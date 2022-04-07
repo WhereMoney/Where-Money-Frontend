@@ -55,8 +55,8 @@
                     <n-button
                         class="w-full py-5 text-lg font-bold"
                         attr-type="button"
-                        secondary
-                        round
+                        :secondary="true"
+                        :round="true"
                         type="primary"
                         size="large"
                         @click="postRegister"
@@ -89,10 +89,9 @@ import {useRouterPush} from '@/composables';
 import {getProtocolApi, registerApi} from '@/apis';
 import {computed, Ref, ref} from 'vue';
 import {getColorPalette, mixColor} from '@/utils';
-import qs from 'qs';
 import {useThemeStore} from '@/store';
 import {LoginBg} from '../login/components';
-
+import {DarkModeSwitch} from "@/components";
 const {routerPush} = useRouterPush();
 const theme = useThemeStore();
 const bgThemeColor = computed(() => (theme.darkMode ? getColorPalette(theme.themeColor, 7) : theme.themeColor));
@@ -153,10 +152,7 @@ declare const window: Window & { $message: any; $router: Router };
 function postRegister(): void {
     formRef.value.validate((errors: boolean) => {
         if (!errors) {
-            registerApi(qs.stringify({
-                userName: formValue.value.userName,
-                password: formValue.value.password
-            }))
+            registerApi({userName: formValue.value.userName, password: formValue.value.password})
                 .then((_response: any) => {
                     window.$message.success('注册成功');
                     routerPush({name: 'login'});

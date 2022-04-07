@@ -2,6 +2,8 @@ import {LoadingBarApi} from 'naive-ui';
 import axios from 'axios';
 import router from '@/router';
 import {storage} from '../utils';
+import qs from "qs";
+
 const service = (axios as any).create({
     baseURL: import.meta.env.VITE_APP_INTERFACE_URL,
     timeout: 600 * 1000
@@ -11,6 +13,9 @@ service.interceptors.request.use(
         const token = storage.get('token');
         if (token) {
             config.headers.authorization = `Bearer ${token}`;
+        }
+        if (config.method === 'post') {
+            config.data = qs.stringify(config.data);
         }
         return config;
     },
@@ -46,7 +51,8 @@ service.interceptors.response.use(
                             case 'token无效':
                             case 'token过期':
                                 window.$message.error('未授权或授权失效，请重新登录');
-                                router.push({name: 'login'}).then(_r => {});
+                                router.push({name: 'login'}).then(_r => {
+                                });
                                 break;
                         }
                         break;
