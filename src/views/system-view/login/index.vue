@@ -6,7 +6,7 @@
             @update:dark="theme.setDarkMode"
         />
         <div class="relative s-card p-14 z-4">
-            <icon-ion:md-football class="absolute z-4 w-13 h-13 text-primary top-5 left-5"/>
+            <icon-ic:baseline-account-balance-wallet class="absolute z-4 w-13 h-13 text-primary top-5 left-5"/>
             <div class="text-6xl font-bold italic text-primary mb-13 mt-5 text-center">
                 <span class="underline decoration-teal-500 decoration-6">Where</span> Money
             </div>

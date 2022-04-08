@@ -6,8 +6,8 @@ function initSvgLogo(id) {
     const svgStr = `<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px">
     <g>
         <title>Layer 1</title>
-        <text style="fill:currentColor" x="238" y="325" id="svg_1" font-size="70" font-family="'Assistant'" xml:space="preserve" font-style="italic" font-weight="bold">TieBreaker</text>
-        <path xmlns="http://www.w3.org/2000/svg" stroke="#00bf5f" stroke-width="10" id="svg_4" d="m244.45455,341.90909l119,0" opacity="undefined" fill="#000" />
+        <text style="fill:currentColor" x="150" y="325" id="svg_1" font-size="70" font-family="'Assistant'" xml:space="preserve" font-style="italic" font-weight="bold">Where Money</text>
+        <path xmlns="http://www.w3.org/2000/svg" stroke="#14b8a6" stroke-width="1%" id="svg_4" d="m150,341.90909l119,0" opacity="undefined" fill="#000" />
     </g>
 </svg>
 `;
