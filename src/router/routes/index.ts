@@ -22,12 +22,12 @@ export const sidebarRoutes: AuthRoute.Route[] = [
         }
     },
     {
-        name:'asset',
-        path: '/asset',
+        name:'test',
+        path: '/test',
         component: 'self',
         meta: {
-            title: '资产',
-            icon: 'mdi:clipboard-account',
+            title: '测试',
+            icon: 'ion:logo-alipay',
             requiresAuth: true,
             singleLayout: 'basic'
         }
@@ -53,11 +53,11 @@ export const constantRoutes: AuthRoute.Route[] = [
         }
     },
     {
-        name: 'register',
-        path: '/register',
+        name: 'active',
+        path: '/active',
         component: 'self',
         meta: {
-            title: '注册'
+            title: '激活'
         }
     },
     {

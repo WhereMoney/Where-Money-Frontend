@@ -29,7 +29,7 @@ export default defineConfig(configEnv => {
             },
             host: '0.0.0.0',
             //ipv6 host: '::',
-            port: 19232,
+            port: 13080,
             open: true
         },
         build: {

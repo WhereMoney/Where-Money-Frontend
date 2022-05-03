@@ -12,7 +12,7 @@
                 <span class="underline decoration-teal-500 decoration-6">T</span>
             </div>
 
-            <div class="s-title s-underline text-4xl text-center mb-3">注册</div>
+            <div class="s-title s-underline text-4xl text-center mb-3">激活</div>
 
             <n-form id="form" ref="formRef" :model="formValue" :rules="rules" :show-label="false">
                 <n-form-item label="用户名" path="userName">
@@ -37,7 +37,7 @@
                         class="roundInput"
                         placeholder="重复密码"
                         type="password"
-                        @keyup.enter="postRegister"
+                        @keyup.enter="postActive"
                     />
                 </n-form-item>
                 <n-form-item>
@@ -59,14 +59,14 @@
                         :round="true"
                         type="primary"
                         size="large"
-                        @click="postRegister"
-                    >注册
+                        @click="postActive"
+                    >激活
                     </n-button>
                 </n-form-item>
             </n-form>
             <div>
                 已经有账号？
-                <a id="registerLink" href="../login">点我登录</a>
+                <a id="loginLink" href="../login">点我登录</a>
             </div>
         </div>
         <login-bg :theme-color="bgThemeColor"/>
@@ -86,7 +86,7 @@
 <script lang="ts" setup>
 import {Router} from 'vue-router';
 import {useRouterPush} from '@/composables';
-import {getProtocolApi, registerApi} from '@/apis';
+import {getProtocolApi, activeApi} from '@/apis';
 import {computed, Ref, ref} from 'vue';
 import {getColorPalette, mixColor} from '@/utils';
 import {useThemeStore} from '@/store';
@@ -112,7 +112,7 @@ const formValue: Ref<Form> = ref({userName: '', password: '', passwordAgain: ''}
 const readProtocol: Ref<boolean> = ref(true);
 const showModal: Ref<boolean> = ref(false);
 const protocol: Ref<string> = ref('');
-/* 用户注册 */
+/* 用户激活 */
 // 表单规则
 const rules: object = {
     userName: {
@@ -149,12 +149,12 @@ const rules: object = {
 };
 declare const window: Window & { $message: any; $router: Router };
 
-function postRegister(): void {
+function postActive(): void {
     formRef.value.validate((errors: boolean) => {
         if (!errors) {
-            registerApi({userName: formValue.value.userName, password: formValue.value.password})
+            activeApi({userName: formValue.value.userName, password: formValue.value.password})
                 .then((_response: any) => {
-                    window.$message.success('注册成功');
+                    window.$message.success('激活成功');
                     routerPush({name: 'login'});
                 })
                 .catch((_error: {}) => {
@@ -183,7 +183,7 @@ defineExpose({
     readProtocol,
     showModal,
     protocol,
-    postRegister,
+    postActive,
     clearPasswordAgain,
     showProtocol
 });
@@ -205,7 +205,7 @@ label {
     color: white;
 }
 
-#registerLink {
+#loginLink {
     color: #246ace;
 }
 </style>

@@ -11,8 +11,8 @@
                 <span class="underline decoration-teal-500 decoration-6">Where</span> Money
             </div>
             <n-form id="form" ref="formRef" :model="formValue" :rules="rules" :show-label="false">
-                <n-form-item label="用户名" path="userName">
-                    <n-input v-model:value="formValue.userName" class="p-2" placeholder="账号" :round="true"/>
+                <n-form-item label="用户名" path="account">
+                    <n-input v-model:value="formValue.account" class="p-2" placeholder="账号" :round="true"/>
                 </n-form-item>
                 <n-form-item label="密码" path="password">
                     <n-input
@@ -42,7 +42,7 @@
             </n-form>
             <div class="mt-2">
                 还没有账号？
-                <a id="registerLink" href="../register">点我注册</a>
+                <a id="loginLink" href="../active">点我注册</a>
             </div>
         </div>
         <login-bg :theme-color="bgThemeColor"/>
@@ -68,10 +68,10 @@ const bgColor = computed(() => {
     const ratio = theme.darkMode ? 0.5 : 0.2;
     return mixColor(COLOR_WHITE, theme.themeColor, ratio);
 });
-const formValue: Ref<{ userName: string; password: string }> = ref({userName: '', password: ''});
+const formValue: Ref<{ account: string; password: string }> = ref({account: '', password: ''});
 declare const window: Window & { $message: any; $router: Router };
 const rules: object = {
-    userName: {
+    account: {
         required: true,
         validator(_rule: any, value: string) {
             if (!value) {
@@ -95,8 +95,8 @@ const GetCookie = (): void => {
         const cookie: string[] = document.cookie.split('; ');
         cookie.forEach(function (element): void {
             const result: string[] = element.split('=');
-            if (result[0] === 'userName') {
-                formValue.value.userName = result[1];
+            if (result[0] === 'account') {
+                formValue.value.account = result[1];
             } else if (result[0] === 'password') {
                 formValue.value.password = result[1];
             }
@@ -109,23 +109,23 @@ onMounted(() => {
 });
 const formRef: Ref = ref(null);
 const needSave: Ref<boolean> = ref(true);
-const SetCookie = (userName: string, password: string, exdays: number): void => {
+const SetCookie = (account: string, password: string, exdays: number): void => {
     const exdate: Date = new Date();
     exdate.setTime(exdate.getTime() + 24 * 60 * 60 * 1000 * exdays);
-    window.document.cookie = `userName` + `=${userName};path=/;expires=${exdate.toUTCString()}`;
+    window.document.cookie = `account` + `=${account};path=/;expires=${exdate.toUTCString()}`;
     window.document.cookie = `password` + `=${password};path=/;expires=${exdate.toUTCString()}`;
 };
 const PostLogin = (): void => {
     SetCookie('', '', -1);
     formRef.value.validate((errors: boolean) => {
         if (!errors) {
-            loginApi({userName: formValue.value.userName, password: formValue.value.password})
+            loginApi({account: formValue.value.account, password: formValue.value.password, role: '业务员'})
                 .then((response: UserLoginResponse) => {
                     window.$message.success('登录成功');
                     const token: string = response.token;
                     storage.set('token', token);
                     if (needSave.value) {
-                        SetCookie(formValue.value.userName, formValue.value.password, 7);
+                        SetCookie(formValue.value.account, formValue.value.password, 7);
                     }
                     routerPush({name: 'home'});
                 })
@@ -143,7 +143,7 @@ label {
     color: white;
 }
 
-#registerLink {
+#loginLink {
     color: #246ace;
 }
 </style>
