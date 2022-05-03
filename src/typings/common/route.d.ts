@@ -8,8 +8,7 @@ declare namespace AuthRoute {
         // 固定的路由
         | 'root' // 根路由
         | 'login'
-        | 'active'
-        | 'test'
+        | 'register'
         | 'not-found'
         | 'no-permission'
         | 'service-error'

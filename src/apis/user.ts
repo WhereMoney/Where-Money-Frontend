@@ -1,6 +1,6 @@
 import http from '@/utils/http';
 
-function activeApi(params: any): any {
+function registerApi(params: any): any {
     return http.post('/user/register', params);
 }
 
@@ -12,8 +12,12 @@ function getProtocolApi(): any {
     return http.get('/user/protocol', null);
 }
 
-function modifyInformation(params: any): any {
-    return http.post('/user/modify-information', params);
+function changeUserNameApi(params: any): any {
+    return http.post('/user/change-user-name', params);
 }
 
-export {activeApi, loginApi,getProtocolApi, modifyInformation};
+function changePasswordApi(params: any): any {
+    return http.post('/user/change-password', params);
+}
+
+export {registerApi, loginApi,getProtocolApi, changeUserNameApi, changePasswordApi};
