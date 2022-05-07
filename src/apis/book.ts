@@ -4,8 +4,12 @@ function addBookApi(params: any): any {
     return http.post('/book/add-book', params);
 }
 
-function getBookApi(params: any): any {
-    return http.get('/book/get-book', params);
+function getBookApi(params: { id: number }): any {
+    return http.get('/book/book', params);
 }
 
-export {addBookApi, getBookApi};
+function getAllBookApi(): any {
+    return http.get('/book/get-book', null);
+}
+
+export {addBookApi, getBookApi, getAllBookApi};

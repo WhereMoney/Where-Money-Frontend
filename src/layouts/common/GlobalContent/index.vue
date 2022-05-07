@@ -9,12 +9,20 @@
                     <component :is="Component" v-if="app.reloadFlag" :key="route.path"/>
                 </keep-alive>
             </transition>
+            <div class="but">
+                <icon-ic:baseline-add-circle class="text-primary w-16 h-16" v-on:click="showAdd=true"/>
+            </div>
+            <n-modal v-model:show="showAdd">
+                <AddModal></AddModal>
+            </n-modal>
         </router-view>
     </div>
 </template>
 
 <script lang="ts" setup>
 import {useAppStore, useRouteStore, useThemeStore} from '@/store';
+import {ref, Ref} from "vue";
+import {AddModal} from './components';
 
 interface Props {
     /** 显示padding */
@@ -28,5 +36,13 @@ withDefaults(defineProps<Props>(), {
 const app = useAppStore();
 const theme = useThemeStore();
 const routeStore = useRouteStore();
+let showAdd: Ref<boolean> = ref(false);
 </script>
-<style scoped></style>
+<style scoped>
+.but {
+    position: fixed;
+    bottom: 5%;
+    right: 2%;
+    cursor: pointer;
+}
+</style>

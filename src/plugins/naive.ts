@@ -9,6 +9,7 @@ import {
     NColorPicker,
     NConfigProvider,
     NDataTable,
+    NDatePicker,
     NDescriptions,
     NDescriptionsItem,
     NDialogProvider,
@@ -43,6 +44,7 @@ import {
     NProgress,
     NRadio,
     NRadioGroup,
+    NRate,
     NScrollbar,
     NSelect,
     NSlider,
@@ -52,13 +54,13 @@ import {
     NSwitch,
     NTabPane,
     NTabs,
-    NText,
     NTag,
+    NText,
     NThing,
     NTimeline,
     NTimelineItem,
-    NTooltip,
-    NRate
+    NTimePicker,
+    NTooltip
 } from 'naive-ui';
 
 /** 按需引入naiveUI */
@@ -73,6 +75,7 @@ export default function setupNaiveUI(app: App) {
             NColorPicker,
             NConfigProvider,
             NDataTable,
+            NDatePicker,
             NDescriptions,
             NDescriptionsItem,
             NDialogProvider,
@@ -118,6 +121,7 @@ export default function setupNaiveUI(app: App) {
             NThing,
             NTimeline,
             NTimelineItem,
+            NTimePicker,
             NTooltip,
             NPagination,
             NProgress,
