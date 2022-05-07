@@ -1,4 +1,4 @@
-import type {App} from 'vue';
+import type { App } from "vue";
 import {
     create,
     NBreadcrumb,
@@ -60,8 +60,9 @@ import {
     NTimeline,
     NTimelineItem,
     NTimePicker,
-    NTooltip
-} from 'naive-ui';
+    NTooltip,
+    NUpload
+} from "naive-ui";
 
 /** 按需引入naiveUI */
 export default function setupNaiveUI(app: App) {
@@ -128,7 +129,8 @@ export default function setupNaiveUI(app: App) {
             NSlider,
             NLayoutSider,
             NLayout,
-            NRate
+            NRate,
+            NUpload
         ]
     });
     app.use(naive);
