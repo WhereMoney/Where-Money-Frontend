@@ -7,7 +7,7 @@
                         <template #default>
                             <div class="flex space-x-2">
                                 <div v-if="outAssetName!=='转出账户'">
-                                    <icon-ri:alipay-fill class="text-primary w-8 h-8" />
+                                    <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
                                 </div>
                                 <div class="m-auto">
                                     {{ outAssetName }}
@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <div class="text-center">
-                        <icon-ic:baseline-arrow-downward class="text-primary w-7 h-7" />
+                        <icon-ic:baseline-arrow-downward class="text-primary w-7 h-7"/>
                     </div>
                 </div>
                 <div>
@@ -29,7 +29,7 @@
                         <template #default>
                             <div class="flex space-x-2">
                                 <div v-if="outAssetName!=='转出账户'">
-                                    <icon-ri:alipay-fill class="text-primary w-8 h-8" />
+                                    <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
                                 </div>
                                 <div class="m-auto">
                                     {{ inAssetName }}
@@ -45,7 +45,7 @@
             <div class="space-y-2">
                 <div class="flex space-x-2">
                     <div class="w-2/3">
-                        <n-input v-model:value="remark" type="text" placeholder="点此输入备注" />
+                        <n-input v-model:value="remark" type="text" placeholder="点此输入备注"/>
                     </div>
                     <div class="w-1/3">
                         <n-input-number v-model:value="amount" step="0.01">
@@ -66,10 +66,10 @@
                         </n-button>
                     </div>
                     <div class="w-1/4">
-                        <n-date-picker v-model:value="timestamp" type="date" clearable="true" />
+                        <n-date-picker v-model:value="timestamp" type="date" clearable="true"/>
                     </div>
                     <div class="w-1/4">
-                        <n-time-picker v-model:value="timestamp" />
+                        <n-time-picker v-model:value="timestamp"/>
                     </div>
                     <div class="w-1/4">
                         <n-popover trigger="hover">
@@ -122,7 +122,7 @@
                                 <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
                                     <div class="flex space-x-2 align-middle">
                                         <div>
-                                            <icon-ri:alipay-fill class="text-primary w-8 h-8" />
+                                            <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
                                         </div>
                                         <div class="w-100 m-auto">
                                             {{ item.assetName }}
@@ -152,7 +152,7 @@
                                 <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
                                     <div class="flex space-x-2">
                                         <div>
-                                            <icon-ri:alipay-fill class="text-primary w-8 h-8" />
+                                            <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
                                         </div>
                                         <div class="w-100 m-auto">
                                             {{ item.assetName }}
@@ -216,10 +216,10 @@
     </div>
 </template>
 <script lang="ts" setup>
-import { onMounted, ref, Ref, watch } from "vue";
-import { getAllAsset, getAllBookApi, getBookApi } from "@/apis";
-import { Asset, AssetGetAllAssetResponse, Book, BookGetAllBookResponse, BookGetBookResponse } from "@/interface";
-import { UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
+import {onMounted, ref, Ref, watch} from "vue";
+import {addBillApi, getAllAsset, getAllBookApi, getBookApi} from "@/apis";
+import {Asset, AssetGetAllAssetResponse, Book, BookGetAllBookResponse, BookGetBookResponse} from "@/interface";
+import {UploadCustomRequestOptions} from "naive-ui";
 
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
@@ -235,7 +235,7 @@ onMounted(() => {
     timestamp.value = Date.now();
     outAssetName.value = "转出账户";
     inAssetName.value = "转入账户";
-    getBookApi({ id: bookId.value }).then((response: BookGetBookResponse) => {
+    getBookApi({id: bookId.value}).then((response: BookGetBookResponse) => {
         bookName.value = response.book.title;
     }).catch(() => {
     });
@@ -318,8 +318,8 @@ function feeDrawerShower() {
 
 let picture: FormData = new FormData();
 let fileName: Ref<string> = ref("");
-const customRequest = ({ file }: UploadCustomRequestOptions) => {
-    picture.append(file.name, file.file as File);
+const customRequest = ({file}: UploadCustomRequestOptions) => {
+    picture.append('file', file.file as File);
     fileName.value = file.name;
     console.log(file);
 };
@@ -335,7 +335,20 @@ function addBill(): void {
         window.$message.error("请选择转入账户");
         return;
     }
-    console.log(remark.value, amount.value, bookId.value, timestamp.value, outAssetId.value, inAssetId.value, fee.value);
+    console.log(picture.get("file"));
+    let test: FormData = new FormData();
+    test.append("bookId", bookId.value as any);
+    test.append("outAssetId", outAssetId.value as any);
+    test.append("inAssetId", inAssetId.value as any);
+    test.append("billCategoryId", 1 as any);
+    test.append("type","转账");
+    test.append("amount", amount.value as any);
+    test.append("time", '2022-04-01 00:00:00' as any);
+    test.append("remark", remark.value as any);
+    test.append("file", picture.get("file") as any);
+    addBillApi(test).then(() => {
+
+    });
 }
 </script>
 
