@@ -1,8 +1,9 @@
 <template>
     <div>
         <div class="space-y-10">
-            <n-scrollbar class="max-h-64">
-                <div class="grid grid-cols-8 gap-4">
+            <n-scrollbar class="h-70">
+                <n-spin class="flex items-center h-70" v-if="isLoading"></n-spin>
+                <div class="grid grid-cols-10 gap-4">
                     <BillCategoryItem v-for="item in billCategoryList" :billCategory="item"></BillCategoryItem>
                 </div>
             </n-scrollbar>
@@ -20,29 +21,36 @@
                     </div>
                 </div>
                 <div class="flex space-x-2">
-                    <div class="w-1/4">
+                    <div class="w-1/3">
                         <n-button v-on:click="bookDrawerShower" class="w-full truncate">
                             <template #default>
-                                <div class="text-left">
+                                <n-spin class="items-center h-4 w-4" v-if="isLoading"></n-spin>
+                                <div class="text-left" v-if="!isLoading">
                                     {{ bookName }}
                                 </div>
                             </template>
                         </n-button>
                     </div>
-                    <div class="w-1/4">
+                    <div class="w-1/3">
                         <n-button v-on:click="assetDrawerShower" class="w-full truncate">
                             <template #default>
-                                <div class="text-left">
-                                    {{ assetName }}
+                                <div class="flex space-x-2">
+                                    <div v-if="assetName!=='支付账户'">
+                                        <Icon :icon="assetSvg" class="text-primary w-4 h-4"/>
+                                    </div>
+                                    <div class="m-auto">
+                                        {{ assetName }}
+                                    </div>
+                                    <div class="m-auto" v-if="assetName!=='支付账户'">
+                                        ￥{{ assetBalance }}
+                                    </div>
                                 </div>
                             </template>
                         </n-button>
                     </div>
-                    <div class="w-1/4">
-                        <n-date-picker v-model:value="timestamp" type="date" clearable="true" :input-readonly="true"/>
-                    </div>
-                    <div class="w-1/4">
-                        <n-time-picker v-model:value="timestamp" :input-readonly="true"/>
+                    <div class="w-1/3">
+                        <n-date-picker v-model:value="timestamp" type="datetime" placement="top-start"
+                                       :input-readonly="true"/>
                     </div>
                 </div>
                 <div class="flex space-x-2">
@@ -78,7 +86,8 @@
                 <template #default>
                     <div>
                         <n-scrollbar class="h-78">
-                            <n-radio-group v-model:value="assetSelector" class="space-y-4 ">
+                            <n-spin v-if="isAssetLoading" class="flex items-center h-78"></n-spin>
+                            <n-radio-group v-model:value="assetSelector" v-if="!isAssetLoading" class="space-y-4 ">
                                 <div v-for="item in assetList">
                                     <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
                                         <div class="flex space-x-2 align-middle">
@@ -109,7 +118,8 @@
                 </template>
                 <template #default>
                     <n-scrollbar class="h-78">
-                        <n-radio-group v-model:value="bookSelector" class="space-y-4 ">
+                        <n-spin v-if="isBookLoading" class="flex items-center h-78"></n-spin>
+                        <n-radio-group v-model:value="bookSelector" v-if="!isBookLoading" class="space-y-4 ">
                             <div v-for="item in bookList">
                                 <n-radio v-bind:key="item.id" v-bind:value="item.title">
                                     <div class="flex space-x-2 item-center">
@@ -133,10 +143,11 @@
 </template>
 
 <script lang="ts" setup>
-import {addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getBookApi} from "@/apis";
+import {addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getAssetApi, getBookApi} from "@/apis";
 import {
     Asset,
     AssetGetAllAssetResponse,
+    AssetGetAssetResponse,
     BillCategory,
     Book,
     BookAllBillCategoryResponse,
@@ -148,7 +159,7 @@ import {UploadCustomRequestOptions, UploadFileInfo} from "naive-ui";
 import {intToString} from "@/utils/dateComputer";
 import {Icon} from "@iconify/vue";
 import {BillCategoryItem} from './components';
-import {useStore} from '@/stores/store';
+import {useStore} from "@/stores/store";
 
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
@@ -157,27 +168,37 @@ let bookId: Ref<number> = ref(0);
 let timestamp: Ref<number> = ref(0);
 let assetName: Ref<string> = ref("");
 let assetBalance: Ref<number> = ref(0);
+let assetSvg: Ref<string> = ref("");
 let billCategoryList: Ref<Array<BillCategory>> = ref([]);
+let isLoading: Ref<boolean> = ref(false);
+let store = useStore();
 onMounted(() => {
+    isLoading.value = true;
     bookId.value = 23;
     timestamp.value = Date.now();
-    assetName.value = "支出账户";
+    assetName.value = "支付账户";
+    store.selectedBillCategoryId = 0;
     getAllBillCategoryApi({bookId: 23, type: "支出"}).then((res: BookAllBillCategoryResponse) => {
         billCategoryList.value = res.billCategoryList;
-    });
-    getBookApi({id: bookId.value}).then((response: BookGetBookResponse) => {
-        bookName.value = response.book.title;
+        getBookApi({id: bookId.value}).then((response: BookGetBookResponse) => {
+            bookName.value = response.book.title;
+            isLoading.value = false;
+        }).catch(() => {
+        });
     }).catch(() => {
     });
 })
 let assetList: Ref<Array<Asset>> = ref([]);
 let showAssetDrawer: Ref<boolean> = ref(false);
 let assetId: Ref<number> = ref(0);
+let isAssetLoading: Ref<boolean> = ref(false);
 
 function assetDrawerShower() {
+    isAssetLoading.value = true;
     showAssetDrawer.value = true;
     getAllAsset().then((response: AssetGetAllAssetResponse) => {
         assetList.value = response.assetList;
+        isAssetLoading.value = false;
     });
 }
 
@@ -189,14 +210,17 @@ watch(assetSelector, (value: string) => {
             assetId.value = asset.id;
             assetName.value = asset.assetName;
             assetBalance.value = asset.balance;
+            assetSvg.value = asset.svg;
         }
     }
 });
 let bookList: Ref<Array<Book>> = ref([]);
 let showBookDrawer: Ref<boolean> = ref(false);
 let bookSelector: Ref<string> = ref("");
+let isBookLoading: Ref<boolean> = ref(false);
 
 function bookDrawerShower() {
+    isBookLoading.value = true;
     showBookDrawer.value = true;
     getAllBookApi().then((response: BookGetAllBookResponse) => {
         bookList.value = response.bookList;
@@ -204,6 +228,7 @@ function bookDrawerShower() {
         if (bookTitle) {
             bookSelector.value = bookTitle;
         }
+        isBookLoading.value = false;
     }).catch(() => {
     });
 }
@@ -238,11 +263,9 @@ function beforeUpload(data: { file: UploadFileInfo, fileList: UploadFileInfo[] }
     return true;
 }
 
-let store = useStore();
-
 function addBill(): void {
     if (assetId.value === 0) {
-        window.$message.error("请选择转出账户");
+        window.$message.error("请选择支付账户");
         return;
     }
     let formData: FormData = new FormData();
@@ -255,6 +278,12 @@ function addBill(): void {
     formData.append("remark", remark.value as any);
     formData.append("file", picture as File);
     addBillApi(formData).then((_res: any) => {
+        window.$message.success("添加成功");
+        getAssetApi({id: assetId.value}).then((response: AssetGetAssetResponse) => {
+            assetBalance.value = response.asset.balance;
+        }).catch(() => {
+        });
+    }).catch(() => {
     });
 }
 </script>

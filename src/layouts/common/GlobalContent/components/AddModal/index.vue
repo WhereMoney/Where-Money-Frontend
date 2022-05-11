@@ -1,8 +1,13 @@
 <template>
     <div>
-        <n-card id="drawer-target" class="w-180">
+        <n-card id="drawer-target" class="w-256">
             <template #header>
                 <div>记一笔</div>
+            </template>
+            <template #header-extra>
+                <Icon icon="icon-park-outline:close" class="cursor-pointer h-4 w-4"
+                      v-bind:class="{'text-primary':mouseOnClose}" v-on:mouseenter="mouseOnClose=true" v-on:mouseleave="mouseOnClose=false"
+                      v-on:click="closeModal"/>
             </template>
             <template #default>
                 <div>
@@ -24,8 +29,18 @@
 </template>
 
 <script lang="ts" setup>
-import {Income, Pay, Transfer} from './components';</script>
+import {Income, Pay, Transfer} from './components';
+import {Icon} from "@iconify/vue";
+import {Ref, ref} from "vue";
 
+const emit = defineEmits(["close"]);
+
+function closeModal() {
+    emit('close', false);
+}
+
+let mouseOnClose: Ref<boolean> = ref(false);
+</script>
 <style scoped>
 
 </style>

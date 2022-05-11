@@ -10,10 +10,10 @@
                 </keep-alive>
             </transition>
             <div class="but">
-                <icon-ic:baseline-add-circle class="text-primary w-16 h-16" v-on:click="showAdd=true"/>
+                <Icon icon="ic:baseline-add-circle" class="text-primary w-16 h-16" v-on:click="showAdd=true"/>
             </div>
-            <n-modal v-model:show="showAdd">
-                <AddModal></AddModal>
+            <n-modal :mask-closable="false" v-model:show="showAdd">
+                <AddModal @close="closeAdd"></AddModal>
             </n-modal>
         </router-view>
     </div>
@@ -23,6 +23,7 @@
 import {useAppStore, useRouteStore, useThemeStore} from '@/store';
 import {ref, Ref} from "vue";
 import {AddModal} from './components';
+import {Icon} from "@iconify/vue";
 
 interface Props {
     /** 显示padding */
@@ -37,6 +38,10 @@ const app = useAppStore();
 const theme = useThemeStore();
 const routeStore = useRouteStore();
 let showAdd: Ref<boolean> = ref(false);
+
+function closeAdd(): void {
+    showAdd.value = false;
+}
 </script>
 <style scoped>
 .but {
