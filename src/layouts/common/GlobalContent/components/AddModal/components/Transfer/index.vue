@@ -28,7 +28,7 @@
                     <n-button class="w-full h-15" v-on:click="inDrawerShower">
                         <template #default>
                             <div class="flex space-x-2">
-                                <div v-if="outAssetName!=='转出账户'">
+                                <div v-if="inAssetName!=='转入账户'">
                                     <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
                                 </div>
                                 <div class="m-auto">
@@ -66,10 +66,10 @@
                         </n-button>
                     </div>
                     <div class="w-1/4">
-                        <n-date-picker v-model:value="timestamp" type="date" clearable="true"/>
+                        <n-date-picker v-model:value="timestamp" type="date" clearable="true" :input-readonly="true"/>
                     </div>
                     <div class="w-1/4">
-                        <n-time-picker v-model:value="timestamp"/>
+                        <n-time-picker v-model:value="timestamp" :input-readonly="true"/>
                     </div>
                     <div class="w-1/4">
                         <n-popover trigger="hover">
@@ -88,7 +88,9 @@
                     </div>
                 </div>
                 <div class="flex space-x-2">
-                    <n-upload :custom-request="customRequest" list-type="image-card" max="1" class="w-1/5">
+                    <n-upload :custom-request="customRequest" v-on:change="changePicture"
+                              v-on:before-upload="beforeUpload" list-type="image-card" max="1"
+                              class="w-1/5">
                         <template #default>
                             <div>
                                 图片
@@ -108,7 +110,7 @@
                 </n-button>
             </div>
         </div>
-        <n-drawer v-model:show="showOutDrawer" :height="300" :placement="'bottom'" to="#drawer-target">
+        <n-drawer v-model:show="showOutDrawer" :height="400" :placement="'bottom'" to="#drawer-target">
             <n-drawer-content>
                 <template #header>
                     <div>
@@ -117,28 +119,30 @@
                 </template>
                 <template #default>
                     <div>
-                        <n-radio-group v-model:value="outSelector" class="space-y-4 ">
-                            <div v-for="item in assetList">
-                                <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
-                                    <div class="flex space-x-2 align-middle">
-                                        <div>
-                                            <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
+                        <n-scrollbar class="h-78">
+                            <n-radio-group v-model:value="outSelector" class="space-y-4 ">
+                                <div v-for="item in assetList">
+                                    <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
+                                        <div class="flex space-x-2 align-middle">
+                                            <div>
+                                                <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
+                                            </div>
+                                            <div class="w-100 m-auto">
+                                                {{ item.assetName }}
+                                            </div>
+                                            <div class="m-auto">
+                                                ￥{{ item.balance }}
+                                            </div>
                                         </div>
-                                        <div class="w-100 m-auto">
-                                            {{ item.assetName }}
-                                        </div>
-                                        <div class="m-auto">
-                                            ￥{{ item.balance }}
-                                        </div>
-                                    </div>
-                                </n-radio>
-                            </div>
-                        </n-radio-group>
+                                    </n-radio>
+                                </div>
+                            </n-radio-group>
+                        </n-scrollbar>
                     </div>
                 </template>
             </n-drawer-content>
         </n-drawer>
-        <n-drawer v-model:show="showInDrawer" :height="300" :placement="'bottom'" to="#drawer-target">
+        <n-drawer v-model:show="showInDrawer" :height="400" :placement="'bottom'" to="#drawer-target">
             <n-drawer-content>
                 <template #header>
                     <div>
@@ -147,28 +151,30 @@
                 </template>
                 <template #default>
                     <div>
-                        <n-radio-group v-model:value="inSelector" class="space-y-4 ">
-                            <div v-for="item in assetList">
-                                <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
-                                    <div class="flex space-x-2">
-                                        <div>
-                                            <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
+                        <n-scrollbar class="h-78">
+                            <n-radio-group v-model:value="inSelector" class="space-y-4 ">
+                                <div v-for="item in assetList">
+                                    <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
+                                        <div class="flex space-x-2">
+                                            <div>
+                                                <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
+                                            </div>
+                                            <div class="w-100 m-auto">
+                                                {{ item.assetName }}
+                                            </div>
+                                            <div class="m-auto">
+                                                ￥{{ item.balance }}
+                                            </div>
                                         </div>
-                                        <div class="w-100 m-auto">
-                                            {{ item.assetName }}
-                                        </div>
-                                        <div class="m-auto">
-                                            ￥{{ item.balance }}
-                                        </div>
-                                    </div>
-                                </n-radio>
-                            </div>
-                        </n-radio-group>
+                                    </n-radio>
+                                </div>
+                            </n-radio-group>
+                        </n-scrollbar>
                     </div>
                 </template>
             </n-drawer-content>
         </n-drawer>
-        <n-drawer v-model:show="showBookDrawer" :height="200" :placement="'bottom'" to="#drawer-target">
+        <n-drawer v-model:show="showBookDrawer" :height="400" :placement="'bottom'" to="#drawer-target">
             <n-drawer-content>
                 <template #header>
                     <div>
@@ -176,22 +182,24 @@
                     </div>
                 </template>
                 <template #default>
-                    <n-radio-group v-model:value="bookSelector" class="space-y-4 ">
-                        <div v-for="item in bookList">
-                            <n-radio v-bind:key="item.id" v-bind:value="item.title">
-                                <div class="flex space-x-2 item-center">
-                                    <div class="w-128 m-auto">
-                                        {{ item.title }}
+                    <n-scrollbar class="h-78">
+                        <n-radio-group v-model:value="bookSelector" class="space-y-4 ">
+                            <div v-for="item in bookList">
+                                <n-radio v-bind:key="item.id" v-bind:value="item.title">
+                                    <div class="flex space-x-2 item-center">
+                                        <div class="w-128 m-auto">
+                                            {{ item.title }}
+                                        </div>
+                                        <div>
+                                            <n-tag class="bg-primary-active cursor-pointer">
+                                                每月{{ item.beginDate }}日起始
+                                            </n-tag>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <n-tag class="bg-primary-active cursor-pointer">
-                                            每月{{ item.beginDate }}日起始
-                                        </n-tag>
-                                    </div>
-                                </div>
-                            </n-radio>
-                        </div>
-                    </n-radio-group>
+                                </n-radio>
+                            </div>
+                        </n-radio-group>
+                    </n-scrollbar>
                 </template>
             </n-drawer-content>
         </n-drawer>
@@ -219,7 +227,8 @@
 import {onMounted, ref, Ref, watch} from "vue";
 import {addBillApi, getAllAsset, getAllBookApi, getBookApi} from "@/apis";
 import {Asset, AssetGetAllAssetResponse, Book, BookGetAllBookResponse, BookGetBookResponse} from "@/interface";
-import {UploadCustomRequestOptions} from "naive-ui";
+import {UploadCustomRequestOptions, UploadFileInfo} from "naive-ui";
+import {intToString} from "@/utils/dateComputer";
 
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
@@ -316,15 +325,26 @@ function feeDrawerShower() {
     showFeeDrawer.value = true;
 }
 
-let picture: FormData = new FormData();
+let picture: File;
 let fileName: Ref<string> = ref("");
 const customRequest = ({file}: UploadCustomRequestOptions) => {
-    picture.append('file', file.file as File);
+    picture = file.file as File;
     fileName.value = file.name;
-    console.log(file);
 };
 
-declare const window: Window & { $message: any; };
+function changePicture() {
+    fileName.value = '';
+}
+
+declare const window: Window & { $message: any; URL: any };
+
+function beforeUpload(data: { file: UploadFileInfo, fileList: UploadFileInfo[] }) {
+    if (!data.file.file?.type.startsWith('image')) {
+        window.$message.error('请上传图片');
+        return false;
+    }
+    return true;
+}
 
 function addBill(): void {
     if (outAssetId.value === 0) {
@@ -335,19 +355,17 @@ function addBill(): void {
         window.$message.error("请选择转入账户");
         return;
     }
-    console.log(picture.get("file"));
     let test: FormData = new FormData();
     test.append("bookId", bookId.value as any);
     test.append("outAssetId", outAssetId.value as any);
     test.append("inAssetId", inAssetId.value as any);
-    test.append("billCategoryId", 1 as any);
-    test.append("type","转账");
+    test.append("type", "转账");
     test.append("amount", amount.value as any);
-    test.append("time", '2022-04-01 00:00:00' as any);
+    test.append("transferFee", fee.value as any);
+    test.append("time", intToString(timestamp.value) as any);
     test.append("remark", remark.value as any);
-    test.append("file", picture.get("file") as any);
-    addBillApi(test).then(() => {
-
+    test.append("file", picture as File);
+    addBillApi(test).then((_res: any) => {
     });
 }
 </script>

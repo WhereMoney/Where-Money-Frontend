@@ -6,3 +6,4 @@ export * from './router';
 export * from './form';
 export * as storage from './storage';
 export * as http from './http';
+export * as dateComputer from './dateComputer';
