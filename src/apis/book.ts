@@ -12,4 +12,8 @@ function getAllBookApi(): any {
     return http.get('/book/get-book', null);
 }
 
-export {addBookApi, getBookApi, getAllBookApi};
+function getAllBillCategoryApi(params: { bookId: number, type: '支出' | '收入' }): any {
+    return http.get('/book/all-bill-category', params);
+}
+
+export {addBookApi, getBookApi, getAllBookApi, getAllBillCategoryApi};

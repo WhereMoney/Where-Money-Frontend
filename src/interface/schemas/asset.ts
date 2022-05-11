@@ -8,4 +8,5 @@ export interface Asset{
     repayDate: number;
     type: string;
     userId: number;
+    svg: string;
 }

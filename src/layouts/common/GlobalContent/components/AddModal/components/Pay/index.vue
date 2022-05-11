@@ -1,47 +1,11 @@
 <template>
     <div>
         <div class="space-y-10">
-            <div class="space-y-2">
-                <div>
-                    <n-button class="w-full h-15" v-on:click="outDrawerShower">
-                        <template #default>
-                            <div class="flex space-x-2">
-                                <div v-if="outAssetName!=='转出账户'">
-                                    <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
-                                </div>
-                                <div class="m-auto">
-                                    {{ outAssetName }}
-                                </div>
-                                <div class="m-auto" v-if="outAssetName!=='转出账户'">
-                                    ￥{{ outAssetBalance }}
-                                </div>
-                            </div>
-                        </template>
-                    </n-button>
+            <n-scrollbar class="max-h-64">
+                <div class="grid grid-cols-8 gap-4">
+                    <BillCategoryItem v-for="item in billCategoryList" :billCategory="item"></BillCategoryItem>
                 </div>
-                <div>
-                    <div class="text-center">
-                        <icon-ic:baseline-arrow-downward class="text-primary w-7 h-7"/>
-                    </div>
-                </div>
-                <div>
-                    <n-button class="w-full h-15" v-on:click="inDrawerShower">
-                        <template #default>
-                            <div class="flex space-x-2">
-                                <div v-if="inAssetName!=='转入账户'">
-                                    <icon-ri:alipay-fill class="text-primary w-8 h-8"/>
-                                </div>
-                                <div class="m-auto">
-                                    {{ inAssetName }}
-                                </div>
-                                <div class="m-auto" v-if="inAssetName!=='转入账户'">
-                                    ￥{{ inAssetBalance }}
-                                </div>
-                            </div>
-                        </template>
-                    </n-button>
-                </div>
-            </div>
+            </n-scrollbar>
             <div class="space-y-2">
                 <div class="flex space-x-2">
                     <div class="w-2/3">
@@ -66,25 +30,19 @@
                         </n-button>
                     </div>
                     <div class="w-1/4">
+                        <n-button v-on:click="assetDrawerShower" class="w-full truncate">
+                            <template #default>
+                                <div class="text-left">
+                                    {{ assetName }}
+                                </div>
+                            </template>
+                        </n-button>
+                    </div>
+                    <div class="w-1/4">
                         <n-date-picker v-model:value="timestamp" type="date" clearable="true" :input-readonly="true"/>
                     </div>
                     <div class="w-1/4">
                         <n-time-picker v-model:value="timestamp" :input-readonly="true"/>
-                    </div>
-                    <div class="w-1/4">
-                        <n-popover trigger="hover">
-                            <template #trigger>
-                                <n-button class="w-full" v-bind:type="fee === 0 ? '' : 'primary'"
-                                          v-on:click="feeDrawerShower">
-                                    <template #default>
-                                        手续费
-                                    </template>
-                                </n-button>
-                            </template>
-                            <template #default>
-                                ￥{{ fee }}
-                            </template>
-                        </n-popover>
                     </div>
                 </div>
                 <div class="flex space-x-2">
@@ -110,52 +68,20 @@
                 </n-button>
             </div>
         </div>
-        <n-drawer v-model:show="showOutDrawer" :height="400" :placement="'bottom'" to="#drawer-target">
+        <n-drawer v-model:show="showAssetDrawer" :height="400" :placement="'bottom'" to="#drawer-target">
             <n-drawer-content>
                 <template #header>
                     <div>
-                        选择转出账户
+                        选择支付账户
                     </div>
                 </template>
                 <template #default>
                     <div>
                         <n-scrollbar class="h-78">
-                            <n-radio-group v-model:value="outSelector" class="space-y-4 ">
+                            <n-radio-group v-model:value="assetSelector" class="space-y-4 ">
                                 <div v-for="item in assetList">
                                     <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
                                         <div class="flex space-x-2 align-middle">
-                                            <div>
-                                                <Icon :icon="item.svg" class="text-primary w-8 h-8"/>
-                                            </div>
-                                            <div class="w-100 m-auto">
-                                                {{ item.assetName }}
-                                            </div>
-                                            <div class="m-auto">
-                                                ￥{{ item.balance }}
-                                            </div>
-                                        </div>
-                                    </n-radio>
-                                </div>
-                            </n-radio-group>
-                        </n-scrollbar>
-                    </div>
-                </template>
-            </n-drawer-content>
-        </n-drawer>
-        <n-drawer v-model:show="showInDrawer" :height="400" :placement="'bottom'" to="#drawer-target">
-            <n-drawer-content>
-                <template #header>
-                    <div>
-                        选择转入账户
-                    </div>
-                </template>
-                <template #default>
-                    <div>
-                        <n-scrollbar class="h-78">
-                            <n-radio-group v-model:value="inSelector" class="space-y-4 ">
-                                <div v-for="item in assetList">
-                                    <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
-                                        <div class="flex space-x-2">
                                             <div>
                                                 <Icon :icon="item.svg" class="text-primary w-8 h-8"/>
                                             </div>
@@ -203,93 +129,66 @@
                 </template>
             </n-drawer-content>
         </n-drawer>
-        <n-drawer v-model:show="showFeeDrawer" :height="150" :placement="'bottom'" to="#drawer-target">
-            <n-drawer-content>
-                <template #header>
-                    <div>
-                        输入手续费
-                    </div>
-                </template>
-                <template #default>
-                    <div>
-                        <n-input-number v-model:value="fee" step="0.01">
-                            <template #prefix>
-                                ￥
-                            </template>
-                        </n-input-number>
-                    </div>
-                </template>
-            </n-drawer-content>
-        </n-drawer>
     </div>
 </template>
+
 <script lang="ts" setup>
+import {addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getBookApi} from "@/apis";
+import {
+    Asset,
+    AssetGetAllAssetResponse,
+    BillCategory,
+    Book,
+    BookAllBillCategoryResponse,
+    BookGetAllBookResponse,
+    BookGetBookResponse
+} from "@/interface";
 import {onMounted, ref, Ref, watch} from "vue";
-import {addBillApi, getAllAsset, getAllBookApi, getBookApi} from "@/apis";
-import {Asset, AssetGetAllAssetResponse, Book, BookGetAllBookResponse, BookGetBookResponse} from "@/interface";
 import {UploadCustomRequestOptions, UploadFileInfo} from "naive-ui";
 import {intToString} from "@/utils/dateComputer";
-import {Icon} from '@iconify/vue';
+import {Icon} from "@iconify/vue";
+import {BillCategoryItem} from './components';
+import {useStore} from '@/stores/store';
 
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
 let bookName: Ref<string> = ref("");
 let bookId: Ref<number> = ref(0);
 let timestamp: Ref<number> = ref(0);
-let outAssetName: Ref<string> = ref("");
-let inAssetName: Ref<string> = ref("");
-let outAssetBalance: Ref<number> = ref(0);
-let inAssetBalance: Ref<number> = ref(0);
+let assetName: Ref<string> = ref("");
+let assetBalance: Ref<number> = ref(0);
+let billCategoryList: Ref<Array<BillCategory>> = ref([]);
 onMounted(() => {
     bookId.value = 23;
     timestamp.value = Date.now();
-    outAssetName.value = "转出账户";
-    inAssetName.value = "转入账户";
+    assetName.value = "支出账户";
+    getAllBillCategoryApi({bookId: 23, type: "支出"}).then((res: BookAllBillCategoryResponse) => {
+        billCategoryList.value = res.billCategoryList;
+    });
     getBookApi({id: bookId.value}).then((response: BookGetBookResponse) => {
         bookName.value = response.book.title;
     }).catch(() => {
     });
-});
+})
 let assetList: Ref<Array<Asset>> = ref([]);
-let showOutDrawer: Ref<boolean> = ref(false);
-let outAssetId: Ref<number> = ref(0);
+let showAssetDrawer: Ref<boolean> = ref(false);
+let assetId: Ref<number> = ref(0);
 
-function outDrawerShower() {
-    showOutDrawer.value = true;
+function assetDrawerShower() {
+    showAssetDrawer.value = true;
     getAllAsset().then((response: AssetGetAllAssetResponse) => {
         assetList.value = response.assetList;
     });
 }
 
-let outSelector: Ref<string> = ref("");
-watch(outSelector, (value: string) => {
+let assetSelector: Ref<string> = ref("");
+watch(assetSelector, (value: string) => {
     if (value) {
         let asset: Asset | undefined = assetList.value.find(item => item.assetName === value);
         if (asset) {
-            outAssetId.value = asset.id;
-            outAssetName.value = asset.assetName;
-            outAssetBalance.value = asset.balance;
-        }
-    }
-});
-let showInDrawer: Ref<boolean> = ref(false);
-let inAssetId: Ref<number> = ref(0);
-
-function inDrawerShower() {
-    showInDrawer.value = true;
-    getAllAsset().then((response: AssetGetAllAssetResponse) => {
-        assetList.value = response.assetList;
-    });
-}
-
-let inSelector: Ref<string> = ref("");
-watch(inSelector, (value: string) => {
-    if (value) {
-        let asset: Asset | undefined = assetList.value.find(item => item.assetName === value);
-        if (asset) {
-            inAssetId.value = asset.id;
-            inAssetName.value = asset.assetName;
-            inAssetBalance.value = asset.balance;
+            assetId.value = asset.id;
+            assetName.value = asset.assetName;
+            assetBalance.value = asset.balance;
         }
     }
 });
@@ -318,14 +217,6 @@ watch(bookSelector, (value: string) => {
         }
     }
 });
-
-let showFeeDrawer: Ref<boolean> = ref(false);
-let fee: Ref<number> = ref(0);
-
-function feeDrawerShower() {
-    showFeeDrawer.value = true;
-}
-
 let picture: File;
 let fileName: Ref<string> = ref("");
 const customRequest = ({file}: UploadCustomRequestOptions) => {
@@ -347,22 +238,19 @@ function beforeUpload(data: { file: UploadFileInfo, fileList: UploadFileInfo[] }
     return true;
 }
 
+let store = useStore();
+
 function addBill(): void {
-    if (outAssetId.value === 0) {
+    if (assetId.value === 0) {
         window.$message.error("请选择转出账户");
-        return;
-    }
-    if (inAssetId.value === 0) {
-        window.$message.error("请选择转入账户");
         return;
     }
     let formData: FormData = new FormData();
     formData.append("bookId", bookId.value as any);
-    formData.append("outAssetId", outAssetId.value as any);
-    formData.append("inAssetId", inAssetId.value as any);
-    formData.append("type", "转账");
+    formData.append("outAssetId", assetId.value as any);
+    formData.append("billCategoryId", store.selectedBillCategoryId as any);
+    formData.append("type", "支出");
     formData.append("amount", amount.value as any);
-    formData.append("transferFee", fee.value as any);
     formData.append("time", intToString(timestamp.value) as any);
     formData.append("remark", remark.value as any);
     formData.append("file", picture as File);
@@ -372,4 +260,5 @@ function addBill(): void {
 </script>
 
 <style scoped>
+
 </style>
