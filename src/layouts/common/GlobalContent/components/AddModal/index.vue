@@ -1,6 +1,6 @@
 <template>
     <div>
-        <n-card id="drawer-target" class="w-256">
+        <n-card id="drawer-target" class="w-full">
             <template #header>
                 <div>记一笔</div>
             </template>
