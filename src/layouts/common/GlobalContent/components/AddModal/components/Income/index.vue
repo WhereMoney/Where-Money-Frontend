@@ -143,10 +143,10 @@
 </template>
 
 <script lang="ts" setup>
-import {addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getBookApi} from "@/apis";
+import {addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getAssetApi, getBookApi} from "@/apis";
 import {
     Asset,
-    AssetGetAllAssetResponse,
+    AssetGetAllAssetResponse, AssetGetAssetResponse,
     BillCategory,
     Book,
     BookAllBillCategoryResponse,
@@ -278,6 +278,10 @@ function addBill(): void {
     formData.append("file", picture as File);
     addBillApi(formData).then((_res: any) => {
         window.$message.success("添加成功");
+        getAssetApi({id: assetId.value}).then((response: AssetGetAssetResponse) => {
+            assetBalance.value = response.asset.balance;
+        }).catch(() => {
+        });
     }).catch(() => {
     });
 }
