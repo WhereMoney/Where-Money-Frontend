@@ -1,4 +1,4 @@
-import type {App} from 'vue';
+import type { App } from "vue";
 import {
     create,
     NBreadcrumb,
@@ -11,6 +11,7 @@ import {
     NColorPicker,
     NConfigProvider,
     NDataTable,
+    NDatePicker,
     NDescriptions,
     NDescriptionsItem,
     NDialogProvider,
@@ -61,8 +62,10 @@ import {
     NThing,
     NTimeline,
     NTimelineItem,
+    NTimePicker,
     NTooltip,
-} from 'naive-ui';
+    NUpload
+} from "naive-ui";
 
 /** 按需引入naiveUI */
 export default function setupNaiveUI(app: App) {
@@ -78,6 +81,7 @@ export default function setupNaiveUI(app: App) {
             NColorPicker,
             NConfigProvider,
             NDataTable,
+            NDatePicker,
             NDescriptions,
             NDescriptionsItem,
             NDialogProvider,
@@ -125,12 +129,14 @@ export default function setupNaiveUI(app: App) {
             NThing,
             NTimeline,
             NTimelineItem,
+            NTimePicker,
             NTooltip,
             NPagination,
             NProgress,
             NSlider,
             NLayoutSider,
             NLayout,
+            NUpload
         ]
     });
     app.use(naive);

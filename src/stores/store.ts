@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia';
+import {defineStore} from 'pinia';
 
 // useStore could be anything like useUser, useCart
 // the first argument is a unique id of the stores across your application
@@ -6,6 +6,7 @@ export const useStore = defineStore('main', {
     state: () => {
         return {
             // all these properties will have their type inferred automatically
+            selectedBillCategoryId: 0,
             Date: '',
             playerData: [] as any[],
             perfData: [] as any[],
@@ -14,7 +15,7 @@ export const useStore = defineStore('main', {
             gamePveData: Object as any,
             playerNameId: [] as any[], // 用于game-on
             clubNameId: [] as any[],
-            nextGame: { teams: [], distance: 0 } as any
+            nextGame: {teams: [], distance: 0} as any
         };
     },
     getters: {
