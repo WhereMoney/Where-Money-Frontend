@@ -6,6 +6,8 @@ import {
     NButton,
     NCard,
     NCheckbox,
+    NCollapse,
+    NCollapseItem,
     NColorPicker,
     NConfigProvider,
     NDataTable,
@@ -42,7 +44,9 @@ import {
     NPopover,
     NProgress,
     NRadio,
+    NRadioButton,
     NRadioGroup,
+    NRate,
     NScrollbar,
     NSelect,
     NSlider,
@@ -58,7 +62,6 @@ import {
     NTimeline,
     NTimelineItem,
     NTooltip,
-    NRate
 } from 'naive-ui';
 
 /** 按需引入naiveUI */
@@ -70,6 +73,8 @@ export default function setupNaiveUI(app: App) {
             NButton,
             NCard,
             NCheckbox,
+            NCollapse,
+            NCollapseItem,
             NColorPicker,
             NConfigProvider,
             NDataTable,
@@ -104,7 +109,9 @@ export default function setupNaiveUI(app: App) {
             NPopover,
             NProgress,
             NRadio,
+            NRadioButton,
             NRadioGroup,
+            NRate,
             NScrollbar,
             NSelect,
             NSpace,
@@ -124,7 +131,6 @@ export default function setupNaiveUI(app: App) {
             NSlider,
             NLayoutSider,
             NLayout,
-            NRate
         ]
     });
     app.use(naive);
