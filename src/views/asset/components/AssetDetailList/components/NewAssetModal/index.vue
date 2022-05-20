@@ -117,15 +117,13 @@
                         </form-item-container>
 
                     </template>
-                    <form-item-container class="justify-items-end">
-                        <n-button
-                            class="w-60px"
-                            type="primary"
-                            @click="submitHandler"
-                        >
-                            <span>确定</span>
-                        </n-button>
-                    </form-item-container>
+                    <n-button
+                        class="w-full"
+                        type="primary"
+                        @click="submitHandler"
+                    >
+                        <span>确定</span>
+                    </n-button>
                 </n-space>
             </n-form>
         </template>
