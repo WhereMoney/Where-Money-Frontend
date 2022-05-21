@@ -241,13 +241,25 @@ function postAddAsset(asset: Asset) {
     margin-block-end: 0;
 
     .n-list-item {
-        -webkit-transition-duration: 0.3s;
-        transition-duration: 0.3s;
+        -webkit-transition-duration: 0.2s;
+        transition-duration: 0.2s;
 
         -webkit-transition-property: background-color;
         transition-property: background-color;
 
         border-radius: 8px;
+
+        svg {
+            -webkit-transition-duration: 0.2s;
+            transition-duration: 0.2s;
+
+            -webkit-transition-property: color;
+            transition-property: color;
+        }
+
+        &:hover svg {
+            color: var(--primary-color-hover);
+        }
     }
 }
 

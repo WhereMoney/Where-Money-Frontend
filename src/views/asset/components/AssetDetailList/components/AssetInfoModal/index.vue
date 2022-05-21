@@ -9,16 +9,14 @@
         @after-enter="getAssetInfoById"
     >
         <template #header>
-            <n-space align="center" justify="space-between">
+            <n-space align="flex-end" justify="start">
                 <span class="text-lg font-bold">资产信息</span>
-                <div class="mx-2">
-                    <span class="text-sm mx-2">修改</span>
-                    <n-switch
-                        size="medium"
-                        v-model:value="canInput"
-                    />
-                </div>
-                <div></div>
+                <n-button text size="small" @click="canInput = true">
+                    <div v-show="!canInput" class="flex-y-center">
+                        <span class="text-sm">修改</span>
+                        <Icon icon="fluent:edit-48-regular" height="1rem" width="1rem"></Icon>
+                    </div>
+                </n-button>
             </n-space>
         </template>
 
