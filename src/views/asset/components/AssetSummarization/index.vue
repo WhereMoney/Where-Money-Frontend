@@ -44,7 +44,7 @@ import { defineProps } from 'vue';
 // components
 import { Icon } from '@iconify/vue';
 // .ts
-import { formattedCurrencyNoSymbol } from "@/views/asset/utils";
+import { formattedCurrencyNoSymbol } from "@/utils";
 
 const props = defineProps({
     total: {

@@ -121,7 +121,7 @@ import { AssetInfoModal, NewAssetModal } from './components';
 // ts
 import { Asset } from '@/interface';
 import { addAsset, updateAsset } from '@/apis'
-import { formattedCurrencyNoSymbol } from '../../utils'
+import { formattedCurrencyNoSymbol } from '@/utils'
 
 const props = defineProps({
     assetList: {

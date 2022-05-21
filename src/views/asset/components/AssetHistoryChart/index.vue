@@ -23,7 +23,7 @@ import { Icon } from '@iconify/vue';
 import { Line } from '@antv/g2plot';
 // .ts
 import { AssetDayStatistic } from '@/interface';
-import { formattedCurrencyNoSymbol } from "@/views/asset/utils";
+import { formattedCurrencyNoSymbol } from "@/utils";
 
 
 const props = defineProps({
