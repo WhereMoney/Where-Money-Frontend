@@ -16,6 +16,7 @@ declare namespace AuthRoute {
         // 自由路由
         | 'home'
         | 'asset'
+        | 'budget'
         // 样例路由
         | 'dashboard'
         | 'dashboard_analysis'
