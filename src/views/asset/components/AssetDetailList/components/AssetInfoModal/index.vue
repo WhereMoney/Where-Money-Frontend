@@ -4,7 +4,7 @@
         preset="card"
         display-directive="show"
         class="w-500px"
-        :show="props.showModal"
+        :show="showModal"
         @close="closeModal"
         @after-enter="getAssetInfoById"
     >

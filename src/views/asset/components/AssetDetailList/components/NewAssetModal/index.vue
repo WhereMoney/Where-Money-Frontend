@@ -2,9 +2,9 @@
     <n-modal
         :auto-focus="false"
         preset="card"
-        display-directive="if"
+        display-directive="show"
         class="w-500px"
-        :show="props.showModal"
+        :show="showModal"
         @close="closeModal"
     >
         <template #header>
