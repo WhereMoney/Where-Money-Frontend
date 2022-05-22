@@ -77,8 +77,10 @@
                     <template #default>
                         <n-list>
                             <n-list-item v-for="budget in budgetList" :key="budget.id"
-                                @click="showBudgetInfoModal(budget)">
-                                <div class="budget-info flex-y-center justify-between">
+                                @click="showBudgetInfoModal(budget)"
+                                class="hover:bg-[#f6f6f6] dark:hover:bg-[#333]"
+                            >
+                                <div class="budget-info flex-y-center justify-between px-2">
                                     <!-- 左侧 icon和名字、额度信息 -->
                                     <div class="flex-y-center">
                                         <!-- icon分svg、名字字符串对应处理 -->
@@ -271,9 +273,22 @@ $--medium-progress-size: 64px;
     .n-card-header {
         padding-top: 0;
     }
-
+    .n-card__content {
+        padding: 0;
+    }
     .n-list {
         margin: 0;
+        .n-list-item {
+            padding-left: 8px;
+            padding-right: 8px;
+            border-radius: 8px;
+
+            -webkit-transition-duration: 0.2s;
+            transition-duration: 0.2s;
+
+            -webkit-transition-property: background-color;
+            transition-property: background-color;
+        }
     }
 
     .n-divider {
@@ -281,7 +296,5 @@ $--medium-progress-size: 64px;
     }
 }
 
-/* :deep(.n-list-item) {
-    padding: 0 0 8px 0;
-} */
+
 </style>
