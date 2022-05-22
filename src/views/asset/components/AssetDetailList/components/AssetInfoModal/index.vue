@@ -52,7 +52,7 @@
                         <Icon
                             :icon="assetInfo.svg"
                             height="24"
-                            class="text-info mx-2"
+                            class="text-primary mx-2"
                         />
                     </form-item-container>
 
