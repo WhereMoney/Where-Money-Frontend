@@ -64,6 +64,7 @@ import { updateBudget } from '@/apis';
 
 import { Icon } from '@iconify/vue';
 import { FormItemContainer } from './components';
+import { useMessage } from 'naive-ui';
 
 const props = defineProps({
     showModal: {
@@ -104,6 +105,7 @@ function resetValue() {
     budgetInfoVar.value = budgetBackup.value;
 }
 
+const message = useMessage();
 function applyChanges() {
     const param = {
         budgetId: budgetInfoVar.value.id,
@@ -115,8 +117,10 @@ function applyChanges() {
     updateBudget(param).then(() => {
         emit('update:budget', budgetInfoVar.value);
         emit('manualUpdateBook');
+        message.success('修改成功！');
         closeModal();
     }).catch((err: Error) => {
+        message.error('修改失败！');
         console.error(err);
     });
 }
