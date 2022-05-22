@@ -31,6 +31,17 @@ export const sidebarRoutes: AuthRoute.Route[] = [
             requiresAuth: true,
             singleLayout: 'basic'
         }
+    },
+    {
+        name:'budget',
+        path: '/budget',
+        component: 'self',
+        meta: {
+            title: '预算',
+            icon: 'mdi:clipboard-account',
+            requiresAuth: true,
+            singleLayout: 'basic'
+        }
     }
 ];
 

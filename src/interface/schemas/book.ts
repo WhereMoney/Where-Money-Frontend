@@ -4,4 +4,6 @@ export interface Book {
     title: string;
     createTime: Date;
     beginDate: number;
+    totalBudget: number;
+    usedBudget: number;
 }

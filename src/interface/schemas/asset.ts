@@ -1,4 +1,5 @@
 export interface Asset{
+    [key: string]: any;
     assetName: string;
     balance: number;
     billDate: number;
@@ -6,7 +7,7 @@ export interface Asset{
     inTotal: boolean;
     quota: number;
     repayDate: number;
-    type: string;
+    type: "信用卡" | "充值" | "投资理财" | "资金";
     userId: number;
     svg: string;
 }
