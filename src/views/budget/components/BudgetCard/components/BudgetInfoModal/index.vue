@@ -1,6 +1,6 @@
 <template>
     <n-modal :auto-focus="false" preset="card" display-directive="show" class="w-400px" :show="showModal"
-        @close="closeModal">
+        @close="closeModal" @after-enter="resetValue">
         <template #header>
             <n-space align="flex-end" justify="start">
                 <span class="text-lg font-bold">预算详情</span>
@@ -58,7 +58,7 @@
 
 <script setup lang="ts">
 
-import { defineProps, defineEmits, ref, PropType, onUpdated } from 'vue';
+import { defineProps, defineEmits, ref, PropType } from 'vue';
 import { BillCategory, Budget } from '@/interface';
 import { updateBudget } from '@/apis';
 
@@ -83,19 +83,36 @@ const props = defineProps({
 const canInput = ref(false);
 const budgetInfoVar = ref<Budget>({ ...props.budget });
 
+const budgetBackup = ref<Budget>({
+    id: 0,
+    bookId: 0,
+    billCategoryId: 0,
+    used: 0,
+    limit: 0,
+    times: 0,
+});
+
 const emit = defineEmits(['update:showModal', 'manualUpdateBook', 'update:budget']);
 function closeModal() {
     emit('update:showModal', false);
     canInput.value = false;
-    budgetInfoVar.value = props.budget;
+    budgetInfoVar.value = budgetBackup.value;
 }
 
-onUpdated(() => {
-    budgetInfoVar.value = props.budget;
-});
+function resetValue() {
+    budgetBackup.value = Object.assign({}, props.budget);
+    budgetInfoVar.value = budgetBackup.value;
+}
 
 function applyChanges() {
-    updateBudget({ budgetId: budgetInfoVar.value.id, ...budgetInfoVar.value }).then(() => {
+    const param = {
+        budgetId: budgetInfoVar.value.id,
+        billCategoryId: budgetInfoVar.value.billCategoryId,
+        limit: budgetInfoVar.value.limit,
+        amount: budgetInfoVar.value.used,
+        times: budgetInfoVar.value.times
+    };
+    updateBudget(param).then(() => {
         emit('update:budget', budgetInfoVar.value);
         emit('manualUpdateBook');
         closeModal();
