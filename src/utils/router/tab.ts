@@ -12,7 +12,7 @@ export function getTabRoutes() {
     const routes: GlobalTabRoute[] = [];
     const data = getLocal<GlobalTabRoute[]>(EnumStorageKey["tab-routes"]);
     if (data) {
-        const defaultTabRoutes = data.map(item => ({
+        const defaultTabRoutes = data.map((item: any) => ({
             ...item,
             scrollPosition: {
                 left: 0,
@@ -22,9 +22,4 @@ export function getTabRoutes() {
         routes.push(...defaultTabRoutes);
     }
     return routes;
-}
-
-/** 清空多页签数据 */
-export function clearTabRoutes() {
-    setTabRoutes([]);
 }

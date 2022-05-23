@@ -1,5 +1,5 @@
 import type { GlobalMenuOption } from "@/interface";
-import { iconifyRender } from "../common";
+import { iconifyRender } from "@/utils";
 
 /** 路由不转换菜单 */
 function hideInMenu(route: AuthRoute.Route) {

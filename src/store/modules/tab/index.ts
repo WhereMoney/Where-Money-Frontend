@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 import { useRouterPush } from "@/composables";
 import { getTabRoutes } from "@/utils";
 import type { GlobalTabRoute } from "@/interface";
-import { useThemeStore } from "../theme";
+import { useThemeStore } from "@/store";
 import { getIndexInTabRoutes, getTabRouteByVueRoute, isInTabRoutes } from "./helpers";
 
 interface TabState {

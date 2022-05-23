@@ -1,6 +1,6 @@
 <template>
     <dark-mode-container class="flex-center h-full">
-        <span>Copyright ©2022 OwiviOsa</span>
+        <span>Copyright ©2022 Where Money</span>
     </dark-mode-container>
 </template>
 

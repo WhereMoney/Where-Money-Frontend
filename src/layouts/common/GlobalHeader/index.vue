@@ -20,25 +20,23 @@
         <div class="flex items-center h-full">
             <div class="flex items-center text-semobold mr-3 gap-2">
                 <div>
-                    <icon-ri:calendar-2-fill class="text-20px" />
+                    <Icon :icon="'ri:calendar-2-fill'" class="text-20px" />
                 </div>
                 {{ "2022-04-04" }}
             </div>
-            <!-- <global-search /> -->
             <github-site />
             <full-screen />
             <theme-mode />
-            <!-- TODO 封装为组件 -->
             <hover-container class="w-40px h-full" tooltip-content="退出">
                 <n-button :bordered="false" class="w-35px h-full" @click="showExitModal = true">
-                    <icon-ri:logout-box-r-line class="text-20px" />
+                    <Icon :icon="'ri:logout-box-r-line'" class="text-20px" />
                 </n-button>
             </hover-container>
         </div>
     </dark-mode-container>
     <div>
         <n-modal v-model:show="showExitModal">
-            <div :bordered="false" class="s-card p-8 space-y-7">
+            <div class="s-card p-8 space-y-7">
                 <div class="s-title s-underline text-lg">提示</div>
                 <div class="mx-auto text-lg">即将退出登录，是否继续？</div>
                 <div class="flex items-center gap-6 justify-end">
@@ -54,7 +52,7 @@
 import { defineComponent, Ref, ref } from "vue";
 import { Router } from "vue-router";
 import { ExitOutline } from "@vicons/ionicons5";
-import { DarkModeContainer } from "@/components";
+import { DarkModeContainer, HoverContainer } from "@/components";
 import { useThemeStore } from "@/store";
 import { useRouterPush } from "@/composables";
 import { storage } from "@/utils";
@@ -62,6 +60,7 @@ import type { GlobalHeaderProps } from "@/interface";
 import { useStore } from "@/stores/store";
 import GlobalLogo from "../GlobalLogo/index.vue";
 import { FullScreen, GithubSite, GlobalBreadcrumb, HeaderMenu, MenuCollapse, ThemeMode } from "./components";
+import { Icon } from "@iconify/vue";
 
 const { routerPush, routerBack } = useRouterPush();
 defineProps<{

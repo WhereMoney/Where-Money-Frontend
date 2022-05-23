@@ -1,5 +1,4 @@
 import type { RouteRecordRaw } from "vue-router";
-import { consoleError } from "../common";
 import { getLayoutComponent, getViewComponent } from "./component";
 
 type ComponentAction = Record<AuthRoute.RouteComponent, () => void>;
@@ -29,7 +28,7 @@ export function transformRouteToList(routes: AuthRoute.Route[], treeMap: AuthRou
 
 /**
  * 将单个权限路由转换成vue路由
- * @param route - 权限路由
+ * @param item
  */
 function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
     const resultRoute: RouteRecordRaw[] = [];
@@ -61,7 +60,7 @@ function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
                     Object.assign(itemRoute, { meta: { ...itemRoute.meta, multi: true } });
                     delete itemRoute.component;
                 } else {
-                    consoleError("多级路由缺少子路由: ", item);
+                    console.log("多级路由缺少子路由: ", item);
                 }
             },
             self() {
@@ -71,14 +70,14 @@ function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
         try {
             action[item.component!]();
         } catch {
-            consoleError("路由组件解析失败: ", item);
+            console.log("路由组件解析失败: ", item);
         }
     }
 
     // 注意：单独路由没有children
     if (isSingleRoute(item)) {
         if (hasChildren(item)) {
-            consoleError("单独路由不应该有子路由: ", item);
+            console.log("单独路由不应该有子路由: ", item);
         }
 
         // 捕获无效路由的需特殊处理
@@ -114,7 +113,7 @@ function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
         const redirectPath: AuthRoute.RoutePath = (children.find(item => !item.meta?.multi)?.path ||
             "/") as AuthRoute.RoutePath;
         if (redirectPath === "/") {
-            consoleError("该多级路由没有有效的子路径", item);
+            console.log("该多级路由没有有效的子路径", item);
         }
 
         if (item.component === "multi") {

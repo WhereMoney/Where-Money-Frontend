@@ -6,6 +6,7 @@ declare module "*.vue" {
 }
 
 interface ImportMetaEnv {
+    readonly VITE_STORAGE_PREFIX: any;
     /** 项目基本地址 */
     readonly VITE_APP_BASE_URL: string;
     /** 项目名称 */
