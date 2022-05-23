@@ -9,4 +9,18 @@ function intToString(timeStamp: number): string {
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
-export { intToString };
+function now(): Date {
+    return new Date();
+}
+
+function dateToString(date: Date) {
+    const year: number = date.getFullYear();
+    const month: number = date.getMonth() + 1;
+    const day: number = date.getDate();
+    const hour: number = date.getHours();
+    const minute: number = date.getMinutes();
+    const second: number = date.getSeconds();
+    return `${year.toString().padStart(4, "0")}-${month.toString().padStart(2, "0")}-${day.toString().padStart(2, "0")} ${hour}:${minute}:${second}`;
+}
+
+export { intToString, now, dateToString };

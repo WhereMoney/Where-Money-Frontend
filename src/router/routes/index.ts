@@ -5,7 +5,7 @@ export const sidebarRoutes: AuthRoute.Route[] = [
         component: "self",
         meta: {
             title: "主页",
-            icon: "mdi:clipboard-account",
+            icon: "ic:baseline-home",
             requiresAuth: true,
             singleLayout: "basic"
         }
@@ -16,7 +16,7 @@ export const sidebarRoutes: AuthRoute.Route[] = [
         component: "self",
         meta: {
             title: "资产",
-            icon: "mdi:clipboard-account",
+            icon: "material-symbols:account-balance-wallet",
             requiresAuth: true,
             singleLayout: "basic"
         }
@@ -27,7 +27,7 @@ export const sidebarRoutes: AuthRoute.Route[] = [
         component: "self",
         meta: {
             title: "预算",
-            icon: "mdi:clipboard-account",
+            icon: "ri:function-fill",
             requiresAuth: true,
             singleLayout: "basic"
         }
@@ -38,7 +38,7 @@ export const sidebarRoutes: AuthRoute.Route[] = [
         component: "self",
         meta: {
             title: "关于",
-            icon: "mdi:clipboard-account",
+            icon: "ic:baseline-question-mark",
             requiresAuth: true,
             singleLayout: "basic"
         }
