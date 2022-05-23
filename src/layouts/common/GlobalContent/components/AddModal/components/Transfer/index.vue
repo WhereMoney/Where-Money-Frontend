@@ -68,7 +68,8 @@
                     </div>
                     <div class="w-1/3">
                         <n-date-picker v-model:value="timestamp" :input-readonly="true" placement="top-start"
-                                       type="datetime" />
+                                       type="datetime" :update-value-on-close="true"
+                                       :time-picker-props="timePickerProps" />
                     </div>
                     <div class="w-1/3">
                         <n-popover trigger="hover">
@@ -236,10 +237,11 @@ import {
     BookGetAllBookResponse,
     BookGetBookResponse
 } from "@/interface";
-import { UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
+import { TimePickerProps, UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
 import { intToString } from "@/utils/dateComputer";
 import { Icon } from "@iconify/vue";
 
+let timePickerProps: TimePickerProps = { inputReadonly: true };
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
 let bookName: Ref<string> = ref("");

@@ -50,7 +50,8 @@
                     </div>
                     <div class="w-1/3">
                         <n-date-picker v-model:value="timestamp" :input-readonly="true" placement="top-start"
-                                       type="datetime" />
+                                       type="datetime" :update-value-on-close="true"
+                                       :time-picker-props="timePickerProps" />
                     </div>
                 </div>
                 <div class="flex space-x-2">
@@ -155,12 +156,13 @@ import {
     BookGetBookResponse
 } from "@/interface";
 import { onMounted, ref, Ref, watch } from "vue";
-import { UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
+import { TimePickerProps, UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
 import { intToString } from "@/utils/dateComputer";
 import { Icon } from "@iconify/vue";
 import { BillCategoryItem } from "./components";
 import { useStore } from "@/stores/store";
 
+let timePickerProps: TimePickerProps = { inputReadonly: true };
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
 let bookName: Ref<string> = ref("");
