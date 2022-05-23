@@ -23,7 +23,7 @@
                             <!-- 左侧 -->
                             <div class="flex flex-col">
                                 <span class="text-lg font-bold">总预算</span>
-                                <span class="text-xs">总额: {{ book.totalBudget }}</span>
+                                <span class="text-xs">总额: {{ formattedCurrencyNoSymbol(book.totalBudget) }}</span>
                             </div>
                             <!-- 右侧[进度条、修改]切换 -->
                             <div class="flex-y-center justify-end">
@@ -63,9 +63,9 @@
                                         :percentage="book.usedBudget > book.totalBudget ? 100 : (1 - book.usedBudget / book.totalBudget) * 100"
                                         :gap-offset-degree="180">
                                         <div class="text-center">
-                                            <p class="text-xs">可用</p>
+                                            <p class="text-xs">{{ book.totalBudget >= book.usedBudget ? '可用' : '超支' }}</p>
                                             <p class="text-xs">
-                                                {{ book.totalBudget - book.usedBudget }}
+                                                {{ compactFormatter.format(book.totalBudget - book.usedBudget) }}
                                             </p>
                                         </div>
                                     </n-progress>
@@ -76,39 +76,36 @@
                     <!-- 分类预算 -->
                     <template #default>
                         <n-list>
-                            <n-list-item v-for="budget in budgetList" :key="budget.id"
+                            <n-list-item v-for="(budget, idx) in budgetList" :key="budget.id"
                                 @click="showBudgetInfoModal(budget)"
                                 class="hover:bg-[#f6f6f6] dark:hover:bg-[#333]"
                             >
                                 <div class="budget-info flex-y-center justify-between px-2">
                                     <!-- 左侧 icon和名字、额度信息 -->
                                     <div class="flex-y-center">
-                                        <!-- icon分svg、名字字符串对应处理 -->
-                                        <div class="budget-svg-container text-primary hover:text-primary-hover mr-3">
-                                            <div v-if="mapBudgetToCategory.get(budget.id)?.svg.indexOf('<') !== -1"
-                                                v-html="mapBudgetToCategory.get(budget.id)?.svg
-                                                .replace(/(height=\u0022\d+\u0022)|(width=\u0022\d+\u0022)/, '')
-                                                .replace(/>/, `width=\u0022${iconWidth}\u0022 height=\u0022${iconWidth}\u0022>`)" />
-                                            <icon v-else :icon="mapBudgetToCategory.get(budget.id)?.svg"
-                                                :height="iconWidth" :width="iconWidth" />
-                                        </div>
+                                        <icon :icon="mapBudgetToCategory.get(budget.id)?.svg"
+                                            :height="iconWidth" :width="iconWidth"
+                                            class="text-primary hover:text-primary-hover mr-3" />
 
                                         <div class="flex flex-col">
                                             <span class="text-base">
                                                 {{ mapBudgetToCategory.get(budget.id)?.billCategoryName }}
                                             </span>
                                             <span class="text-xs">
-                                                总额: {{ budget.limit }} | {{ budget.times }} 笔支出
+                                                总额: {{ formattedCurrencyNoSymbol(budget.limit) }} | {{ budget.times.toFixed(0) }} 笔支出
                                             </span>
                                         </div>
                                     </div>
                                     <!-- 右侧进度条 -->
                                     <n-progress type="circle" :status="budget.used > budget.limit ? 'error' : 'success'"
-                                        :percentage="budget.used > budget.limit ? 100 : (1 - budget.used / budget.limit) * 100"
+                                        :percentage="budgetRemainList![idx] < 0 ? 100 : (1 - budget.used / budget.limit) * 100"
                                         :gap-offset-degree="180">
                                         <div class="text-center">
                                             <p class="text-xs">
-                                                {{ budget.limit - budget.used }}
+                                                {{ budgetRemainList![idx] >= 0 ? '可用' : '超支' }}
+                                            </p>
+                                            <p class="text-xs">
+                                                {{ compactFormatter.format(Math.abs(budgetRemainList![idx])) }}
                                             </p>
                                         </div>
                                     </n-progress>
@@ -134,6 +131,7 @@ import { computed, defineProps, defineEmits, onMounted, PropType, ref, watch } f
 import { useMessage } from 'naive-ui';
 import { Book, Budget, BillCategory, BudgetGetBudgetByBookResponse, BookAllBillCategoryResponse } from '@/interface';
 import { getBudgetsByBook, getAllBillCategoryApi, setBookBudget } from '@/apis';
+import { formattedCurrencyNoSymbol } from '@/utils';
 import { useStore } from '@/stores/store';
 
 import { Icon } from '@iconify/vue';
@@ -171,6 +169,10 @@ function getBudgetList(id: number) {
         console.log(err);
     });
 }
+
+const budgetRemainList = computed(() => (
+    budgetList.value?.map((budget) => (budget.limit - budget.used))
+));
 
 onMounted(() => {
     getBudgetList(props.book.id);
@@ -239,10 +241,16 @@ function showBudgetInfoModal(budget: Budget) {
     showInfoModal.value = true;
 }
 
+const compactFormatter = new Intl.NumberFormat('en-US', {
+    notation: 'compact',
+    maximumFractionDigits: 2,
+    maximumSignificantDigits: 5,
+});
+
 </script>
 
 <style lang="scss" scoped>
-$--small-progress-size: 48px;
+$--small-progress-size: 56px;
 $--medium-progress-size: 64px;
 
 .book-budget-info {
@@ -256,16 +264,6 @@ $--medium-progress-size: 64px;
     :deep(.n-progress) {
         width: $--small-progress-size;
         height: $--small-progress-size;
-    }
-}
-
-.budget-svg-container {
-    $--icon-width: 24px;
-    width: $--icon-width;
-    height: $--icon-width;
-
-    svg {
-        height: 100%;
     }
 }
 
@@ -288,6 +286,16 @@ $--medium-progress-size: 64px;
 
             -webkit-transition-property: background-color;
             transition-property: background-color;
+
+            &:hover svg  {
+                -webkit-transition-duration: 0.2s;
+                transition-duration: 0.2s;
+
+                -webkit-transition-property: color;
+                transition-property: color;
+
+                color: var(--primary-color-hover);
+            }
         }
     }
 
