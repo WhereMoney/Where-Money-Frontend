@@ -1,5 +1,5 @@
-import {ERROR_MSG_DURATION, NO_ERROR_MSG_CODE} from '@/config';
-import {consoleWarn} from '../common';
+import { ERROR_MSG_DURATION, NO_ERROR_MSG_CODE } from "@/config";
+import { consoleWarn } from "../common";
 
 /** 错误消息栈，防止同一错误同时出现 */
 const errorMsgStack = new Map<string | number, string>([]);
@@ -26,7 +26,7 @@ export function showErrorMsg(error: Service.RequestError) {
         if (!hasErrorMsg(error)) {
             addErrorMsg(error);
             consoleWarn(error.code, error.msg);
-            window.$message?.error(error.msg, {duration: ERROR_MSG_DURATION});
+            window.$message?.error(error.msg, { duration: ERROR_MSG_DURATION });
             setTimeout(() => {
                 removeErrorMsg(error);
             }, ERROR_MSG_DURATION);

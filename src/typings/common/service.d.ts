@@ -3,7 +3,7 @@ declare namespace Service {
     /** 请求环境类型
      * - test:测试环境
      * - prod:正式环境 */
-    type HttpEnv = 'test' | 'prod';
+    type HttpEnv = "test" | "prod";
 
     /**
      * 请求的错误类型：
@@ -11,7 +11,7 @@ declare namespace Service {
      * - http: 请求成功，响应的状态码非200的错误
      * - backend: 请求成功，响应的状态码为200，由后端定义的业务错误
      */
-    type RequestErrorType = 'axios' | 'http' | 'backend';
+    type RequestErrorType = "axios" | "http" | "backend";
 
     /** 请求错误 */
     interface RequestError {

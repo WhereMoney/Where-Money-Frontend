@@ -2,9 +2,9 @@
     <span>{{ value }}</span>
 </template>
 <script lang="ts" setup>
-import {computed, onMounted, ref, watch, watchEffect} from 'vue';
-import {TransitionPresets, useTransition} from '@vueuse/core';
-import {isNumber} from '@/utils';
+import { computed, onMounted, ref, watch, watchEffect } from "vue";
+import { TransitionPresets, useTransition } from "@vueuse/core";
+import { isNumber } from "@/utils";
 
 interface Props {
     /** 初始值 */
@@ -37,17 +37,17 @@ const props = withDefaults(defineProps<Props>(), {
     duration: 1500,
     autoplay: true,
     decimals: 0,
-    prefix: '',
-    suffix: '',
-    separator: ',',
-    decimal: '.',
+    prefix: "",
+    suffix: "",
+    separator: ",",
+    decimal: ".",
     useEasing: true,
-    transition: 'linear'
+    transition: "linear"
 });
 
 const emit = defineEmits<{
-    (e: 'on-started'): void;
-    (e: 'on-finished'): void;
+    (e: "on-started"): void;
+    (e: "on-finished"): void;
 }>();
 
 const source = ref(props.startValue);
@@ -59,9 +59,9 @@ function run() {
     outputValue = useTransition(source, {
         disabled,
         duration: props.duration,
-        onStarted: () => emit('on-started'),
-        onFinished: () => emit('on-finished'),
-        ...(props.useEasing ? {transition: TransitionPresets[props.transition]} : {})
+        onStarted: () => emit("on-started"),
+        onFinished: () => emit("on-finished"),
+        ...(props.useEasing ? { transition: TransitionPresets[props.transition] } : {})
     });
 }
 
@@ -72,15 +72,15 @@ function start() {
 
 function formatNumber(num: number | string) {
     if (!num) {
-        return '';
+        return "";
     }
-    const {decimals, decimal, separator, suffix, prefix} = props;
+    const { decimals, decimal, separator, suffix, prefix } = props;
     let number = Number(num).toFixed(decimals);
-    number += '';
+    number += "";
 
-    const x = number.split('.');
+    const x = number.split(".");
     let x1 = x[0];
-    const x2 = x.length > 1 ? decimal + x[1] : '';
+    const x2 = x.length > 1 ? decimal + x[1] : "";
     const rgx = /(\d+)(\d{3})/;
     if (separator && !isNumber(separator)) {
         while (rgx.test(x1)) {

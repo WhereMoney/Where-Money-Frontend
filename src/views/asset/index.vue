@@ -1,26 +1,26 @@
 <template>
     <n-space
-        :vertical="true"
         :size="16"
         :style="{ minHeight: `calc(100vh - ${minHeight}px)` }"
+        :vertical="true"
     >
         <n-grid
+            :item-responsive="true"
             :x-gap="16"
             :y-gap="16"
-            :item-responsive="true"
         >
             <n-grid-item span="0:24 640:24 1024:9">
                 <asset-summarization
-                    class="h-250px"
-                    v-model:total="total"
                     v-model:debt="debt"
                     v-model:net="net"
+                    v-model:total="total"
+                    class="h-250px"
                 />
             </n-grid-item>
             <n-grid-item span="0:24 640:24 1024:15">
                 <asset-history-chart
-                    class="h-250px"
                     :statistic-list="dayStatisticList"
+                    class="h-250px"
                 />
             </n-grid-item>
         </n-grid>
@@ -34,11 +34,11 @@
 
 <script lang="ts" setup>
 
-import { ref, Ref, onMounted, computed, watch } from 'vue';
-import { getAllAsset, getDayStatisticTime } from '@/apis';
-import { Asset, AssetGetAllAssetResponse, AssetDayStatistic, AssetDayStatisticTimeResponse } from "@/interface";
-import { AssetDetailList, AssetSummarization, AssetHistoryChart } from './components';
-import { useThemeStore } from '@/store';
+import { computed, onMounted, ref, Ref, watch } from "vue";
+import { getAllAsset, getDayStatisticTime } from "@/apis";
+import { Asset, AssetDayStatistic, AssetDayStatisticTimeResponse, AssetGetAllAssetResponse } from "@/interface";
+import { AssetDetailList, AssetHistoryChart, AssetSummarization } from "./components";
+import { useThemeStore } from "@/store";
 
 const theme = useThemeStore();
 const minHeight = computed(() => (theme.tab.height + theme.header.height + theme.footer.height + 32));
@@ -48,6 +48,7 @@ const total = ref(0);
 const debt = ref(0);
 const net = ref(0);
 const assetList = ref([] as Asset[]);
+
 /**
  * @description 获取所有资产
  */
@@ -76,6 +77,7 @@ watch(assetList, (newValue: Asset[]) => {
 
 // 第二张卡片：资产变化曲线
 const dayStatisticList: Ref<AssetDayStatistic[]> = ref([]);
+
 /**
  * @description 获取资产变化
  */
@@ -84,8 +86,8 @@ function pullAssetDayStatistic() {
     today.setHours(24, 0, 0, 0);
     const past30Day = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
     getDayStatisticTime({
-        startTime: past30Day.toLocaleString().replaceAll('/', '-'),
-        endTime: today.toLocaleString().replaceAll('/', '-'),
+        startTime: past30Day.toLocaleString().replaceAll("/", "-"),
+        endTime: today.toLocaleString().replaceAll("/", "-")
     }).then((res: AssetDayStatisticTimeResponse) => {
         dayStatisticList.value = res.dayStatistic;
     }).catch((error: any) => {

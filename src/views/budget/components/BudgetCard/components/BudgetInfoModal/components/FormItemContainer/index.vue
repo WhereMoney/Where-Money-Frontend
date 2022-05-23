@@ -7,13 +7,14 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
+
 const props = defineProps({
     label: {
         type: String,
-        default: ''
+        default: ""
     }
 });
 

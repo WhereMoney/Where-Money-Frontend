@@ -12,7 +12,7 @@ function initSvgLogo(id) {
 </svg>
 `;
     const appEl = document.querySelector(id);
-    const div = document.createElement('div');
+    const div = document.createElement("div");
     div.innerHTML = svgStr;
     if (appEl) {
         appEl.appendChild(div);
@@ -20,12 +20,11 @@ function initSvgLogo(id) {
 }
 
 function addThemeColorCssVars() {
-    const key = '__THEME_COLOR__';
-    const themeColor = window.localStorage.getItem(key) || '#2092C6';
-    const cssVars = `--primary-color: ${themeColor}`;
-    document.documentElement.style.cssText = cssVars;
+    const key = "__THEME_COLOR__";
+    const themeColor = window.localStorage.getItem(key) || "#2092C6";
+    document.documentElement.style.cssText = `--primary-color: ${themeColor}`;
 }
 
-initSvgLogo('#loadingLogo');
+initSvgLogo("#loadingLogo");
 
 addThemeColorCssVars();

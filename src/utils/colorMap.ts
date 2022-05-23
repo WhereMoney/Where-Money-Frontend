@@ -28,9 +28,9 @@ const percentColorsForText = [
     }
 ];
 
-export const getColor = function (pct: number, type: string = 'progress', begin: number = 0, end: number = 100) {
+export const getColor = function(pct: number, type: string = "progress", begin: number = 0, end: number = 100) {
     let percentColors = [];
-    if (type == 'progress') {
+    if (type == "progress") {
         percentColors = percentColorsForProgress;
     } else {
         percentColors = percentColorsForText;
@@ -58,7 +58,7 @@ export const getColor = function (pct: number, type: string = 'progress', begin:
         g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
         b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
     };
-    return `rgb(${[color.r, color.g, color.b].join(',')})`;
+    return `rgb(${[color.r, color.g, color.b].join(",")})`;
 };
 
 const clubsColor: { string: Array<number> } = {
@@ -142,7 +142,7 @@ const clubsColor: { string: Array<number> } = {
     "巴拉多利德": [191, 189, 176],
     "巴斯蒂亚": [162, 164, 186],
     "巴黎FC": [136, 146, 162],
-    "巴黎圣日尔曼": [51,134,172],
+    "巴黎圣日尔曼": [51, 134, 172],
     "布伦特福德": [193, 126, 123],
     "布尔戈斯": [181, 182, 165],
     "布莱克本流浪者": [138, 161, 135],
@@ -309,25 +309,25 @@ const clubsColor: { string: Array<number> } = {
     "马略卡": [216, 179, 139],
     "马赛": [171, 220, 238],
     "鹿岛鹿角": [167, 134, 142]
-}
+};
 
 
 const rgb2Hex = (rgb: Array<number>) => {
-    let r = rgb[0]
-    let g = rgb[1]
-    let b = rgb[2]
+    let r = rgb[0];
+    let g = rgb[1];
+    let b = rgb[2];
     var hex = "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
     return hex;
-}
+};
 
 function getLightColor(oldRgb: Array<number>, level: number) {
-    let rgb = [...oldRgb]
+    let rgb = [...oldRgb];
     for (var i = 0; i < 3; i++) rgb[i] = Math.floor((255 - rgb[i]) * level + rgb[i]);
     return [rgb[0], rgb[1], rgb[2]];
 }
 
 function getDarkColor(oldRgb: Array<number>, level: number) {
-    let rgb = [...oldRgb]
+    let rgb = [...oldRgb];
     for (var i = 0; i < 3; i++) rgb[i] = Math.floor(rgb[i] * (1 - level));
     return [rgb[0], rgb[1], rgb[2]];
 }
@@ -335,32 +335,32 @@ function getDarkColor(oldRgb: Array<number>, level: number) {
 export const getClubColor = (club: string, level: number = 0) => {
     if (clubsColor[club]) {
         if (level == 0) {
-            return rgb2Hex(clubsColor[club])
+            return rgb2Hex(clubsColor[club]);
         } else if (level > 0) {
-            return rgb2Hex(getDarkColor(clubsColor[club], level))
+            return rgb2Hex(getDarkColor(clubsColor[club], level));
         } else if (level < 0) {
-            return rgb2Hex(getLightColor(clubsColor[club], -level))
+            return rgb2Hex(getLightColor(clubsColor[club], -level));
         }
     } else {
-        return 'primary'
+        return "primary";
     }
-}
+};
 
 
 export const clubBg = (club: string, level: number = 0) => {
     return {
-        'background-color': getClubColor(club, level)
-    }
-}
+        "background-color": getClubColor(club, level)
+    };
+};
 
 export const clubTx = (club: string, level: number = 0) => {
     return {
-        'color': getClubColor(club, level)
-    }
-}
+        "color": getClubColor(club, level)
+    };
+};
 
 export const clubBd = (club: string, level: number = 0) => {
     return {
-        'border-color': getClubColor(club, level)
-    }
-}
+        "border-color": getClubColor(club, level)
+    };
+};

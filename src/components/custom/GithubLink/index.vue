@@ -1,9 +1,9 @@
 <template>
-    <web-site-link :link="link" label="github地址："/>
+    <web-site-link :link="link" label="github地址：" />
 </template>
 
 <script lang="ts" setup>
-import WebSiteLink from '../WebSiteLink/index.vue';
+import WebSiteLink from "../WebSiteLink/index.vue";
 
 interface Props {
     /** github链接 */

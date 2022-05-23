@@ -29,7 +29,8 @@
             "scripthost"
         ],
         "types": [
-            "naive-ui/volar"
+            "naive-ui/volar",
+            "node"
         ]
     },
     "include": [
@@ -37,9 +38,7 @@
         "src/typings/*.d.ts",
         "src/**/*",
         "src/**/*.vue",
-        "mock/**/*.ts",
         "build/**/*.ts",
-        ".env-config.ts"
     ],
     "exclude": [
         "/dist/**",

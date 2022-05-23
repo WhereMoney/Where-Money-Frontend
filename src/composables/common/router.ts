@@ -1,7 +1,7 @@
-import type {RouteLocationRaw} from 'vue-router';
-import {useRouter} from 'vue-router';
-import {routeName, router as globalRouter} from '@/router';
-import {LoginModuleKey} from '@/interface';
+import type { RouteLocationRaw } from "vue-router";
+import { useRouter } from "vue-router";
+import { routeName, router as globalRouter } from "@/router";
+import { LoginModuleKey } from "@/interface";
 
 /**
  * 路由跳转
@@ -19,7 +19,7 @@ export function useRouterPush(inSetup: boolean = true) {
     function routerPush(to: RouteLocationRaw, newTab = false) {
         if (newTab) {
             const routerData = router.resolve(to);
-            window.open(routerData.href, '_blank');
+            window.open(routerData.href, "_blank");
         } else {
             router.push(to);
         }
@@ -35,7 +35,7 @@ export function useRouterPush(inSetup: boolean = true) {
      * @param newTab - 在新的浏览器标签打开
      */
     function toHome(newTab = false) {
-        routerPush({name: routeName('root')}, newTab);
+        routerPush({ name: routeName("root") }, newTab);
     }
 
     /**
@@ -44,13 +44,13 @@ export function useRouterPush(inSetup: boolean = true) {
      * @param redirectUrl - 重定向地址(登录成功后跳转的地址),默认undefined表示取当前地址为重定向地址
      */
     function toLogin(loginModule?: LoginModuleKey, redirectUrl?: string) {
-        const module: LoginModuleKey = loginModule || 'pwd-login';
+        const module: LoginModuleKey = loginModule || "pwd-login";
         const routeLocation: RouteLocationRaw = {
-            name: routeName('login'),
-            params: {module}
+            name: routeName("login"),
+            params: { module }
         };
         const redirect = redirectUrl || route.value.fullPath;
-        Object.assign(routeLocation, {query: {redirect}});
+        Object.assign(routeLocation, { query: { redirect } });
         routerPush(routeLocation);
     }
 
@@ -59,15 +59,15 @@ export function useRouterPush(inSetup: boolean = true) {
      * @param module - 切换后的登录模块
      */
     function toLoginModule(module: LoginModuleKey) {
-        const {query} = route.value;
-        routerPush({name: routeName('login'), params: {module}, query});
+        const { query } = route.value;
+        routerPush({ name: routeName("login"), params: { module }, query });
     }
 
     /**
      * 登录成功后跳转重定向的地址
      */
     function toLoginRedirect() {
-        const {query} = route.value;
+        const { query } = route.value;
         if (query?.redirect) {
             routerPush(query.redirect as string);
         } else {

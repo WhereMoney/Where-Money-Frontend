@@ -1,6 +1,6 @@
-import {Ref} from 'vue';
-import type {FormItemRule} from 'naive-ui';
-import {REGEXP_CODE_SIX, REGEXP_EMAIL, REGEXP_PHONE, REGEXP_PWD} from '@/config';
+import { Ref } from "vue";
+import type { FormItemRule } from "naive-ui";
+import { REGEXP_CODE_SIX, REGEXP_EMAIL, REGEXP_PHONE, REGEXP_PWD } from "@/config";
 
 /** 表单规则 */
 interface CustomFormRules {
@@ -17,24 +17,24 @@ interface CustomFormRules {
 /** 表单规则 */
 export const formRules: CustomFormRules = {
     phone: [
-        {required: true, message: '请输入手机号码'},
-        {pattern: REGEXP_PHONE, message: '手机号码格式错误', trigger: 'input'}
+        { required: true, message: "请输入手机号码" },
+        { pattern: REGEXP_PHONE, message: "手机号码格式错误", trigger: "input" }
     ],
     pwd: [
-        {required: true, message: '请输入密码'},
-        {pattern: REGEXP_PWD, message: '密码为8-18位数字/字符/符号，至少2种组合', trigger: 'input'}
+        { required: true, message: "请输入密码" },
+        { pattern: REGEXP_PWD, message: "密码为8-18位数字/字符/符号，至少2种组合", trigger: "input" }
     ],
     code: [
-        {required: true, message: '请输入验证码'},
-        {pattern: REGEXP_CODE_SIX, message: '验证码格式错误', trigger: 'input'}
+        { required: true, message: "请输入验证码" },
+        { pattern: REGEXP_CODE_SIX, message: "验证码格式错误", trigger: "input" }
     ],
-    email: [{pattern: REGEXP_EMAIL, message: '邮箱格式错误', trigger: 'blur'}]
+    email: [{ pattern: REGEXP_EMAIL, message: "邮箱格式错误", trigger: "blur" }]
 };
 
 /** 获取确认密码的表单规则 */
 export function getConfirmPwdRule(pwd: Ref<string>) {
     const confirmPwdRule: FormItemRule[] = [
-        {required: true, message: '请输入确认密码'},
+        { required: true, message: "请输入确认密码" },
         {
             validator: (rule, value) => {
                 if (!isBlankString(value) && value !== pwd.value) {
@@ -42,8 +42,8 @@ export function getConfirmPwdRule(pwd: Ref<string>) {
                 }
                 return Promise.resolve();
             },
-            message: '输入的值与密码不一致',
-            trigger: 'input'
+            message: "输入的值与密码不一致",
+            trigger: "input"
         }
     ];
     return confirmPwdRule;
@@ -52,7 +52,7 @@ export function getConfirmPwdRule(pwd: Ref<string>) {
 /** 获取图片验证码的表单规则 */
 export function getImgCodeRule(imgCode: Ref<string>) {
     const imgCodeRule: FormItemRule[] = [
-        {required: true, message: '请输入验证码'},
+        { required: true, message: "请输入验证码" },
         {
             validator: (rule, value) => {
                 if (!isBlankString(value) && value !== imgCode.value) {
@@ -60,8 +60,8 @@ export function getImgCodeRule(imgCode: Ref<string>) {
                 }
                 return Promise.resolve();
             },
-            message: '验证码不正确',
-            trigger: 'blur'
+            message: "验证码不正确",
+            trigger: "blur"
         }
     ];
     return imgCodeRule;
@@ -69,5 +69,5 @@ export function getImgCodeRule(imgCode: Ref<string>) {
 
 /** 是否为空字符串 */
 function isBlankString(str: string) {
-    return str.trim() === '';
+    return str.trim() === "";
 }

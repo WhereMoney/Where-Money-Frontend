@@ -3,11 +3,11 @@
         <slot></slot>
         <div v-show="showPlaceholder" :class="placeholderClass" class="absolute-lt w-full h-full">
             <div v-show="loading" class="absolute-center">
-                <n-spin :show="true" :size="loadingSize"/>
+                <n-spin :show="true" :size="loadingSize" />
             </div>
             <div v-show="isEmpty" class="absolute-center">
                 <div :class="emptyNetworkClass" class="relative">
-                    <svg-empty-data class="text-primary"/>
+                    <svg-empty-data class="text-primary" />
                     <p class="absolute-lb w-full text-center">{{ emptyDesc }}</p>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                     class="relative"
                     @click="handleReload"
                 >
-                    <svg-network-error class="text-primary"/>
+                    <svg-network-error class="text-primary" />
                     <p class="absolute-lb w-full text-center">{{ networkErrorDesc }}</p>
                 </div>
             </div>
@@ -26,10 +26,10 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, nextTick, onUnmounted, watch} from 'vue';
-import {NETWORK_ERROR_MSG} from '@/config';
-import {SvgEmptyData, SvgNetworkError} from '@/components';
-import {useBoolean} from '@/hooks';
+import { computed, nextTick, onUnmounted, watch } from "vue";
+import { NETWORK_ERROR_MSG } from "@/config";
+import { SvgEmptyData, SvgNetworkError } from "@/components";
+import { useBoolean } from "@/hooks";
 
 interface Props {
     /** 是否加载 */
@@ -37,7 +37,7 @@ interface Props {
     /** 是否为空 */
     empty?: boolean;
     /** 加载图标的大小 */
-    loadingSize?: 'small' | 'medium' | 'large';
+    loadingSize?: "small" | "medium" | "large";
     /** 中间占位符的class */
     placeholderClass?: string;
     /** 空数据描述文本 */
@@ -51,16 +51,16 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     loading: false,
     empty: false,
-    loadingSize: 'medium',
-    placeholderClass: 'bg-white dark:bg-dark transition-background-color duration-300 ease-in-out',
-    emptyDesc: '暂无数据',
-    emptyNetworkClass: 'w-320px h-320px text-16px text-[#666]',
+    loadingSize: "medium",
+    placeholderClass: "bg-white dark:bg-dark transition-background-color duration-300 ease-in-out",
+    emptyDesc: "暂无数据",
+    emptyNetworkClass: "w-320px h-320px text-16px text-[#666]",
     showNetworkReload: false
 });
 
 // 网络状态
-const {bool: network, setBool: setNetwork} = useBoolean(window.navigator.onLine);
-const {bool: reloadFlag, setBool: setReload} = useBoolean(true);
+const { bool: network, setBool: setNetwork } = useBoolean(window.navigator.onLine);
+const { bool: reloadFlag, setBool: setReload } = useBoolean(true);
 
 // 数据是否为空
 const isEmpty = computed(() => props.empty && !props.loading && network.value);

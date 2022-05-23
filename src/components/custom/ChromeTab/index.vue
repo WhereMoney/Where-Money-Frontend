@@ -18,16 +18,16 @@
       <slot></slot>
     </span>
         <div v-if="closable" class="pl-18px">
-            <icon-close :is-active="isActive" :primary-color="primaryColor" @click="handleClose"/>
+            <icon-close :is-active="isActive" :primary-color="primaryColor" @click="handleClose" />
         </div>
-        <n-divider v-if="!isHover && !isActive" :vertical="true" class="absolute right-0 !bg-[#a4abb8] z-2"/>
+        <n-divider v-if="!isHover && !isActive" :vertical="true" class="absolute right-0 !bg-[#a4abb8] z-2" />
     </div>
 </template>
 
 <script lang="ts" setup>
-import {useBoolean} from '@/hooks';
-import IconClose from '../IconClose/index.vue';
-import {SvgRadiusBg} from './components';
+import { useBoolean } from "@/hooks";
+import IconClose from "../IconClose/index.vue";
+import { SvgRadiusBg } from "./components";
 
 interface Props {
     /** 激活状态 */
@@ -42,12 +42,12 @@ interface Props {
 
 interface Emits {
     /** 点击关闭图标 */
-    (e: 'close'): void;
+    (e: "close"): void;
 }
 
 withDefaults(defineProps<Props>(), {
     isActive: false,
-    primaryColor: '#409EFF',
+    primaryColor: "#409EFF",
     closable: true,
     darkMode: false,
     isLast: false
@@ -55,11 +55,11 @@ withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<Emits>();
 
-const {bool: isHover, setTrue, setFalse} = useBoolean();
+const { bool: isHover, setTrue, setFalse } = useBoolean();
 
 function handleClose(e: MouseEvent) {
     e.stopPropagation();
-    emit('close');
+    emit("close");
 }
 </script>
 <style scoped></style>

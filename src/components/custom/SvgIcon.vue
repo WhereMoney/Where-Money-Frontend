@@ -1,10 +1,10 @@
 <template>
     <svg aria-hidden="true" class="svg-icon">
-        <use :fill="fill" :xlink:href="symbolId"/>
+        <use :fill="fill" :xlink:href="symbolId" />
     </svg>
 </template>
 <script lang="ts" setup>
-import {computed} from 'vue';
+import { computed } from "vue";
 
 interface Props {
     /** icon前缀 */
@@ -16,11 +16,11 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    prefix: 'icon',
-    name: '',
-    color: ''
+    prefix: "icon",
+    name: "",
+    color: ""
 });
-const fill = computed(() => props.color || 'currentColor');
+const fill = computed(() => props.color || "currentColor");
 const symbolId = computed(() => `#${props.prefix}-${props.name}`);
 </script>
 <style scoped>

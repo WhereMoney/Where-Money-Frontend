@@ -4,7 +4,7 @@
             <gradient-bg :end-color="item.colors[1]" :start-color="item.colors[0]" class="h-100px">
                 <h3 class="text-16px">{{ item.title }}</h3>
                 <div class="flex justify-between pt-12px">
-                    <Icon :icon="item.icon" class="text-32px"/>
+                    <Icon :icon="item.icon" class="text-32px" />
                     <count-to
                         :end-value="item.value"
                         :prefix="item.unit"
@@ -18,9 +18,9 @@
 </template>
 
 <script lang="ts" setup>
-import {Icon} from '@iconify/vue';
-import {CountTo} from '@/components';
-import {GradientBg} from './components';
+import { Icon } from "@iconify/vue";
+import { CountTo } from "@/components";
+import { GradientBg } from "./components";
 
 interface CardData {
     id: string;
@@ -33,36 +33,36 @@ interface CardData {
 
 const cardData: CardData[] = [
     {
-        id: 'visit',
-        title: '访问量',
+        id: "visit",
+        title: "访问量",
         value: 1000000,
-        unit: '',
-        colors: ['#ec4786', '#b955a4'],
-        icon: 'ant-design:bar-chart-outlined'
+        unit: "",
+        colors: ["#ec4786", "#b955a4"],
+        icon: "ant-design:bar-chart-outlined"
     },
     {
-        id: 'amount',
-        title: '成交额',
+        id: "amount",
+        title: "成交额",
         value: 234567.89,
-        unit: '$',
-        colors: ['#865ec0', '#5144b4'],
-        icon: 'ant-design:money-collect-outlined'
+        unit: "$",
+        colors: ["#865ec0", "#5144b4"],
+        icon: "ant-design:money-collect-outlined"
     },
     {
-        id: 'download',
-        title: '下载数',
+        id: "download",
+        title: "下载数",
         value: 666666,
-        unit: '',
-        colors: ['#56cdf3', '#719de3'],
-        icon: 'carbon:document-download'
+        unit: "",
+        colors: ["#56cdf3", "#719de3"],
+        icon: "carbon:document-download"
     },
     {
-        id: 'trade',
-        title: '成交数',
+        id: "trade",
+        title: "成交数",
         value: 999999,
-        unit: '',
-        colors: ['#fcbc25', '#f68057'],
-        icon: 'ant-design:trademark-circle-outlined'
+        unit: "",
+        colors: ["#fcbc25", "#f68057"],
+        icon: "ant-design:trademark-circle-outlined"
     }
 ];
 </script>

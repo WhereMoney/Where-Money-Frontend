@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
+import { computed } from "vue";
 
 interface Props {
     /** 是否勾选 */
@@ -15,13 +15,13 @@ interface Props {
 }
 
 interface Emits {
-    (e: 'update:value', value: boolean): void;
+    (e: "update:value", value: boolean): void;
 
     /** 点击协议 */
-    (e: 'click-protocol'): void;
+    (e: "click-protocol"): void;
 
     /** 点击隐私政策 */
-    (e: 'click-policy'): void;
+    (e: "click-policy"): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -35,16 +35,16 @@ const checked = computed({
         return props.value;
     },
     set(newValue: boolean) {
-        emit('update:value', newValue);
+        emit("update:value", newValue);
     }
 });
 
 function handleClickProtocol() {
-    emit('click-protocol');
+    emit("click-protocol");
 }
 
 function handleClickPolicy() {
-    emit('click-policy');
+    emit("click-policy");
 }
 </script>
 <style scoped></style>

@@ -1,6 +1,6 @@
-import {computed} from 'vue';
-import {useAppStore, useThemeStore} from '@/store';
-import type {GlobalHeaderProps, ThemeLayoutMode} from '@/interface';
+import { computed } from "vue";
+import { useAppStore, useThemeStore } from "@/store";
+import type { GlobalHeaderProps, ThemeLayoutMode } from "@/interface";
 
 type LayoutHeaderProps = Record<ThemeLayoutMode, GlobalHeaderProps>;
 
@@ -8,10 +8,10 @@ export function useBasicLayout() {
     const app = useAppStore();
     const theme = useThemeStore();
 
-    type LayoutMode = 'vertical' | 'horizontal';
+    type LayoutMode = "vertical" | "horizontal";
     const mode = computed(() => {
-        const vertical: LayoutMode = 'vertical';
-        const horizontal: LayoutMode = 'horizontal';
+        const vertical: LayoutMode = "vertical";
+        const horizontal: LayoutMode = "horizontal";
         return theme.layout.mode.includes(vertical) ? vertical : horizontal;
     });
 
@@ -21,7 +21,7 @@ export function useBasicLayout() {
             showHeaderMenu: false,
             showMenuCollape: true
         },
-        'vertical-mix': {
+        "vertical-mix": {
             showLogo: false,
             showHeaderMenu: false,
             showMenuCollape: false
@@ -31,7 +31,7 @@ export function useBasicLayout() {
             showHeaderMenu: true,
             showMenuCollape: false
         },
-        'horizontal-mix': {
+        "horizontal-mix": {
             showLogo: true,
             showHeaderMenu: false,
             showMenuCollape: true
@@ -40,10 +40,10 @@ export function useBasicLayout() {
 
     const headerProps = computed(() => layoutHeaderProps[theme.layout.mode]);
 
-    const siderVisible = computed(() => theme.layout.mode !== 'horizontal');
+    const siderVisible = computed(() => theme.layout.mode !== "horizontal");
     const siderWidth = computed(() => {
-        const {width, mixWidth, mixChildMenuWidth} = theme.sider;
-        const isVerticalMix = theme.layout.mode === 'vertical-mix';
+        const { width, mixWidth, mixChildMenuWidth } = theme.sider;
+        const isVerticalMix = theme.layout.mode === "vertical-mix";
         let w = isVerticalMix ? mixWidth : width;
         if (isVerticalMix && app.mixSiderFixed) {
             w += mixChildMenuWidth;
@@ -51,8 +51,8 @@ export function useBasicLayout() {
         return w;
     });
     const siderCollapsedWidth = computed(() => {
-        const {collapsedWidth, mixCollapsedWidth, mixChildMenuWidth} = theme.sider;
-        const isVerticalMix = theme.layout.mode === 'vertical-mix';
+        const { collapsedWidth, mixCollapsedWidth, mixChildMenuWidth } = theme.sider;
+        const isVerticalMix = theme.layout.mode === "vertical-mix";
         let w = isVerticalMix ? mixCollapsedWidth : collapsedWidth;
         if (isVerticalMix && app.mixSiderFixed) {
             w += mixChildMenuWidth;

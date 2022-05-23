@@ -1,4 +1,9 @@
-import type {DialogProviderInst, LoadingBarProviderInst, MessageProviderInst, NotificationProviderInst} from 'naive-ui';
+import type {
+    DialogProviderInst,
+    LoadingBarProviderInst,
+    MessageProviderInst,
+    NotificationProviderInst
+} from "naive-ui";
 
 declare global {
     interface Window {

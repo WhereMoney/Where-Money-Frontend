@@ -1,10 +1,10 @@
 <template>
-    <n-card class="rounded-[16px] shadow-sm" :segmented="true" v-cloak>
+    <n-card v-cloak :segmented="true" class="rounded-[16px] shadow-sm">
         <template #header>
             <div class="flex-y-center justify-between">
                 <span class="text-xl font-bold">{{ book.title }}</span>
                 <n-button text @click="showAddModal = true; store.selectedBillCategoryId = -1;">
-                    <icon icon="fluent:add-24-filled" height="24px" />
+                    <icon height="24px" icon="fluent:add-24-filled" />
                     <span class="text-base ml-2">新增预算</span>
                 </n-button>
             </div>
@@ -16,7 +16,7 @@
             </n-empty>
 
             <template v-else-if="budgetList != undefined">
-                <n-card :bordered="false" size="small" :segmented="true">
+                <n-card :bordered="false" :segmented="true" size="small">
                     <!-- 账本总预算 -->
                     <template #header>
                         <div class="book-budget-info flex-y-center justify-between">
@@ -30,24 +30,24 @@
                                 <div v-if="bookBudgetEdit" class="flex flex-col">
                                     <n-input-group>
                                         <n-input-group-label size="small">总额</n-input-group-label>
-                                        <n-input-number size="small" :style="{ width: '100px', textAlign: 'center' }"
-                                            :show-button="false" v-model:value="bookTotalBudget"
-                                            :min="bookBudgetTotalMin">
+                                        <n-input-number v-model:value="bookTotalBudget" :min="bookBudgetTotalMin"
+                                                        :show-button="false" :style="{ width: '100px', textAlign: 'center' }"
+                                                        size="small">
                                             <template #prefix>￥</template>
                                         </n-input-number>
                                         <n-button text @click="submitBookBudgetChange">
-                                            <icon class="text-blue-600" icon="bi:check" height="32"></icon>
+                                            <icon class="text-blue-600" height="32" icon="bi:check"></icon>
                                         </n-button>
                                     </n-input-group>
                                     <n-input-group>
                                         <n-input-group-label size="small">已用</n-input-group-label>
-                                        <n-input-number size="small" :style="{ width: '100px', textAlign: 'center' }"
-                                            :show-button="false" v-model:value="bookUsedBudget"
-                                            :min="bookBudgetUsedMin">
+                                        <n-input-number v-model:value="bookUsedBudget" :min="bookBudgetUsedMin"
+                                                        :show-button="false" :style="{ width: '100px', textAlign: 'center' }"
+                                                        size="small">
                                             <template #prefix>￥</template>
                                         </n-input-number>
                                         <n-button text @click="cancelBookBudgetInput">
-                                            <icon class="text-red-600" icon="bi:x" height="32"></icon>
+                                            <icon class="text-red-600" height="32" icon="bi:x"></icon>
                                         </n-button>
                                     </n-input-group>
                                 </div>
@@ -55,15 +55,16 @@
                                 <div v-else class="flex-y-center">
                                     <n-button text @click="showBookBudgetInput">
                                         <div class="mr-2 h-40px flex items-end">
-                                            <icon icon="carbon:edit" height="24" horizontalAlign="bottom"></icon>
+                                            <icon height="24" horizontalAlign="bottom" icon="carbon:edit"></icon>
                                         </div>
                                     </n-button>
-                                    <n-progress type="circle"
-                                        :status="book.usedBudget > book.totalBudget ? 'error' : 'success'"
-                                        :percentage="book.usedBudget > book.totalBudget ? 100 : (1 - book.usedBudget / book.totalBudget) * 100"
-                                        :gap-offset-degree="180">
+                                    <n-progress :gap-offset-degree="180"
+                                                :percentage="book.usedBudget > book.totalBudget ? 100 : (1 - book.usedBudget / book.totalBudget) * 100"
+                                                :status="book.usedBudget > book.totalBudget ? 'error' : 'success'"
+                                                type="circle">
                                         <div class="text-center">
-                                            <p class="text-xs">{{ book.totalBudget >= book.usedBudget ? '可用' : '超支' }}</p>
+                                            <p class="text-xs">{{ book.totalBudget >= book.usedBudget ? "可用" : "超支"
+                                                }}</p>
                                             <p class="text-xs">
                                                 {{ compactFormatter.format(book.totalBudget - book.usedBudget) }}
                                             </p>
@@ -77,32 +78,33 @@
                     <template #default>
                         <n-list>
                             <n-list-item v-for="(budget, idx) in budgetList" :key="budget.id"
-                                @click="showBudgetInfoModal(budget)"
-                                class="hover:bg-[#f6f6f6] dark:hover:bg-[#333]"
+                                         class="hover:bg-[#f6f6f6] dark:hover:bg-[#333]"
+                                         @click="showBudgetInfoModal(budget)"
                             >
                                 <div class="budget-info flex-y-center justify-between px-2">
                                     <!-- 左侧 icon和名字、额度信息 -->
                                     <div class="flex-y-center">
-                                        <icon :icon="mapBudgetToCategory.get(budget.id)?.svg"
-                                            :height="iconWidth" :width="iconWidth"
-                                            class="text-primary hover:text-primary-hover mr-3" />
+                                        <icon :height="iconWidth"
+                                              :icon="mapBudgetToCategory.get(budget.id)?.svg" :width="iconWidth"
+                                              class="text-primary hover:text-primary-hover mr-3" />
 
                                         <div class="flex flex-col">
                                             <span class="text-base">
                                                 {{ mapBudgetToCategory.get(budget.id)?.billCategoryName }}
                                             </span>
                                             <span class="text-xs">
-                                                总额: {{ formattedCurrencyNoSymbol(budget.limit) }} | {{ budget.times.toFixed(0) }} 笔支出
+                                                总额: {{ formattedCurrencyNoSymbol(budget.limit)
+                                                }} | {{ budget.times.toFixed(0) }} 笔支出
                                             </span>
                                         </div>
                                     </div>
                                     <!-- 右侧进度条 -->
-                                    <n-progress type="circle" :status="budget.used > budget.limit ? 'error' : 'success'"
-                                        :percentage="budgetRemainList![idx] < 0 ? 100 : (1 - budget.used / budget.limit) * 100"
-                                        :gap-offset-degree="180">
+                                    <n-progress :gap-offset-degree="180" :percentage="budgetRemainList![idx] < 0 ? 100 : (1 - budget.used / budget.limit) * 100"
+                                                :status="budget.used > budget.limit ? 'error' : 'success'"
+                                                type="circle">
                                         <div class="text-center">
                                             <p class="text-xs">
-                                                {{ budgetRemainList![idx] >= 0 ? '可用' : '超支' }}
+                                                {{ budgetRemainList![idx] >= 0 ? "可用" : "超支" }}
                                             </p>
                                             <p class="text-xs">
                                                 {{ compactFormatter.format(Math.abs(budgetRemainList![idx])) }}
@@ -116,32 +118,32 @@
                 </n-card>
             </template>
 
-            <add-budget-modal v-model:show-modal="showAddModal" v-model:book="book" :disabled-categories="categoryInUse"
-                @manual-update-book="emit('manualUpdateBook')" />
+            <add-budget-modal v-model:book="book" v-model:show-modal="showAddModal" :disabled-categories="categoryInUse"
+                              @manual-update-book="emit('manualUpdateBook')" />
 
-            <budget-info-modal v-model:show-modal="showInfoModal" v-model:budget="budgetTemp"
-                :category="categoryTemp" @manual-update-book="emit('manualUpdateBook')" />
+            <budget-info-modal v-model:budget="budgetTemp" v-model:show-modal="showInfoModal"
+                               :category="categoryTemp" @manual-update-book="emit('manualUpdateBook')" />
         </template>
     </n-card>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 
-import { computed, defineProps, defineEmits, onMounted, PropType, ref, watch } from 'vue';
-import { useMessage } from 'naive-ui';
-import { Book, Budget, BillCategory, BudgetGetBudgetByBookResponse, BookAllBillCategoryResponse } from '@/interface';
-import { getBudgetsByBook, getAllBillCategoryApi, setBookBudget } from '@/apis';
-import { formattedCurrencyNoSymbol } from '@/utils';
-import { useStore } from '@/stores/store';
+import { computed, defineEmits, defineProps, onMounted, PropType, ref, watch } from "vue";
+import { useMessage } from "naive-ui";
+import { BillCategory, Book, BookAllBillCategoryResponse, Budget, BudgetGetBudgetByBookResponse } from "@/interface";
+import { getAllBillCategoryApi, getBudgetsByBook, setBookBudget } from "@/apis";
+import { formattedCurrencyNoSymbol } from "@/utils";
+import { useStore } from "@/stores/store";
 
-import { Icon } from '@iconify/vue';
-import { AddBudgetModal, BudgetInfoModal } from './components';
+import { Icon } from "@iconify/vue";
+import { AddBudgetModal, BudgetInfoModal } from "./components";
 
 const props = defineProps({
     book: {
         type: Object as PropType<Book>,
-        required: true,
-    },
+        required: true
+    }
 });
 
 const store = useStore();
@@ -155,7 +157,7 @@ const categoryInUse = ref(new Set<Number>());
 function getBudgetList(id: number) {
     getBudgetsByBook({ bookId: id }).then((res: BudgetGetBudgetByBookResponse) => {
         budgetList.value = res.budgetList;
-        getAllBillCategoryApi({ bookId: id, type: '支出' }).then((res: BookAllBillCategoryResponse) => {
+        getAllBillCategoryApi({ bookId: id, type: "支出" }).then((res: BookAllBillCategoryResponse) => {
             billCategoryList.value = res.billCategoryList;
             budgetList.value?.forEach((budget) => {
                 const billCategory = billCategoryList.value.find((billCategory) => billCategory.id === budget.billCategoryId);
@@ -194,28 +196,31 @@ function showBookBudgetInput() {
     bookUsedBudget.value = props.book.usedBudget;
     bookBudgetEdit.value = true;
 }
+
 function cancelBookBudgetInput() {
     bookBudgetEdit.value = false;
 }
+
 const message = useMessage();
+
 function submitBookBudgetChange() {
     const params = {
         bookId: props.book.id,
         totalBudget: bookTotalBudget.value,
-        usedBudget: bookUsedBudget.value,
+        usedBudget: bookUsedBudget.value
     };
     setBookBudget(params).then(() => {
         bookBudgetEdit.value = false;
-        emit('manualUpdateBook');
+        emit("manualUpdateBook");
         getBudgetList(props.book.id);
-        message.success('修改成功！');
+        message.success("修改成功！");
     }).catch((err: Error) => {
         console.log(err);
     });
 }
 
 const showAddModal = ref(false);
-const emit = defineEmits(['manualUpdateBook'])
+const emit = defineEmits(["manualUpdateBook"]);
 
 const showInfoModal = ref(false);
 const budgetTemp = ref<Budget>({
@@ -224,15 +229,15 @@ const budgetTemp = ref<Budget>({
     billCategoryId: 0,
     used: 0,
     limit: 0,
-    times: 0,
+    times: 0
 });
 
 const categoryTemp = ref<BillCategory>({
     id: 0,
     bookId: 0,
-    billCategoryName: '',
-    svg: '',
-    type: '支出',
+    billCategoryName: "",
+    svg: "",
+    type: "支出"
 });
 
 function showBudgetInfoModal(budget: Budget) {
@@ -241,10 +246,10 @@ function showBudgetInfoModal(budget: Budget) {
     showInfoModal.value = true;
 }
 
-const compactFormatter = new Intl.NumberFormat('en-US', {
-    notation: 'compact',
+const compactFormatter = new Intl.NumberFormat("en-US", {
+    notation: "compact",
     maximumFractionDigits: 2,
-    maximumSignificantDigits: 5,
+    maximumSignificantDigits: 5
 });
 
 </script>
@@ -271,11 +276,14 @@ $--medium-progress-size: 64px;
     .n-card-header {
         padding-top: 0;
     }
+
     .n-card__content {
         padding: 0;
     }
+
     .n-list {
         margin: 0;
+
         .n-list-item {
             padding-left: 8px;
             padding-right: 8px;
@@ -287,7 +295,7 @@ $--medium-progress-size: 64px;
             -webkit-transition-property: background-color;
             transition-property: background-color;
 
-            &:hover svg  {
+            &:hover svg {
                 -webkit-transition-duration: 0.2s;
                 transition-duration: 0.2s;
 

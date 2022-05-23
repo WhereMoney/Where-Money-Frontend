@@ -1,63 +1,49 @@
 /** 权限路由相关类型 */
 declare namespace AuthRoute {
     /** 多级路由分割符号 */
-    type RouteSplitMark = '_';
+    type RouteSplitMark = "_";
 
     /** 路由的key */
     type RouteKey =
-        // 固定的路由
-        | 'root' // 根路由
-        | 'login'
-        | 'register'
-        | 'not-found'
-        | 'no-permission'
-        | 'service-error'
-        | 'not-found-page' // 捕获无效path的路由
+    // 固定的路由
+        | "root" // 根路由
+        | "login"
+        | "register"
+        | "not-found"
+        | "no-permission"
+        | "service-error"
+        | "not-found-page" // 捕获无效path的路由
         // 自由路由
-        | 'home'
-        | 'asset'
-        | 'budget'
-        // 样例路由
-        | 'dashboard'
-        | 'dashboard_analysis'
-        | 'dashboard_workbench'
-        | 'document'
-        | 'document_vue'
-        | 'document_vue-new'
-        | 'document_vite'
-        | 'document_naive'
-        | 'document_project'
-        | 'component'
-        | 'component_button'
-        | 'component_card'
-        | 'component_table'
-        | 'plugin'
-        | 'plugin_map'
-        | 'plugin_video'
-        | 'plugin_editor'
-        | 'plugin_editor_quill'
-        | 'plugin_editor_markdown'
-        | 'plugin_copy'
-        | 'plugin_icon'
-        | 'plugin_print'
-        | 'plugin_swiper'
-        | 'exception'
-        | 'exception_403'
-        | 'exception_404'
-        | 'exception_500'
-        | 'multi-menu'
-        | 'multi-menu_first'
-        | 'multi-menu_first_second'
-        | 'multi-menu_first_second-new'
-        | 'multi-menu_first_second-new_third'
-        | 'about';
+        | "home"
+        | "asset"
+        | "budget"
+        | "document"
+        | "document_vue"
+        | "document_vue-new"
+        | "document_vite"
+        | "document_naive"
+        | "document_project"
+        | "component"
+        | "component_button"
+        | "component_card"
+        | "component_table"
+        | "exception"
+        | "exception_403"
+        | "exception_404"
+        | "exception_500"
+        | "multi-menu"
+        | "multi-menu_first"
+        | "multi-menu_first_second"
+        | "multi-menu_first_second-new"
+        | "multi-menu_first_second-new_third"
+        | "about";
 
     /** 路由的path */
     type RoutePath =
-        | '/'
-        | Exclude<KeyToPath<RouteKey>, '/root' | 'not-found-page'>
+        | "/"
+        | Exclude<KeyToPath<RouteKey>, "/root" | "not-found-page">
         | SingleRouteParentPath
-        | '/:pathMatch(.*)*';
+        | "/:pathMatch(.*)*";
 
     /**
      * 路由的组件
@@ -66,16 +52,16 @@ declare namespace AuthRoute {
      * - multi - 多级路由布局(三级路由或三级以上时，除第一级路由和最后一级路由，其余的采用该布局)
      * - self - 作为子路由，使用自身的布局(作为最后一级路由，没有子路由)
      */
-    type RouteComponent = 'basic' | 'blank' | 'multi' | 'self';
+    type RouteComponent = "basic" | "blank" | "multi" | "self";
 
     /** 路由描述 */
     type RouteMeta = {
         /** 路由标题(可用来作document.title或者菜单的名称) */
         title: string;
         /** 路由的动态路径 */
-        dynamicPath?: PathToDynamicPath<'/login'>;
+        dynamicPath?: PathToDynamicPath<"/login">;
         /** 作为单级路由的父级路由布局组件 */
-        singleLayout?: Extract<RouteComponent, 'basic' | 'blank'>;
+        singleLayout?: Extract<RouteComponent, "basic" | "blank">;
         /** 需要登录权限 */
         requiresAuth?: boolean;
         /** 哪些类型的用户有权限才能访问的路由(空的话则表示不需要权限) */
@@ -120,7 +106,7 @@ declare namespace AuthRoute {
 
     /** 单独一级路由的key (单独路由需要添加一个父级路由用于应用布局组件) */
     type SingleRouteKey = Exclude<GetSingleRouteKey<RouteKey>,
-        GetRouteFirstParentKey<RouteKey> | 'root' | 'not-found-page'>;
+        GetRouteFirstParentKey<RouteKey> | "root" | "not-found-page">;
     /** 单独路由父级路由key */
     type SingleRouteParentKey = `${SingleRouteKey}-parent`;
 

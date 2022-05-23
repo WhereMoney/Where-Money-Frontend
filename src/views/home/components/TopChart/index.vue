@@ -7,11 +7,11 @@
                         <h3 class="text-16px font-bold">Dashboard</h3>
                         <p class="text-[#aaa]">Overview Of Lasted Month</p>
                         <h3 class="pt-36px text-24px font-bold">
-                            <count-to :end-value="7754" :start-value="0" prefix="$"/>
+                            <count-to :end-value="7754" :start-value="0" prefix="$" />
                         </h3>
                         <p class="text-[#aaa]">Current Month Earnings</p>
                         <h3 class="pt-36px text-24px font-bold">
-                            <count-to :end-value="1234" :start-value="0"/>
+                            <count-to :end-value="1234" :start-value="0" />
                         </h3>
                         <p class="text-[#aaa]">Current Month Sales</p>
                         <n-button class="mt-24px" type="primary">Last Month Summary</n-button>
@@ -31,10 +31,10 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, ref} from 'vue';
-import {Line, Pie} from '@antv/g2plot';
-import {CountTo} from '@/components';
-import data from './data.json';
+import { onMounted, ref } from "vue";
+import { Line, Pie } from "@antv/g2plot";
+import { CountTo } from "@/components";
+import data from "./data.json";
 
 const lineRef = ref<HTMLElement>();
 const line = ref<Line>();
@@ -46,21 +46,21 @@ function renderLineChart() {
     line.value = new Line(lineRef.value, {
         data,
         autoFit: true,
-        xField: 'date',
-        yField: 'value',
-        seriesField: 'type',
+        xField: "date",
+        yField: "value",
+        seriesField: "type",
         lineStyle: {
             lineWidth: 4
         },
         area: {
             style: {
-                fill: 'l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff'
+                fill: "l(270) 0:#ffffff 0.5:#7ec2f3 1:#1890ff"
             }
         },
         smooth: true,
         animation: {
             appear: {
-                animation: 'wave-in',
+                animation: "wave-in",
                 duration: 2000
             }
         }
@@ -70,16 +70,16 @@ function renderLineChart() {
 
 function renderPieChart() {
     const data = [
-        {type: '学习', value: 20},
-        {type: '娱乐', value: 10},
-        {type: '工作', value: 30},
-        {type: '休息', value: 40}
+        { type: "学习", value: 20 },
+        { type: "娱乐", value: 10 },
+        { type: "工作", value: 30 },
+        { type: "休息", value: 40 }
     ];
     pie.value = new Pie(pieRef.value!, {
         appendPadding: 10,
         data,
-        angleField: 'value',
-        colorField: 'type',
+        angleField: "value",
+        colorField: "type",
         radius: 0.8,
         innerRadius: 0.65,
         meta: {
@@ -88,31 +88,31 @@ function renderPieChart() {
             }
         },
         label: {
-            type: 'inner',
+            type: "inner",
             autoRotate: false,
-            formatter: ({percent}) => `${(percent * 100).toFixed(0)}%`
+            formatter: ({ percent }) => `${(percent * 100).toFixed(0)}%`
         },
         statistic: undefined,
         pieStyle: {
             radius: [20]
         },
-        color: ['#025DF4', '#DB6BCF', '#2498D1', '#FF745A', '#007E99', '#FFA8A8', '#2391FF'],
+        color: ["#025DF4", "#DB6BCF", "#2498D1", "#FF745A", "#007E99", "#FFA8A8", "#2391FF"],
         legend: {
-            position: 'bottom'
+            position: "bottom"
         },
         interactions: [
-            {type: 'element-selected'},
-            {type: 'element-active'},
+            { type: "element-selected" },
+            { type: "element-active" },
             {
-                type: 'pie-statistic-active',
+                type: "pie-statistic-active",
                 cfg: {
                     start: [
-                        {trigger: 'element:mouseenter', action: 'pie-statistic:change'},
-                        {trigger: 'legend-item:mouseenter', action: 'pie-statistic:change'}
+                        { trigger: "element:mouseenter", action: "pie-statistic:change" },
+                        { trigger: "legend-item:mouseenter", action: "pie-statistic:change" }
                     ],
                     end: [
-                        {trigger: 'element:mouseleave', action: 'pie-statistic:reset'},
-                        {trigger: 'legend-item:mouseleave', action: 'pie-statistic:reset'}
+                        { trigger: "element:mouseleave", action: "pie-statistic:reset" },
+                        { trigger: "legend-item:mouseleave", action: "pie-statistic:reset" }
                     ]
                 }
             }

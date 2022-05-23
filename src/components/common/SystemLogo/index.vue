@@ -1,12 +1,12 @@
 <template>
     <div>
-        <svg-fill-logo v-if="fill"/>
-        <svg-logo v-else/>
+        <svg-fill-logo v-if="fill" />
+        <svg-logo v-else />
     </div>
 </template>
 
 <script lang="ts" setup>
-import {SvgFillLogo, SvgLogo} from './components';
+import { SvgFillLogo, SvgLogo } from "./components";
 
 interface Props {
     /** logo是否填充 */

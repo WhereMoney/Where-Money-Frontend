@@ -10,16 +10,16 @@
       <slot></slot>
     </span>
         <div v-if="closable" class="pl-10px">
-            <icon-close :is-active="isIconActive" :primary-color="primaryColor" @click="handleClose"/>
+            <icon-close :is-active="isIconActive" :primary-color="primaryColor" @click="handleClose" />
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
-import {useBoolean} from '@/hooks';
-import {addColorAlpha} from '@/utils';
-import IconClose from '../IconClose/index.vue';
+import { computed } from "vue";
+import { useBoolean } from "@/hooks";
+import { addColorAlpha } from "@/utils";
+import IconClose from "../IconClose/index.vue";
 
 interface Props {
     /** 激活状态 */
@@ -34,19 +34,19 @@ interface Props {
 
 interface Emits {
     /** 点击关闭图标 */
-    (e: 'close'): void;
+    (e: "close"): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
     isActive: false,
-    primaryColor: '#1890ff',
+    primaryColor: "#1890ff",
     closable: true,
     darkMode: false
 });
 
 const emit = defineEmits<Emits>();
 
-const {bool: isHover, setTrue, setFalse} = useBoolean();
+const { bool: isHover, setTrue, setFalse } = useBoolean();
 
 const isIconActive = computed(() => props.isActive || isHover.value);
 
@@ -65,7 +65,7 @@ const buttonStyle = computed(() => {
 
 function handleClose(e: MouseEvent) {
     e.stopPropagation();
-    emit('close');
+    emit("close");
 }
 </script>
 <style scoped></style>

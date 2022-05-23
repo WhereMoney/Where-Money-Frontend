@@ -23,16 +23,16 @@
 </template>
 
 <script lang="ts" setup>
-import {traditionColors} from '@/settings';
-import {useThemeStore} from '@/store';
-import ColorCheckbox from './ColorCheckbox.vue';
+import { traditionColors } from "@/settings";
+import { useThemeStore } from "@/store";
+import ColorCheckbox from "./ColorCheckbox.vue";
 
 interface Props {
     visible: boolean;
 }
 
 interface Emits {
-    (e: 'close'): void;
+    (e: "close"): void;
 }
 
 defineProps<Props>();
@@ -42,7 +42,7 @@ const emit = defineEmits<Emits>();
 const theme = useThemeStore();
 
 function handleClose() {
-    emit('close');
+    emit("close");
 }
 </script>
 <style scoped></style>

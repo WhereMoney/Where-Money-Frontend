@@ -2,19 +2,19 @@
     <n-card :bordered="false" class="rounded-16px shadow-sm h-250px">
         <template #header>
             <n-space align="center">
-                <Icon icon="carbon:wallet" width="24px" height="24px" />
+                <Icon height="24px" icon="carbon:wallet" width="24px" />
                 <span class="font-bold text-xl">资产总览</span>
             </n-space>
         </template>
 
         <template #default>
-            <n-space vertical :size="32">
+            <n-space :size="32" vertical>
                 <!-- 第一行 计算净资产 -->
                 <n-space justify="space-around">
                     <div>
                         <p class="text-xl text-center">净资产</p>
                         <!-- 小于0标红 -->
-                        <p class="font-bold text-lg text-center" :class="net < 0 ? 'text-red-500' : ''">
+                        <p :class="net < 0 ? 'text-red-500' : ''" class="font-bold text-lg text-center">
                             {{ formattedCurrencyNoSymbol(net) }}
                         </p>
                     </div>
@@ -28,7 +28,7 @@
                     <div>
                         <p class="text-base text-center">总负债</p>
                         <!-- 小于0标红 -->
-                        <p class="font-bold text-base text-center" :class="debt < 0 ? 'text-red-500' : ''">
+                        <p :class="debt < 0 ? 'text-red-500' : ''" class="font-bold text-base text-center">
                             {{ formattedCurrencyNoSymbol(debt) }}
                         </p>
                     </div>
@@ -40,9 +40,9 @@
 
 <script lang="ts" setup>
 // vue
-import { defineProps } from 'vue';
+import { defineProps } from "vue";
 // components
-import { Icon } from '@iconify/vue';
+import { Icon } from "@iconify/vue";
 // .ts
 import { formattedCurrencyNoSymbol } from "@/utils";
 

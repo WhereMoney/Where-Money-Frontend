@@ -1,10 +1,10 @@
 <template>
     <n-modal
         :auto-focus="false"
-        preset="card"
-        display-directive="show"
-        class="w-500px"
         :show="showModal"
+        class="w-500px"
+        display-directive="show"
+        preset="card"
         @close="closeModal"
     >
         <template #header>
@@ -12,8 +12,8 @@
         </template>
 
         <template #default>
-            <n-form :model="assetInfo" v-if="assetInfo">
-                <n-space vertical :size="16">
+            <n-form v-if="assetInfo" :model="assetInfo">
+                <n-space :size="16" vertical>
                     <form-item-container label="资产类型">
                         <n-radio-group
                             v-model:value="assetInfo.type"
@@ -22,10 +22,10 @@
                         >
                             <n-radio-button
                                 v-for="(typeName) in ['信用卡', '充值', '投资理财', '资金']"
-                                size="medium"
                                 :key="typeName"
-                                :value="typeName"
                                 :label="typeName"
+                                :value="typeName"
+                                size="medium"
                             >
                                 <span>{{ typeName }}</span>
                             </n-radio-button>
@@ -34,32 +34,32 @@
 
                     <form-item-container label="资产图标">
                         <n-input
-                            class="w-240px"
                             v-model:value.trim="assetInfo.svg"
+                            class="w-240px"
                             size="medium"
                         />
                         <Icon
                             :icon="assetInfo.svg"
-                            height="24"
                             class="text-info mx-2"
+                            height="24"
                         />
                     </form-item-container>
 
                     <form-item-container label="资产名称">
                         <n-input
-                            class="w-240px"
                             v-model:value="assetInfo.assetName"
+                            class="w-240px"
                             size="medium"
                         />
                     </form-item-container>
 
                     <form-item-container :label="assetInfo.type === '信用卡' ? '当前欠款（负数）' : '资产余额'">
                         <n-input-number
-                            class="w-240px"
                             v-model:value="assetInfo.balance"
                             :show-button="false"
-                            size="medium"
                             :validator="validateAssetBalance"
+                            class="w-240px"
+                            size="medium"
                         >
                             <template #prefix>
                                 <span>￥</span>
@@ -78,10 +78,10 @@
                         <n-divider>账单设置</n-divider>
                         <form-item-container label="总额度">
                             <n-input-number
-                                class="w-240px"
                                 v-model:value="assetInfo.quota"
                                 :min="0"
                                 :show-button="false"
+                                class="w-240px"
                                 size="medium"
                             >
                                 <template #prefix>
@@ -92,10 +92,10 @@
 
                         <form-item-container label="出账日">
                             <n-input-number
-                                class="w-240px text-center"
                                 v-model:value="assetInfo.billDate"
-                                :min="1"
                                 :max="31"
+                                :min="1"
+                                class="w-240px text-center"
                                 size="medium"
                             >
                                 <template #prefix>每月</template>
@@ -105,10 +105,10 @@
 
                         <form-item-container label="还款日">
                             <n-input-number
-                                class="w-240px text-center"
                                 v-model:value="assetInfo.repayDate"
-                                :min="1"
                                 :max="31"
+                                :min="1"
+                                class="w-240px text-center"
                                 size="medium"
                             >
                                 <template #prefix>每月</template>
@@ -133,12 +133,12 @@
 
 <script lang="ts" setup>
 
-import { defineProps, defineEmits, ref } from 'vue';
+import { defineEmits, defineProps, ref } from "vue";
 
-import { FormItemContainer } from '../';
+import { FormItemContainer } from "../";
 
-import { useMessage } from 'naive-ui';
-import { Icon } from '@iconify/vue';
+import { useMessage } from "naive-ui";
+import { Icon } from "@iconify/vue";
 
 
 const props = defineProps({
@@ -146,7 +146,7 @@ const props = defineProps({
         type: Boolean,
         required: true,
         default: false
-    },
+    }
 });
 
 const assetInfo = ref<any>({ inTotal: true });
@@ -156,28 +156,30 @@ const assetInfo = ref<any>({ inTotal: true });
  */
 function validateAssetBalance(value: number) {
     if (assetInfo.value === undefined) return false;
-    if (assetInfo.value.type === '信用卡' && value > 0 ) {
+    if (assetInfo.value.type === "信用卡" && value > 0) {
         return false;
     }
-    if (assetInfo.value.type !== '信用卡' && value < 0) {
+    if (assetInfo.value.type !== "信用卡" && value < 0) {
         return false;
     }
     return true;
 }
 
-const emit = defineEmits(['update:showModal', 'newAssetSubmitted'])
+const emit = defineEmits(["update:showModal", "newAssetSubmitted"]);
+
 function closeModal() {
-    emit('update:showModal', false);
+    emit("update:showModal", false);
 }
 
 const message = useMessage();
+
 /**
  * @description 提交新资产
  */
 function submitHandler() {
     // 验证全部填写了
     let allBlankFilled = true;
-    let keys = ['assetName', 'balance', 'type', 'svg']
+    let keys = ["assetName", "balance", "type", "svg"];
     for (const keyIdx in keys) {
         if (!assetInfo.value[keys[keyIdx]]) {
             message.error("请填写完整信息！");
@@ -185,8 +187,8 @@ function submitHandler() {
             break;
         }
     }
-    if (assetInfo.value.type === '信用卡') {
-        keys = ['billDate', 'repayDate', 'quota']
+    if (assetInfo.value.type === "信用卡") {
+        keys = ["billDate", "repayDate", "quota"];
         for (const keyIdx in keys) {
             if (!assetInfo.value[keys[keyIdx]]) {
                 message.error("请填写完整信息！");
@@ -197,19 +199,17 @@ function submitHandler() {
     }
     if (!allBlankFilled) return;
     // 验证balance，其他的有输入框限制
-    if (assetInfo.value.type === '信用卡' && assetInfo.value.balance! > 0 ) {
-        message.error('欠款金额请输入负数！');
-    }
-    else if (assetInfo.value.type !== '信用卡' && assetInfo.value.balance! < 0) {
-        message.error('资产余额不能为负数！');
-    }
-    else {
-        emit('newAssetSubmitted', assetInfo.value);
+    if (assetInfo.value.type === "信用卡" && assetInfo.value.balance! > 0) {
+        message.error("欠款金额请输入负数！");
+    } else if (assetInfo.value.type !== "信用卡" && assetInfo.value.balance! < 0) {
+        message.error("资产余额不能为负数！");
+    } else {
+        emit("newAssetSubmitted", assetInfo.value);
         for (const key in assetInfo.value) {
             assetInfo.value[key] = null;
         }
         assetInfo.value.inTotal = true;
-        message.success('添加成功！');
+        message.success("添加成功！");
     }
 }
 

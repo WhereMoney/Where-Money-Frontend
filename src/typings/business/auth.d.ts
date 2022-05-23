@@ -7,7 +7,7 @@ declare namespace Auth {
      * - test: 测试
      * - visitor: 游客
      */
-    type RoleType = 'super' | 'admin' | 'test' | 'visitor';
+    type RoleType = "super" | "admin" | "test" | "visitor";
 
     /** 用户信息 */
     interface UserInfo {

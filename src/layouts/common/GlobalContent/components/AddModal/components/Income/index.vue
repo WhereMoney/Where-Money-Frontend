@@ -2,15 +2,15 @@
     <div>
         <div class="space-y-10">
             <n-scrollbar class="h-70">
-                <n-spin class="h-70 flex items-center" v-if="isLoading"></n-spin>
-                <div class="grid grid-cols-10 gap-4" v-if="!isLoading">
+                <n-spin v-if="isLoading" class="h-70 flex items-center"></n-spin>
+                <div v-if="!isLoading" class="grid grid-cols-10 gap-4">
                     <BillCategoryItem v-for="item in billCategoryList" :billCategory="item"></BillCategoryItem>
                 </div>
             </n-scrollbar>
             <div class="space-y-2">
                 <div class="flex space-x-2">
                     <div class="w-2/3">
-                        <n-input v-model:value="remark" type="text" placeholder="点此输入备注"/>
+                        <n-input v-model:value="remark" placeholder="点此输入备注" type="text" />
                     </div>
                     <div class="w-1/3">
                         <n-input-number v-model:value="amount" step="0.01">
@@ -22,26 +22,26 @@
                 </div>
                 <div class="flex space-x-2">
                     <div class="w-1/3">
-                        <n-button v-on:click="bookDrawerShower" class="w-full truncate">
+                        <n-button class="w-full truncate" v-on:click="bookDrawerShower">
                             <template #default>
-                                <n-spin class="items-center h-4 w-4" v-if="isLoading"></n-spin>
-                                <div class="text-left" v-if="!isLoading">
+                                <n-spin v-if="isLoading" class="items-center h-4 w-4"></n-spin>
+                                <div v-if="!isLoading" class="text-left">
                                     {{ bookName }}
                                 </div>
                             </template>
                         </n-button>
                     </div>
                     <div class="w-1/3">
-                        <n-button v-on:click="assetDrawerShower" class="w-full truncate">
+                        <n-button class="w-full truncate" v-on:click="assetDrawerShower">
                             <template #default>
                                 <div class="flex space-x-2">
                                     <div v-if="assetName!=='收款账户'">
-                                        <Icon :icon="assetSvg" class="text-primary w-4 h-4"/>
+                                        <Icon :icon="assetSvg" class="text-primary w-4 h-4" />
                                     </div>
                                     <div class="m-auto">
                                         {{ assetName }}
                                     </div>
-                                    <div class="m-auto" v-if="assetName!=='收款账户'">
+                                    <div v-if="assetName!=='收款账户'" class="m-auto">
                                         ￥{{ assetBalance }}
                                     </div>
                                 </div>
@@ -49,14 +49,14 @@
                         </n-button>
                     </div>
                     <div class="w-1/3">
-                        <n-date-picker v-model:value="timestamp" type="datetime" placement="top-start"
-                                       :input-readonly="true"/>
+                        <n-date-picker v-model:value="timestamp" :input-readonly="true" placement="top-start"
+                                       type="datetime" />
                     </div>
                 </div>
                 <div class="flex space-x-2">
-                    <n-upload :custom-request="customRequest" v-on:change="changePicture"
-                              v-on:before-upload="beforeUpload" list-type="image-card" max="1"
-                              class="w-1/5">
+                    <n-upload :custom-request="customRequest" class="w-1/5"
+                              list-type="image-card" max="1" v-on:change="changePicture"
+                              v-on:before-upload="beforeUpload">
                         <template #default>
                             <div>
                                 图片
@@ -87,12 +87,12 @@
                     <div>
                         <n-scrollbar class="h-78">
                             <n-spin v-if="isAssetLoading" class="flex items-center h-78"></n-spin>
-                            <n-radio-group v-model:value="assetSelector" v-if="!isAssetLoading" class="space-y-4 ">
+                            <n-radio-group v-if="!isAssetLoading" v-model:value="assetSelector" class="space-y-4 ">
                                 <div v-for="item in assetList">
                                     <n-radio v-bind:key="item.id" v-bind:value="item.assetName">
                                         <div class="flex space-x-2 align-middle">
                                             <div>
-                                                <Icon :icon="item.svg" class="text-primary w-8 h-8"/>
+                                                <Icon :icon="item.svg" class="text-primary w-8 h-8" />
                                             </div>
                                             <div class="w-100 m-auto">
                                                 {{ item.assetName }}
@@ -119,7 +119,7 @@
                 <template #default>
                     <n-scrollbar class="h-78">
                         <n-spin v-if="isBookLoading" class="flex items-center h-78"></n-spin>
-                        <n-radio-group v-model:value="bookSelector" v-if="!isBookLoading" class="space-y-4 ">
+                        <n-radio-group v-if="!isBookLoading" v-model:value="bookSelector" class="space-y-4 ">
                             <div v-for="item in bookList">
                                 <n-radio v-bind:key="item.id" v-bind:value="item.title">
                                     <div class="flex space-x-2 item-center">
@@ -143,22 +143,23 @@
 </template>
 
 <script lang="ts" setup>
-import {addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getAssetApi, getBookApi} from "@/apis";
+import { addBillApi, getAllAsset, getAllBillCategoryApi, getAllBookApi, getAssetApi, getBookApi } from "@/apis";
 import {
     Asset,
-    AssetGetAllAssetResponse, AssetGetAssetResponse,
+    AssetGetAllAssetResponse,
+    AssetGetAssetResponse,
     BillCategory,
     Book,
     BookAllBillCategoryResponse,
     BookGetAllBookResponse,
     BookGetBookResponse
 } from "@/interface";
-import {onMounted, ref, Ref, watch} from "vue";
-import {UploadCustomRequestOptions, UploadFileInfo} from "naive-ui";
-import {intToString} from "@/utils/dateComputer";
-import {Icon} from "@iconify/vue";
-import {BillCategoryItem} from './components';
-import {useStore} from '@/stores/store';
+import { onMounted, ref, Ref, watch } from "vue";
+import { UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
+import { intToString } from "@/utils/dateComputer";
+import { Icon } from "@iconify/vue";
+import { BillCategoryItem } from "./components";
+import { useStore } from "@/stores/store";
 
 let remark: Ref<string> = ref("");
 let amount: Ref<number> = ref(0);
@@ -177,16 +178,16 @@ onMounted(() => {
     timestamp.value = Date.now();
     assetName.value = "收款账户";
     store.selectedBillCategoryId = 0;
-    getAllBillCategoryApi({bookId: 23, type: "收入"}).then((res: BookAllBillCategoryResponse) => {
+    getAllBillCategoryApi({ bookId: 23, type: "收入" }).then((res: BookAllBillCategoryResponse) => {
         billCategoryList.value = res.billCategoryList;
-        getBookApi({id: bookId.value}).then((response: BookGetBookResponse) => {
+        getBookApi({ id: bookId.value }).then((response: BookGetBookResponse) => {
             bookName.value = response.book.title;
             isLoading.value = false;
         }).catch(() => {
         });
     }).catch(() => {
     });
-})
+});
 let assetList: Ref<Array<Asset>> = ref([]);
 let showAssetDrawer: Ref<boolean> = ref(false);
 let assetId: Ref<number> = ref(0);
@@ -243,20 +244,20 @@ watch(bookSelector, (value: string) => {
 });
 let picture: File;
 let fileName: Ref<string> = ref("");
-const customRequest = ({file}: UploadCustomRequestOptions) => {
+const customRequest = ({ file }: UploadCustomRequestOptions) => {
     picture = file.file as File;
     fileName.value = file.name;
 };
 
 function changePicture() {
-    fileName.value = '';
+    fileName.value = "";
 }
 
 declare const window: Window & { $message: any; URL: any };
 
 function beforeUpload(data: { file: UploadFileInfo, fileList: UploadFileInfo[] }) {
-    if (!data.file.file?.type.startsWith('image')) {
-        window.$message.error('请上传图片');
+    if (!data.file.file?.type.startsWith("image")) {
+        window.$message.error("请上传图片");
         return false;
     }
     return true;
@@ -278,7 +279,7 @@ function addBill(): void {
     formData.append("file", picture as File);
     addBillApi(formData).then((_res: any) => {
         window.$message.success("添加成功");
-        getAssetApi({id: assetId.value}).then((response: AssetGetAssetResponse) => {
+        getAssetApi({ id: assetId.value }).then((response: AssetGetAssetResponse) => {
             assetBalance.value = response.asset.balance;
         }).catch(() => {
         });

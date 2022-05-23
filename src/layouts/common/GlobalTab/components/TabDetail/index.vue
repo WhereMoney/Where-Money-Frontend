@@ -25,15 +25,15 @@
 </template>
 
 <script lang="ts" setup>
-import {computed, nextTick, reactive, ref, watch} from 'vue';
-import {useEventListener} from '@vueuse/core';
-import {ButtonTab, ChromeTab} from '@/components';
-import {useTabStore, useThemeStore} from '@/store';
-import {setTabRoutes} from '@/utils';
-import {ContextMenu} from './components';
+import { computed, nextTick, reactive, ref, watch } from "vue";
+import { useEventListener } from "@vueuse/core";
+import { ButtonTab, ChromeTab } from "@/components";
+import { useTabStore, useThemeStore } from "@/store";
+import { setTabRoutes } from "@/utils";
+import { ContextMenu } from "./components";
 
 interface Emits {
-    (e: 'scroll', clientX: number): void;
+    (e: "scroll", clientX: number): void;
 }
 
 const emit = defineEmits<Emits>();
@@ -41,7 +41,7 @@ const emit = defineEmits<Emits>();
 const theme = useThemeStore();
 const tab = useTabStore();
 
-const isChromeMode = computed(() => theme.tab.mode === 'chrome');
+const isChromeMode = computed(() => theme.tab.mode === "chrome");
 const activeComponent = computed(() => (isChromeMode.value ? ChromeTab : ButtonTab));
 
 // 获取当前激活的tab的clientX
@@ -51,10 +51,10 @@ async function getActiveTabClientX() {
     await nextTick();
     if (tabRef.value) {
         const activeTabElement = tabRef.value.children[tab.activeTabIndex];
-        const {x, width} = activeTabElement.getBoundingClientRect();
+        const { x, width } = activeTabElement.getBoundingClientRect();
         const clientX = x + width / 2;
         setTimeout(() => {
-            emit('scroll', clientX);
+            emit("scroll", clientX);
         }, 50);
     }
 }
@@ -63,7 +63,7 @@ const dropdown = reactive({
     visible: false,
     x: 0,
     y: 0,
-    currentPath: ''
+    currentPath: ""
 });
 
 function showDropdown() {
@@ -75,13 +75,13 @@ function hideDropdown() {
 }
 
 function setDropdown(x: number, y: number, currentPath: string) {
-    Object.assign(dropdown, {x, y, currentPath});
+    Object.assign(dropdown, { x, y, currentPath });
 }
 
 /** 点击右键菜单 */
 async function handleContextMenu(e: MouseEvent, path: string) {
     e.preventDefault();
-    const {clientX, clientY} = e;
+    const { clientX, clientY } = e;
     hideDropdown();
     setDropdown(clientX, clientY, path);
     await nextTick();
@@ -99,7 +99,7 @@ watch(
 );
 
 /** 页面离开时缓存多页签数据 */
-useEventListener(window, 'beforeunload', () => {
+useEventListener(window, "beforeunload", () => {
     setTabRoutes(tab.tabs);
 });
 </script>

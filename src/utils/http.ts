@@ -1,5 +1,5 @@
-import {AxiosRequestConfig} from 'axios';
-import request from './request';
+import { AxiosRequestConfig } from "axios";
+import request from "./request";
 
 const http = {
     /**
@@ -9,7 +9,7 @@ const http = {
      */
     get(url: string, params: any) {
         const config: AxiosRequestConfig = {
-            method: 'get',
+            method: "get",
             url
         };
         if (params) config.params = params;
@@ -17,7 +17,7 @@ const http = {
     },
     post(url: string, params: any) {
         const config: AxiosRequestConfig = {
-            method: 'post',
+            method: "post",
             url
         };
         if (params) config.data = params;
@@ -25,7 +25,7 @@ const http = {
     },
     put(url: string, params: any) {
         const config: AxiosRequestConfig = {
-            method: 'put',
+            method: "put",
             url
         };
         if (params) config.data = params;
@@ -33,7 +33,7 @@ const http = {
     },
     delete(url: string, params: any) {
         const config: AxiosRequestConfig = {
-            method: 'delete',
+            method: "delete",
             url
         };
         if (params) config.params = params;

@@ -5,7 +5,7 @@ import {
     EnumThemeHorizontalMenuPosition,
     EnumThemeLayoutMode,
     EnumThemeTabMode
-} from '@/enum';
+} from "@/enum";
 
 /** 布局组件名称 */
 export type LayoutComponentName = keyof typeof EnumLayoutComponentName;

@@ -35,8 +35,8 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
-import {mixColor} from '@/utils';
+import { computed } from "vue";
+import { mixColor } from "@/utils";
 
 interface Props {
     /** 激活状态 */
@@ -55,13 +55,13 @@ type FillColor = [string, string];
 const props = withDefaults(defineProps<Props>(), {
     isActive: false,
     isHover: false,
-    primaryColor: '#409EFF',
+    primaryColor: "#409EFF",
     darkMode: false
 });
 
-const defaultColor: FillColor = ['#fff', '#18181c'];
-const hoverColor: FillColor = ['#dee1e6', '#3f3c37'];
-const mixColors: FillColor = ['#ffffff', '#000000'];
+const defaultColor: FillColor = ["#fff", "#18181c"];
+const hoverColor: FillColor = ["#dee1e6", "#3f3c37"];
+const mixColors: FillColor = ["#ffffff", "#000000"];
 
 const fill = computed(() => {
     const index = Number(props.darkMode);

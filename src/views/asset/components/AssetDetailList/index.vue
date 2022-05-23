@@ -2,14 +2,14 @@
     <n-card :bordered="false" class="rounded-16px shadow-sm">
         <template #header>
             <n-space align="center">
-                <Icon icon="bi:card-list" width="24px" height="24px" />
+                <Icon height="24px" icon="bi:card-list" width="24px" />
                 <span class="font-bold text-xl">资产明细</span>
             </n-space>
         </template>
 
         <template #header-extra>
             <n-button text @click="showNewAssetModal">
-                <Icon icon="fluent:add-24-filled" height="24px" />
+                <Icon height="24px" icon="fluent:add-24-filled" />
                 <span class="text-base px-2">新增资产</span>
             </n-button>
         </template>
@@ -29,8 +29,8 @@
                     <!-- 合计 -->
                     <template #header-extra>
                         <span
-                            class="text-lg font-bold"
                             :class="{ 'text-red-500': assetSumByType.get(assetType)! < 0 }"
+                            class="text-lg font-bold"
                         >
                             {{ formattedCurrencyNoSymbol(assetSumByType.get(assetType)!) }}
                         </span>
@@ -50,10 +50,10 @@
                                     <!-- Icon -->
                                     <div class="mr-2 w-8">
                                         <Icon
-                                            :icon="asset.svg"
                                             :height="24"
-                                            class="text-primary"
-                                            :inline="true" />
+                                            :icon="asset.svg"
+                                            :inline="true"
+                                            class="text-primary" />
                                     </div>
                                     <!-- Info -->
                                     <div class="flex-auto">
@@ -66,14 +66,14 @@
                                             </n-space>
                                             <!-- 如果是信用卡，额外显示可用余额、还款日 -->
                                             <div v-if="asset.type === '信用卡'"
-                                                class="asset-item-credit-container"
+                                                 class="asset-item-credit-container"
                                             >
                                                 <!-- 余额进度条 -->
                                                 <n-progress
-                                                    type="line"
                                                     :height="5"
                                                     :percentage="(1 + asset.balance / asset.quota) * 100"
-                                                    :show-indicator="false" />
+                                                    :show-indicator="false"
+                                                    type="line" />
                                                 <!-- 还款日、余额文字 -->
                                                 <n-space justify="space-between">
                                                     <p class="text-gray-400 text-small">
@@ -105,23 +105,23 @@
     <asset-info-modal
         v-model:show-modal="showInfoModal"
         :asset-id="showId"
-        @change-submitted="postChange"/>
+        @change-submitted="postChange" />
 
     <new-asset-modal
         v-model:show-modal="showAddModal"
-        @new-asset-submitted="postAddAsset"/>
+        @new-asset-submitted="postAddAsset" />
 </template>
 
 <script lang="ts" setup>
 // vue
-import { computed, defineProps, PropType, ref } from 'vue';
+import { computed, defineProps, PropType, ref } from "vue";
 // components
-import { Icon } from '@iconify/vue';
-import { AssetInfoModal, NewAssetModal } from './components';
+import { Icon } from "@iconify/vue";
+import { AssetInfoModal, NewAssetModal } from "./components";
 // ts
-import { Asset } from '@/interface';
-import { addAsset, updateAsset } from '@/apis'
-import { formattedCurrencyNoSymbol } from '@/utils'
+import { Asset } from "@/interface";
+import { addAsset, updateAsset } from "@/apis";
+import { formattedCurrencyNoSymbol } from "@/utils";
 
 const props = defineProps({
     assetList: {
@@ -187,18 +187,21 @@ function daysBeforeRepayDate(repayDate: number): number | string {
 
 const showId = ref(0);
 const showInfoModal = ref(false);
+
 function showDetail(id: number) {
     showId.value = id;
     showInfoModal.value = true;
 }
 
 const showAddModal = ref(false);
+
 function showNewAssetModal() {
     showAddModal.value = true;
 }
 
 
-const emit = defineEmits(['assetListChanged']);
+const emit = defineEmits(["assetListChanged"]);
+
 /**
  * @description 修改资产
  */
@@ -213,12 +216,13 @@ function postChange(changed: Asset) {
     });
     updateAsset({ assetId: changed.id, ...params }).then((res: any) => {
         // 发送请求成功后，更新资产列表
-        emit('assetListChanged', null);
+        emit("assetListChanged", null);
         // 关闭弹窗
         showInfoModal.value = false;
     });
 
 }
+
 /**
  * @description 新增资产
  */
@@ -227,7 +231,7 @@ function postAddAsset(asset: Asset) {
     console.log(asset);
     addAsset(asset).then((res: any) => {
         // 发送请求成功后，更新资产列表
-        emit('assetListChanged', null);
+        emit("assetListChanged", null);
         // 关闭弹窗
         showAddModal.value = false;
     });

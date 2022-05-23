@@ -3,5 +3,5 @@ export interface BillCategory {
     bookId: number;
     billCategoryName: string;
     svg: string;
-    type: '支出' | '收入';
+    type: "支出" | "收入";
 }

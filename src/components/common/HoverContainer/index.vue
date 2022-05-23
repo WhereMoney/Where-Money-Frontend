@@ -16,8 +16,8 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
-import type {FollowerPlacement} from 'vueuc';
+import { computed } from "vue";
+import type { FollowerPlacement } from "vueuc";
 
 interface Props {
     /** tooltip显示文本 */
@@ -29,9 +29,9 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    tooltipContent: '',
-    placement: 'bottom',
-    contentClass: ''
+    tooltipContent: "",
+    placement: "bottom",
+    contentClass: ""
 });
 
 const showTooltip = computed(() => Boolean(props.tooltipContent));

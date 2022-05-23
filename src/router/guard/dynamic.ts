@@ -1,5 +1,5 @@
-import type {NavigationGuardNext, RouteLocationNormalized, Router} from 'vue-router';
-import {useRouteStore} from '@/store';
+import type { NavigationGuardNext, RouteLocationNormalized, Router } from "vue-router";
+import { useRouteStore } from "@/store";
 
 export async function createDynamicRouteGuard(
     to: RouteLocationNormalized,

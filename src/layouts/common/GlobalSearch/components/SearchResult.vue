@@ -11,9 +11,9 @@
                     @click="handleTo"
                     @mouseenter="handleMouse(item)"
                 >
-                    <Icon :icon="item.meta?.icon ?? 'mdi:bookmark-minus-outline'"/>
+                    <Icon :icon="item.meta?.icon ?? 'mdi:bookmark-minus-outline'" />
                     <span class="flex-1 ml-5px">{{ item.meta?.title }}</span>
-                    <icon-ant-design:enter-outlined class="icon text-20px p-2px mr-3px"/>
+                    <icon-ant-design:enter-outlined class="icon text-20px p-2px mr-3px" />
                 </div>
             </template>
         </div>
@@ -21,10 +21,10 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
-import {Icon} from '@iconify/vue';
-import {useThemeStore} from '@/store';
-import type {RouteList} from './types';
+import { computed } from "vue";
+import { Icon } from "@iconify/vue";
+import { useThemeStore } from "@/store";
+import type { RouteList } from "./types";
 
 interface Props {
     value: string;
@@ -32,9 +32,9 @@ interface Props {
 }
 
 interface Emits {
-    (e: 'update:value', val: string): void;
+    (e: "update:value", val: string): void;
 
-    (e: 'enter'): void;
+    (e: "enter"): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {});
@@ -45,7 +45,7 @@ const active = computed({
         return props.value;
     },
     set(val: string) {
-        emit('update:value', val);
+        emit("update:value", val);
     }
 });
 const theme = useThemeStore();
@@ -56,7 +56,7 @@ async function handleMouse(item: RouteList) {
 }
 
 function handleTo() {
-    emit('enter');
+    emit("enter");
 }
 </script>
 <style lang="scss" scoped></style>

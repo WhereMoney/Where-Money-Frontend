@@ -1,12 +1,12 @@
 <template>
     <div class="flex-center text-18px hover:text-primary cursor-pointer" @click="handleSwitch">
-        <icon-mdi-moon-waning-crescent v-if="darkMode"/>
-        <icon-mdi-white-balance-sunny v-else/>
+        <icon-mdi-moon-waning-crescent v-if="darkMode" />
+        <icon-mdi-white-balance-sunny v-else />
     </div>
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
+import { computed } from "vue";
 
 interface Props {
     /** 暗黑模式 */
@@ -14,7 +14,7 @@ interface Props {
 }
 
 interface Emits {
-    (e: 'update:dark', darkMode: boolean): void;
+    (e: "update:dark", darkMode: boolean): void;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -28,7 +28,7 @@ const darkMode = computed({
         return props.dark;
     },
     set(newValue: boolean) {
-        emit('update:dark', newValue);
+        emit("update:dark", newValue);
     }
 });
 

@@ -1,3 +1,3 @@
-export interface UserChangeUserNameResponse{
+export interface UserChangeUserNameResponse {
     token: string;
 }
