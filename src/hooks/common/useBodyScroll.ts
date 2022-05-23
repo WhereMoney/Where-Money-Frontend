@@ -9,18 +9,18 @@ interface ScrollBodyStyle {
  */
 export default function useBodyScroll(duration = 300) {
     const defaultStyle: ScrollBodyStyle = {
-        overflow: '',
-        paddingRight: ''
+        overflow: "",
+        paddingRight: ""
     };
 
     function getInitBodyStyle() {
-        const {overflow, paddingRight} = document.body.style;
-        Object.assign(defaultStyle, {overflow, paddingRight});
+        const { overflow, paddingRight } = document.body.style;
+        Object.assign(defaultStyle, { overflow, paddingRight });
     }
 
     function setScrollBodyStyle() {
         document.body.style.paddingRight = `${window.innerWidth - document.body.clientWidth}px`;
-        document.body.style.overflow = 'hidden';
+        document.body.style.overflow = "hidden";
     }
 
     function resetScrollBodyStyle() {

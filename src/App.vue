@@ -13,14 +13,12 @@
         </n-config-provider>
     </div>
 </template>
-
 <script lang="ts" setup>
-import { dateZhCN, zhCN } from 'naive-ui';
-import { NaiveProvider } from '@/components';
-import { subscribeStore, useThemeStore } from '@/store';
+import { dateZhCN, zhCN } from "naive-ui";
+import { NaiveProvider } from "@/components";
+import { useThemeStore } from "@/store";
 
 const theme = useThemeStore();
-
-subscribeStore();
 </script>
-
+<style scoped>
+</style>

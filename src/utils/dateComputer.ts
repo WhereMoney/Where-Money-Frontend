@@ -8,4 +8,5 @@ function intToString(timeStamp: number): string {
     const second = date.getSeconds();
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
+
 export { intToString };

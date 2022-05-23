@@ -1,46 +1,46 @@
 export const sidebarRoutes: AuthRoute.Route[] = [
     {
-        name: 'home',
-        path: '/home',
-        component: 'self',
+        name: "home",
+        path: "/home",
+        component: "self",
         meta: {
-            title: '主页',
-            icon: 'mdi:clipboard-account',
+            title: "主页",
+            icon: "mdi:clipboard-account",
             requiresAuth: true,
-            singleLayout: 'basic'
+            singleLayout: "basic"
         }
     },
     {
-        name: 'dashboard',
-        path: '/dashboard',
-        component: 'self',
+        name: "asset",
+        path: "/asset",
+        component: "self",
         meta: {
-            title: '仪表盘',
-            icon: 'mdi:clipboard-account',
+            title: "资产",
+            icon: "mdi:clipboard-account",
             requiresAuth: true,
-            singleLayout: 'basic'
+            singleLayout: "basic"
         }
     },
     {
-        name:'asset',
-        path: '/asset',
-        component: 'self',
+        name: "budget",
+        path: "/budget",
+        component: "self",
         meta: {
-            title: '资产',
-            icon: 'mdi:clipboard-account',
+            title: "预算",
+            icon: "mdi:clipboard-account",
             requiresAuth: true,
-            singleLayout: 'basic'
+            singleLayout: "basic"
         }
     },
     {
-        name:'budget',
-        path: '/budget',
-        component: 'self',
+        name: "about",
+        path: "/about",
+        component: "self",
         meta: {
-            title: '预算',
-            icon: 'mdi:clipboard-account',
+            title: "关于",
+            icon: "mdi:clipboard-account",
             requiresAuth: true,
-            singleLayout: 'basic'
+            singleLayout: "basic"
         }
     }
 ];
@@ -48,64 +48,64 @@ export const sidebarRoutes: AuthRoute.Route[] = [
 /** 固定的路由 */
 export const constantRoutes: AuthRoute.Route[] = [
     {
-        name: 'root',
-        path: '/',
-        redirect: '/home',
+        name: "root",
+        path: "/",
+        redirect: "/home",
         meta: {
-            title: '主页'
+            title: "主页"
         }
     },
     {
-        name: 'login',
-        path: '/login',
-        component: 'self',
+        name: "login",
+        path: "/login",
+        component: "self",
         meta: {
-            title: '登录'
+            title: "登录"
         }
     },
     {
-        name: 'register',
-        path: '/register',
-        component: 'self',
+        name: "register",
+        path: "/register",
+        component: "self",
         meta: {
-            title: '注册'
+            title: "注册"
         }
     },
     {
-        name: 'no-permission',
-        path: '/no-permission',
-        component: 'self',
+        name: "no-permission",
+        path: "/no-permission",
+        component: "self",
         meta: {
-            title: '无权限',
-            singleLayout: 'blank'
+            title: "无权限",
+            singleLayout: "blank"
         }
     },
     {
-        name: 'not-found',
-        path: '/not-found',
-        component: 'self',
+        name: "not-found",
+        path: "/not-found",
+        component: "self",
         meta: {
-            title: '未找到',
-            singleLayout: 'blank'
+            title: "未找到",
+            singleLayout: "blank"
         }
     },
     {
-        name: 'service-error',
-        path: '/service-error',
-        component: 'self',
+        name: "service-error",
+        path: "/service-error",
+        component: "self",
         meta: {
-            title: '服务器错误',
-            singleLayout: 'blank'
+            title: "服务器错误",
+            singleLayout: "blank"
         }
     },
     // 匹配无效路径的路由
     {
-        name: 'not-found-page',
-        path: '/:pathMatch(.*)*',
-        component: 'blank',
+        name: "not-found-page",
+        path: "/:pathMatch(.*)*",
+        component: "blank",
         meta: {
-            title: '未找到!',
-            singleLayout: 'blank'
+            title: "未找到!",
+            singleLayout: "blank"
         }
     },
     ...sidebarRoutes
@@ -115,11 +115,11 @@ export const constantRoutes: AuthRoute.Route[] = [
 export const routeName = (key: AuthRoute.RouteKey) => key;
 
 /** 路由路径 */
-export function routePath(key: Exclude<AuthRoute.RouteKey, 'not-found-page'>): AuthRoute.RoutePath {
-    const rootPath: AuthRoute.RoutePath = '/';
-    if (key === 'root') return rootPath;
-    const splitMark: AuthRoute.RouteSplitMark = '_';
-    const pathSplitMark = '/';
+export function routePath(key: Exclude<AuthRoute.RouteKey, "not-found-page">): AuthRoute.RoutePath {
+    const rootPath: AuthRoute.RoutePath = "/";
+    if (key === "root") return rootPath;
+    const splitMark: AuthRoute.RouteSplitMark = "_";
+    const pathSplitMark = "/";
     const path = key.split(splitMark).join(pathSplitMark);
     return (pathSplitMark + path) as AuthRoute.RoutePath;
 }

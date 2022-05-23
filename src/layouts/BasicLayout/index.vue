@@ -13,32 +13,33 @@
         :tab-visible="theme.tab.visible"
     >
         <template #header>
-            <global-header v-bind="headerProps"/>
+            <global-header v-bind="headerProps" />
         </template>
         <template #tab>
-            <global-tab/>
+            <global-tab />
         </template>
         <template #sider>
-            <global-sider/>
+            <global-sider />
         </template>
-        <global-content/>
+        <global-content />
         <template #footer>
-            <global-footer/>
+            <global-footer />
         </template>
     </soybean-admin-layout>
-    <setting-drawer/>
+    <setting-drawer />
 </template>
 
 <script lang="ts" setup>
-import {onMounted} from 'vue';
-import SoybeanAdminLayout from 'soybean-admin-layout';
-import {useAppStore, useThemeStore} from '@/store';
-import {useBasicLayout} from '@/composables';
-import {useStore} from '@/stores/store';
-import {GlobalContent, GlobalFooter, GlobalHeader, GlobalSider, GlobalTab, SettingDrawer} from '../common';
+import { onMounted } from "vue";
+import SoybeanAdminLayout from "soybean-admin-layout";
+import { useAppStore, useThemeStore } from "@/store";
+import { useBasicLayout } from "@/composables";
+import { useStore } from "@/stores/store";
+import { GlobalContent, GlobalFooter, GlobalHeader, GlobalSider, GlobalTab, SettingDrawer } from "../common";
+
 const app = useAppStore();
 const theme = useThemeStore();
-const {mode, headerProps, siderVisible, siderWidth, siderCollapsedWidth} = useBasicLayout();
+const { mode, headerProps, siderVisible, siderWidth, siderCollapsedWidth } = useBasicLayout();
 const store = useStore();
 onMounted(() => {
 });

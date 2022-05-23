@@ -1,11 +1,10 @@
 import {
     EnumLayoutComponentName,
-    EnumLoginModule,
     EnumThemeAnimateMode,
     EnumThemeHorizontalMenuPosition,
     EnumThemeLayoutMode,
     EnumThemeTabMode
-} from '@/enum';
+} from "@/enum";
 
 /** 布局组件名称 */
 export type LayoutComponentName = keyof typeof EnumLayoutComponentName;
@@ -21,6 +20,3 @@ export type ThemeHorizontalMenuPosition = keyof typeof EnumThemeHorizontalMenuPo
 
 /** 过渡动画 */
 export type ThemeAnimateMode = keyof typeof EnumThemeAnimateMode;
-
-/** 登录模块 */
-export type LoginModuleKey = keyof typeof EnumLoginModule;

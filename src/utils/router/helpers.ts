@@ -1,6 +1,5 @@
-import type {RouteRecordRaw} from 'vue-router';
-import {consoleError} from '../common';
-import {getLayoutComponent, getViewComponent} from './component';
+import type { RouteRecordRaw } from "vue-router";
+import { getLayoutComponent, getViewComponent } from "./component";
 
 type ComponentAction = Record<AuthRoute.RouteComponent, () => void>;
 
@@ -29,39 +28,39 @@ export function transformRouteToList(routes: AuthRoute.Route[], treeMap: AuthRou
 
 /**
  * 将单个权限路由转换成vue路由
- * @param route - 权限路由
+ * @param item
  */
 function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
     const resultRoute: RouteRecordRaw[] = [];
 
-    const itemRoute = {...item} as RouteRecordRaw;
+    const itemRoute = { ...item } as RouteRecordRaw;
 
     // 动态path
     if (hasDynamicPath(item)) {
-        Object.assign(itemRoute, {path: item.meta.dynamicPath});
+        Object.assign(itemRoute, { path: item.meta.dynamicPath });
     }
 
     // 外链路由
     if (hasHref(item)) {
-        Object.assign(itemRoute, {component: getViewComponent('not-found-page')});
+        Object.assign(itemRoute, { component: getViewComponent("not-found-page") });
     }
 
     // 路由组件
     if (hasComponent(item)) {
         const action: ComponentAction = {
             basic() {
-                itemRoute.component = getLayoutComponent('basic');
+                itemRoute.component = getLayoutComponent("basic");
             },
             blank() {
-                itemRoute.component = getLayoutComponent('blank');
+                itemRoute.component = getLayoutComponent("blank");
             },
             multi() {
                 // 多级路由一定有子路由
                 if (hasChildren(item)) {
-                    Object.assign(itemRoute, {meta: {...itemRoute.meta, multi: true}});
+                    Object.assign(itemRoute, { meta: { ...itemRoute.meta, multi: true } });
                     delete itemRoute.component;
                 } else {
-                    consoleError('多级路由缺少子路由: ', item);
+                    console.log("多级路由缺少子路由: ", item);
                 }
             },
             self() {
@@ -71,29 +70,29 @@ function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
         try {
             action[item.component!]();
         } catch {
-            consoleError('路由组件解析失败: ', item);
+            console.log("路由组件解析失败: ", item);
         }
     }
 
     // 注意：单独路由没有children
     if (isSingleRoute(item)) {
         if (hasChildren(item)) {
-            consoleError('单独路由不应该有子路由: ', item);
+            console.log("单独路由不应该有子路由: ", item);
         }
 
         // 捕获无效路由的需特殊处理
-        if (item.name === 'not-found-page') {
+        if (item.name === "not-found-page") {
             itemRoute.children = [
                 {
-                    path: '',
+                    path: "",
                     name: item.name,
-                    component: getViewComponent('not-found-page')
+                    component: getViewComponent("not-found-page")
                 }
             ];
         } else {
             const parentPath = `${itemRoute.path}-parent` as AuthRoute.SingleRouteParentPath;
 
-            const layout = item.meta.singleLayout === 'basic' ? getLayoutComponent('basic') : getLayoutComponent('blank');
+            const layout = item.meta.singleLayout === "basic" ? getLayoutComponent("basic") : getLayoutComponent("blank");
 
             const parentRoute: RouteRecordRaw = {
                 path: parentPath,
@@ -112,12 +111,12 @@ function transformAuthRouteToVueRoute(item: AuthRoute.Route) {
 
         // 找出第一个不为多级路由中间级的子路由路径作为重定向路径
         const redirectPath: AuthRoute.RoutePath = (children.find(item => !item.meta?.multi)?.path ||
-            '/') as AuthRoute.RoutePath;
-        if (redirectPath === '/') {
-            consoleError('该多级路由没有有效的子路径', item);
+            "/") as AuthRoute.RoutePath;
+        if (redirectPath === "/") {
+            console.log("该多级路由没有有效的子路径", item);
         }
 
-        if (item.component === 'multi') {
+        if (item.component === "multi") {
             // 多级路由，将子路由提取出来变成同级
             resultRoute.push(...children);
             delete itemRoute.children;

@@ -1,13 +1,12 @@
-/// <reference types="vite/client" />
-
-declare module '*.vue' {
-    import {DefineComponent} from 'vue';
+declare module "*.vue" {
+    import { DefineComponent } from "vue";
 
     const component: DefineComponent<{}, {}, any>;
     export default component;
 }
 
 interface ImportMetaEnv {
+    readonly VITE_STORAGE_PREFIX: any;
     /** 项目基本地址 */
     readonly VITE_APP_BASE_URL: string;
     /** 项目名称 */
@@ -19,7 +18,7 @@ interface ImportMetaEnv {
     /** 网路请求环境类型 */
     readonly VITE_HTTP_ENV: Service.HttpEnv;
     /** 是否是部署vercel */
-    readonly VITE_IS_VERCEL?: '1';
+    readonly VITE_IS_VERCEL?: "1";
 }
 
 interface ImportMeta {

@@ -18,9 +18,8 @@
 </template>
 
 <script lang="ts" setup>
-import { SystemLogo } from '@/components';
-import { routePath } from '@/router';
-import { useAppInfo } from '@/composables';
+import { routePath } from "@/router";
+import { useAppInfo } from "@/composables";
 
 interface Props {
     /** 显示名字 */
@@ -30,6 +29,6 @@ interface Props {
 defineProps<Props>();
 
 const { title } = useAppInfo();
-const routeHomePath = routePath('root');
+const routeHomePath = routePath("root");
 </script>
 <style scoped></style>

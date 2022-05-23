@@ -1,4 +1,4 @@
-import colorJson from './color.json';
+import colorJson from "./color.json";
 
 interface TraditionColorDetail {
     label: string;

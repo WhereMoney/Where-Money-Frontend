@@ -8,6 +8,5 @@
 </template>
 
 <script lang="ts" setup>
-import { DevDependency, ProDependency, ProjectInfo, ProjectIntroduction } from './components';
-</script>
+import { DevDependency, ProDependency, ProjectInfo, ProjectIntroduction } from "./components";</script>
 <style scoped></style>

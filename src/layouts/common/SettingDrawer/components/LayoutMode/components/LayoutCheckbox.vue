@@ -16,10 +16,10 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
-import type {FollowerPlacement} from 'vueuc';
-import {EnumThemeLayoutMode} from '@/enum';
-import type {ThemeLayoutMode} from '@/interface';
+import { computed } from "vue";
+import type { FollowerPlacement } from "vueuc";
+import { EnumThemeLayoutMode } from "@/enum";
+import type { ThemeLayoutMode } from "@/interface";
 
 interface Props {
     /** 布局模式 */
@@ -41,24 +41,24 @@ type LayoutConfig = Record<ThemeLayoutMode,
 
 const layoutConfig: LayoutConfig = {
     vertical: {
-        placement: 'bottom-start',
-        menuClass: 'w-1/3 h-full',
-        mainClass: 'w-2/3 h-3/4'
+        placement: "bottom-start",
+        menuClass: "w-1/3 h-full",
+        mainClass: "w-2/3 h-3/4"
     },
-    'vertical-mix': {
-        placement: 'bottom',
-        menuClass: 'w-1/4 h-full',
-        mainClass: 'w-2/3 h-3/4'
+    "vertical-mix": {
+        placement: "bottom",
+        menuClass: "w-1/4 h-full",
+        mainClass: "w-2/3 h-3/4"
     },
     horizontal: {
-        placement: 'bottom',
-        menuClass: 'w-full h-1/4',
-        mainClass: 'w-full h-3/4'
+        placement: "bottom",
+        menuClass: "w-full h-1/4",
+        mainClass: "w-full h-3/4"
     },
-    'horizontal-mix': {
-        placement: 'bottom-end',
-        menuClass: 'w-full h-1/4',
-        mainClass: 'w-2/3 h-3/4'
+    "horizontal-mix": {
+        placement: "bottom-end",
+        menuClass: "w-full h-1/4",
+        mainClass: "w-2/3 h-3/4"
     }
 };
 

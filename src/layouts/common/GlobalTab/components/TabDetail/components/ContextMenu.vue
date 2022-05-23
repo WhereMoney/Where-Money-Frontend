@@ -11,10 +11,10 @@
 </template>
 
 <script lang="ts" setup>
-import {computed} from 'vue';
-import type {DropdownOption} from 'naive-ui';
-import {useAppStore, useTabStore} from '@/store';
-import {iconifyRender} from '@/utils';
+import { computed } from "vue";
+import type { DropdownOption } from "naive-ui";
+import { useAppStore, useTabStore } from "@/store";
+import { iconifyRender } from "@/utils";
 
 interface Props {
     /** 右键菜单可见性 */
@@ -28,17 +28,17 @@ interface Props {
 }
 
 interface Emits {
-    (e: 'update:visible', visible: boolean): void;
+    (e: "update:visible", visible: boolean): void;
 }
 
-type DropdownKey = 'reload-current' | 'close-current' | 'close-other' | 'close-left' | 'close-right' | 'close-all';
+type DropdownKey = "reload-current" | "close-current" | "close-other" | "close-left" | "close-right" | "close-all";
 type Option = DropdownOption & {
     key: DropdownKey;
 };
 
 const props = withDefaults(defineProps<Props>(), {
     visible: false,
-    currentPath: ''
+    currentPath: ""
 });
 
 const emit = defineEmits<Emits>();
@@ -51,7 +51,7 @@ const dropdownVisible = computed({
         return props.visible;
     },
     set(visible: boolean) {
-        emit('update:visible', visible);
+        emit("update:visible", visible);
     }
 });
 
@@ -61,61 +61,61 @@ function hide() {
 
 const options = computed<Option[]>(() => [
     {
-        label: '重新加载',
-        key: 'reload-current',
+        label: "重新加载",
+        key: "reload-current",
         disabled: props.currentPath !== tab.activeTab,
-        icon: iconifyRender('ant-design:reload-outlined')
+        icon: iconifyRender("ant-design:reload-outlined")
     },
     {
-        label: '关闭',
-        key: 'close-current',
+        label: "关闭",
+        key: "close-current",
         disabled: props.currentPath === tab.homeTab.path,
-        icon: iconifyRender('ant-design:close-outlined')
+        icon: iconifyRender("ant-design:close-outlined")
     },
     {
-        label: '关闭其他',
-        key: 'close-other',
-        icon: iconifyRender('ant-design:column-width-outlined')
+        label: "关闭其他",
+        key: "close-other",
+        icon: iconifyRender("ant-design:column-width-outlined")
     },
     {
-        label: '关闭左侧',
-        key: 'close-left',
-        icon: iconifyRender('mdi:format-horizontal-align-left')
+        label: "关闭左侧",
+        key: "close-left",
+        icon: iconifyRender("mdi:format-horizontal-align-left")
     },
     {
-        label: '关闭右侧',
-        key: 'close-right',
-        icon: iconifyRender('mdi:format-horizontal-align-right')
+        label: "关闭右侧",
+        key: "close-right",
+        icon: iconifyRender("mdi:format-horizontal-align-right")
     }
 ]);
 
 const actionMap = new Map<DropdownKey, () => void>([
     [
-        'reload-current',
+        "reload-current",
         () => {
             app.reloadPage();
         }
     ],
     [
-        'close-current',
+        "close-current",
         () => {
             tab.removeTab(props.currentPath);
         }
     ],
     [
-        'close-other',
+        "close-other",
         () => {
             tab.clearTab([props.currentPath]);
         }
     ],
     [
-        'close-left',
+        "close-left",
         () => {
             tab.clearLeftTab(props.currentPath);
         }
     ],
     [
-        'close-right',
+        "close-right",
         () => {
             tab.clearRightTab(props.currentPath);
         }

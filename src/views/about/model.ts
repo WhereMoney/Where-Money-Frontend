@@ -1,4 +1,4 @@
-import pkg from '~/package.json';
+import pkg from "~/package.json";
 
 /** npm依赖包版本信息 */
 export interface PkgVersionInfo {

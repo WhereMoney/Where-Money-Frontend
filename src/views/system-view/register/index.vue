@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center h-screen" :style="{ backgroundColor: bgColor }">
+    <div :style="{ backgroundColor: bgColor }" class="flex justify-center items-center h-screen">
         <dark-mode-switch
             :dark="theme.darkMode"
             class="absolute left-48px top-24px z-3 text-20px"
@@ -53,12 +53,12 @@
                 </n-form-item>
                 <n-form-item>
                     <n-button
-                        class="w-full py-5 text-lg font-bold"
-                        attr-type="button"
-                        :secondary="true"
                         :round="true"
-                        type="primary"
+                        :secondary="true"
+                        attr-type="button"
+                        class="w-full py-5 text-lg font-bold"
                         size="large"
+                        type="primary"
                         @click="postRegister"
                     >注册
                     </n-button>
@@ -69,11 +69,11 @@
                 <a id="registerLink" href="../login">点我登录</a>
             </div>
         </div>
-        <login-bg :theme-color="bgThemeColor"/>
+        <login-bg :theme-color="bgThemeColor" />
 
         <n-modal v-model:show="showModal">
             <n-card :bordered="false" size="huge" style="width: 600px" title="使用条款">
-                <n-scrollbar style="max-height: 300px" :x-scrollable="true">
+                <n-scrollbar :x-scrollable="true" style="max-height: 300px">
                     <div v-html="protocol"></div>
                 </n-scrollbar>
                 <template #footer>
@@ -84,19 +84,20 @@
     </div>
 </template>
 <script lang="ts" setup>
-import {Router} from 'vue-router';
-import {useRouterPush} from '@/composables';
-import {getProtocolApi, registerApi} from '@/apis';
-import {computed, Ref, ref} from 'vue';
-import {getColorPalette, mixColor} from '@/utils';
-import {useThemeStore} from '@/store';
-import {LoginBg} from '../login/components';
-import {DarkModeSwitch} from "@/components";
-const {routerPush} = useRouterPush();
+import { Router } from "vue-router";
+import { useRouterPush } from "@/composables";
+import { getProtocolApi, registerApi } from "@/apis";
+import { computed, Ref, ref } from "vue";
+import { getColorPalette, mixColor } from "@/utils";
+import { useThemeStore } from "@/store";
+import { LoginBg } from "../login/components";
+import { DarkModeSwitch } from "@/components";
+
+const { routerPush } = useRouterPush();
 const theme = useThemeStore();
 const bgThemeColor = computed(() => (theme.darkMode ? getColorPalette(theme.themeColor, 7) : theme.themeColor));
 const bgColor = computed(() => {
-    const COLOR_WHITE = '#ffffff';
+    const COLOR_WHITE = "#ffffff";
     const ratio = theme.darkMode ? 0.5 : 0.2;
     return mixColor(COLOR_WHITE, theme.themeColor, ratio);
 });
@@ -108,10 +109,10 @@ interface Form {
 }
 
 const formRef: Ref = ref(null);
-const formValue: Ref<Form> = ref({userName: '', password: '', passwordAgain: ''});
+const formValue: Ref<Form> = ref({ userName: "", password: "", passwordAgain: "" });
 const readProtocol: Ref<boolean> = ref(true);
 const showModal: Ref<boolean> = ref(false);
-const protocol: Ref<string> = ref('');
+const protocol: Ref<string> = ref("");
 /* 用户注册 */
 // 表单规则
 const rules: object = {
@@ -119,32 +120,32 @@ const rules: object = {
         required: true,
         validator(_rule: any, value: string) {
             if (!value) {
-                return new Error('请输入邮箱或手机号。');
+                return new Error("请输入邮箱或手机号。");
             }
             if (!/^(\w+@(\w+\.)+\w+)|([0-9]{11})|\w+$/.test(value)) {
-                return new Error('请输入正确的邮箱或手机号。');
+                return new Error("请输入正确的邮箱或手机号。");
             }
             return true;
         },
-        trigger: 'blur'
+        trigger: "blur"
     },
     password: {
         required: true,
-        message: '请输入密码。',
-        trigger: ['input', 'blur']
+        message: "请输入密码。",
+        trigger: ["input", "blur"]
     },
     passwordAgain: {
         required: true,
         validator(_rule: any, value: string) {
             if (!value) {
-                return new Error('请输入重复密码。');
+                return new Error("请输入重复密码。");
             }
             if (value !== formValue.value.password) {
-                return new Error('两次输入密码不一致。');
+                return new Error("两次输入密码不一致。");
             }
             return true;
         },
-        trigger: ['input', 'blur']
+        trigger: ["input", "blur"]
     }
 };
 declare const window: Window & { $message: any; $router: Router };
@@ -152,21 +153,21 @@ declare const window: Window & { $message: any; $router: Router };
 function postRegister(): void {
     formRef.value.validate((errors: boolean) => {
         if (!errors) {
-            registerApi({userName: formValue.value.userName, password: formValue.value.password})
+            registerApi({ userName: formValue.value.userName, password: formValue.value.password })
                 .then((_response: any) => {
-                    window.$message.success('注册成功');
-                    routerPush({name: 'login'});
+                    window.$message.success("注册成功");
+                    routerPush({ name: "login" });
                 })
                 .catch((_error: {}) => {
                 });
         } else {
-            window.$message.error('请正确输入信息');
+            window.$message.error("请正确输入信息");
         }
     });
 }
 
 function clearPasswordAgain(): void {
-    formValue.value.passwordAgain = '';
+    formValue.value.passwordAgain = "";
 }
 
 function showProtocol(): void {

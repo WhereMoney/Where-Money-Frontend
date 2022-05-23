@@ -1,7 +1,7 @@
-import {LoadingBarApi} from 'naive-ui';
-import axios from 'axios';
-import router from '@/router';
-import {storage} from '../utils';
+import { LoadingBarApi } from "naive-ui";
+import axios from "axios";
+import router from "@/router";
+import { storage } from "../utils";
 import qs from "qs";
 
 const service = (axios as any).create({
@@ -10,11 +10,11 @@ const service = (axios as any).create({
 });
 service.interceptors.request.use(
     (config: any) => {
-        const token = storage.get('token');
+        const token = storage.get("token");
         if (token) {
             config.headers.authorization = `Bearer ${token}`;
         }
-        if (config.method === 'post' && config.url !== '/bill/add-bill') {
+        if (config.method === "post" && config.url !== "/bill/add-bill") {
             config.data = qs.stringify(config.data);
         }
         return config;
@@ -43,15 +43,15 @@ service.interceptors.response.use(
                         window.$message.error(res.message);
                         break;
                     case 401:
-                        storage.remove('token');
+                        storage.remove("token");
                         switch (res.message) {
-                            case '账户或密码错误':
-                                window.$message.error('账户或密码错误');
+                            case "账户或密码错误":
+                                window.$message.error("账户或密码错误");
                                 break;
-                            case 'token无效':
-                            case 'token过期':
-                                window.$message.error('未授权或授权失效，请重新登录');
-                                router.push({name: 'login'}).then(_r => {
+                            case "token无效":
+                            case "token过期":
+                                window.$message.error("未授权或授权失效，请重新登录");
+                                router.push({ name: "login" }).then(_r => {
                                 });
                                 break;
                         }
@@ -59,22 +59,22 @@ service.interceptors.response.use(
                     case 403:
                         break;
                     case 404:
-                        window.$message.error('请求错误');
+                        window.$message.error("请求错误");
                         break;
                     case 405:
                         break;
                     case 408:
                         break;
                     case 422:
-                        window.$message.error('请求参数错误');
+                        window.$message.error("请求参数错误");
                         break;
                     case 500:
-                        window.$message.error('服务器错误');
+                        window.$message.error("服务器错误");
                         break;
                     case 501:
                         break;
                     case 502:
-                        window.$message.error('网络错误');
+                        window.$message.error("网络错误");
                         break;
                     case 503:
                         break;
@@ -86,15 +86,15 @@ service.interceptors.response.use(
                         console.log(`连接错误${res.code}`);
                 }
             } else {
-                window.$message.error('连接服务器失败');
+                window.$message.error("连接服务器失败");
             }
             window.$loadingBar.error();
             return Promise.reject(res);
         }
     },
     (error: any) => {
-        if (JSON.stringify(error).includes('timeout')) {
-            window.$message.error('连接服务器失败');
+        if (JSON.stringify(error).includes("timeout")) {
+            window.$message.error("连接服务器失败");
         }
         window.$loadingBar.error();
         return Promise.reject(error);

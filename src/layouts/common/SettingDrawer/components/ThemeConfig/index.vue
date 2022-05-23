@@ -1,6 +1,6 @@
 <template>
     <n-divider title-placement="center">主题配置</n-divider>
-    <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0"/>
+    <textarea id="themeConfigCopyTarget" v-model="dataClipboardText" class="absolute opacity-0" />
     <n-space vertical>
         <div ref="copyRef" data-clipboard-target="#themeConfigCopyTarget">
             <n-button :block="true" type="primary">拷贝当前配置</n-button>
@@ -10,9 +10,9 @@
 </template>
 
 <script lang="ts" setup>
-import {onMounted, onUnmounted, ref, watch} from 'vue';
-import Clipboard from 'clipboard';
-import {useThemeStore} from '@/store';
+import { onMounted, onUnmounted, ref, watch } from "vue";
+import Clipboard from "clipboard";
+import { useThemeStore } from "@/store";
 
 const theme = useThemeStore();
 
@@ -26,16 +26,16 @@ function getClipboardText() {
 
 function handleResetConfig() {
     theme.resetThemeStore();
-    window.$message?.success('已重置配置，请重新拷贝！');
+    window.$message?.success("已重置配置，请重新拷贝！");
 }
 
 function clipboardEventListener() {
     const copy = new Clipboard(copyRef.value!);
-    copy.on('success', () => {
+    copy.on("success", () => {
         window.$dialog?.success({
-            title: '操作成功',
-            content: '复制成功,请替换 src/settings/theme.json的内容！',
-            positiveText: '确定'
+            title: "操作成功",
+            content: "复制成功,请替换 src/settings/theme.json的内容！",
+            positiveText: "确定"
         });
     });
 }
@@ -45,7 +45,7 @@ const stopHandle = watch(
     () => {
         dataClipboardText.value = getClipboardText();
     },
-    {deep: true}
+    { deep: true }
 );
 
 onMounted(() => {
