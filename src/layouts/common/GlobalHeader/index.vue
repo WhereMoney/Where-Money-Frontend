@@ -22,7 +22,7 @@
                 <div>
                     <Icon :icon="'ri:calendar-2-fill'" class="text-20px" />
                 </div>
-                {{ "2022-04-04" }}
+                {{ nowDate }}
             </div>
             <github-site />
             <full-screen />
@@ -61,6 +61,7 @@ import { useStore } from "@/stores/store";
 import GlobalLogo from "../GlobalLogo/index.vue";
 import { FullScreen, GithubSite, GlobalBreadcrumb, HeaderMenu, MenuCollapse, ThemeMode } from "./components";
 import { Icon } from "@iconify/vue";
+import { dateToString, now } from "@/utils/dateComputer";
 
 const { routerPush, routerBack } = useRouterPush();
 defineProps<{
@@ -87,6 +88,8 @@ function ExitLogin(): void {
     routerPush({ name: "login" });
 }
 
+now();
+let nowDate: Ref<string> = ref(dateToString(now()).split(" ")[0]);
 defineExpose({ ExitLogin, goPre, showExitModal });
 </script>
 <style scoped>

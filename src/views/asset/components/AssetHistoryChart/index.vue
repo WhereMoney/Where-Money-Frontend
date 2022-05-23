@@ -23,7 +23,8 @@ import { Icon } from "@iconify/vue";
 import { Line } from "@antv/g2plot";
 // .ts
 import { AssetDayStatistic } from "@/interface";
-import { formattedCurrencyNoSymbol } from "@/utils";
+import { formattedCurrencyNoSymbol, getThemeColor } from "@/utils";
+import { useThemeStore } from "@/store";
 
 
 const props = defineProps({
@@ -36,10 +37,23 @@ const props = defineProps({
 
 const lineChart = ref<Line>();
 const lineChartAreaRef = ref<HTMLElement>();
+const key = "__THEME_COLOR__";
+const theme = useThemeStore();
+let color: string | null = getThemeColor();
+watch(
+    () => theme.themeColor,
+    newValue => {
+        color = newValue;
+        lineChart.value?.destroy();
+        initAndPlotLineChart();
+    },
+    { immediate: true }
+);
 
 function initAndPlotLineChart() {
     if (lineChartAreaRef.value === undefined) return;
     lineChart.value = new Line(lineChartAreaRef.value, {
+        color: color ? color : "#2092C6",
         data: props.statisticList,
         xField: "time",
         yField: "total",
@@ -103,9 +117,8 @@ function initAndPlotLineChart() {
     lineChart.value.render();
 }
 
-
 watch(() => props.statisticList,
-    (newVal, oldVal) => {
+    (newVal) => {
         if (!!lineChart.value) {
             lineChart.value.changeData(newVal);
         } else {

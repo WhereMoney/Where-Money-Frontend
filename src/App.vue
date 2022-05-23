@@ -16,9 +16,10 @@
 <script lang="ts" setup>
 import { dateZhCN, zhCN } from "naive-ui";
 import { NaiveProvider } from "@/components";
-import { useThemeStore } from "@/store";
+import { subscribeStore, useThemeStore } from "@/store";
 
 const theme = useThemeStore();
+subscribeStore();
 </script>
 <style scoped>
 </style>
