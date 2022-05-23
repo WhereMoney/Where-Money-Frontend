@@ -32,6 +32,7 @@
                     <span class="text-base">预算总额</span>
                     <n-input-number class="ml-4"
                         v-model:value="limitInput"
+                        placeholder="请输入预算"
                         :show-button="false"
                     >
                         <template #prefix>￥</template>
@@ -104,9 +105,8 @@ function submitNewBudget() {
         message.error("请输入预算总额！");
         return;
     }
-    addBudget({ bookId: props.book.id, billCategoryId: store.selectedBillCategoryId, limit: limitInput.value! }).then(() => {
-        setBookBudget({ bookId: props.book.id, totalBudget: props.book.totalBudget + limitInput.value! }).then(() => {
-            limitInput.value = 0;
+    setBookBudget({ bookId: props.book.id, totalBudget: props.book.totalBudget + limitInput.value! }).then(() => {
+        addBudget({ bookId: props.book.id, billCategoryId: store.selectedBillCategoryId, limit: limitInput.value! }).then(() => {
             store.selectedBillCategoryId = -1;
             emit('manualUpdateBook', null);
             message.success('添加成功');
