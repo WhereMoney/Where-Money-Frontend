@@ -424,7 +424,7 @@ const handleUpdateValue = (_: number, { year, month, date }: { year: number; mon
         display: flex;
 
         .right-wrap {
-            width: 50%;
+            width: 35%;
             padding-left: 16px;
 
             .n-calendar {
@@ -433,7 +433,7 @@ const handleUpdateValue = (_: number, { year, month, date }: { year: number; mon
         }
 
         .left-wrap {
-            width: 50%;
+            width: 65%;
 
             .info-wrap {
                 .info-item {
