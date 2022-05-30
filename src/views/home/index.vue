@@ -127,6 +127,7 @@ import { getAllBillInBookApi, getBillInStatisticTimeApi } from "@/apis/bill";
 import { BookForm } from "./components";
 
 import * as echarts from "echarts";
+import { storage } from "@/utils";
 
 // 当前选中bookId
 const bookId = ref<any>(null);
@@ -141,6 +142,7 @@ const getBooks = () => {
         }, []);
         if (!bookId.value) {
             bookId.value = res.bookList[0].id;
+            storage.set("bookId", bookId.value);
             getBalanceMonth();
             getIncomeMonth();
             getPayMonth();
@@ -152,6 +154,8 @@ const getBooks = () => {
 getBooks();
 // 切换账本
 const changeBook = (val: any) => {
+    storage.set("bookId", bookId.value);
+    console.log(bookId.value);
     getBalanceMonth();
     getIncomeMonth();
     getPayMonth();

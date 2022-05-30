@@ -240,6 +240,7 @@ import {
 import { TimePickerProps, UploadCustomRequestOptions, UploadFileInfo } from "naive-ui";
 import { intToString } from "@/utils/dateComputer";
 import { Icon } from "@iconify/vue";
+import { storage } from "@/utils";
 
 let timePickerProps: TimePickerProps = { inputReadonly: true };
 let remark: Ref<string> = ref("");
@@ -256,7 +257,7 @@ let inAssetSvg: Ref<string> = ref("");
 let isLoading: Ref<boolean> = ref(false);
 onMounted(() => {
     isLoading.value = true;
-    bookId.value = 23;
+    bookId.value = storage.get("bookId");
     timestamp.value = Date.now();
     outAssetName.value = "转出账户";
     inAssetName.value = "转入账户";
