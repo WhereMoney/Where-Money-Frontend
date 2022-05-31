@@ -15,7 +15,8 @@ export function createRouterGuard(router: Router) {
     });
     router.afterEach(to => {
         // 设置document title
-        useTitle(to.meta.title);
+        useTitle(to.meta.title as any);
+        document.querySelector("body")?.setAttribute("style", "overflow: auto !important;")
         // 结束 loadingBar
         window.$loadingBar?.finish();
     });
