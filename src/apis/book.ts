@@ -13,21 +13,31 @@ function getAllBookApi(): any {
 }
 
 // 获取账本所有账单
-function getAllBillCategoryApi(params: { bookId: number, type: '支出' | '收入' }): any {
-    return http.get('/book/all-bill-category', params);
+function getAllBillCategoryApi(params: { bookId: number, type: "支出" | "收入" }): any {
+    return http.get("/book/all-bill-category", params);
 }
 
 // 获取账本月结余
-function getBalanceMonthApi(params:{bookId:number}):any{
-    return  http.get('/book/balance-month',params)
-}
-// 获取账本月收入
-function getIncomeMonthApi(params:{bookId:number}):any{
-    return  http.get('book/income-month',params)
-}
-// 获取账本月支出
-function getPayMonthApi(params:{bookId:number}):any{
-    return  http.get('/book/pay-month',params)
+function getBalanceMonthApi(params: { bookId: number, startTime: string, endTime: string }): any {
+    return http.get("/book/balance-month-time", params);
 }
 
-export { addBookApi, getBookApi, getAllBookApi, getAllBillCategoryApi,getBalanceMonthApi,getIncomeMonthApi,getPayMonthApi}
+// 获取账本月收入
+function getIncomeMonthApi(params: { bookId: number, startTime: string, endTime: string }): any {
+    return http.get("book/income-month-time", params);
+}
+
+// 获取账本月支出
+function getPayMonthApi(params: { bookId: number, startTime: string, endTime: string }): any {
+    return http.get("/book/pay-month-time", params);
+}
+
+export {
+    addBookApi,
+    getBookApi,
+    getAllBookApi,
+    getAllBillCategoryApi,
+    getBalanceMonthApi,
+    getIncomeMonthApi,
+    getPayMonthApi
+};

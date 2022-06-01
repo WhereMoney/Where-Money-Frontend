@@ -14,7 +14,7 @@
                 <n-grid :x-gap="16" :cols="3" class="info-wrap">
                     <n-grid-item>
                         <div class="info-item">
-                            <img class="item-left" src="./assets/zhichu.png" />
+                            <img class="item-left" src="./assets/zhichu.png"  alt="支出"/>
                             <div class="item-right">
                                 <div>月支出</div>
                                 <div>{{ payNum }}</div>
@@ -23,7 +23,7 @@
                     </n-grid-item>
                     <n-grid-item>
                         <div class="info-item second-item">
-                            <img class="item-left" src="./assets/shoru.png" />
+                            <img class="item-left" src="./assets/shoru.png"  alt="收入"/>
                             <div class="item-right">
                                 <div>月收入</div>
                                 <div>{{ incomeNum }}</div>
@@ -32,7 +32,7 @@
                     </n-grid-item>
                     <n-grid-item>
                         <div class="info-item third-item">
-                            <img class="item-left" src="./assets/jieyu.png" />
+                            <img class="item-left" src="./assets/jieyu.png"  alt="结余"/>
                             <div class="item-right">
                                 <div>月结余</div>
                                 <div>{{ balanceNum }}</div>
@@ -153,9 +153,8 @@ const getBooks = () => {
 };
 getBooks();
 // 切换账本
-const changeBook = (val: any) => {
+const changeBook = () => {
     storage.set("bookId", bookId.value);
-    console.log(bookId.value);
     getBalanceMonth();
     getIncomeMonth();
     getPayMonth();
@@ -171,21 +170,27 @@ const addBook = () => {
 // 获取账单结余
 const balanceNum = ref(0);
 const getBalanceMonth = () => {
-    getBalanceMonthApi({ bookId: bookId.value }).then((res: any) => {
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    getBalanceMonthApi({ bookId: bookId.value, startTime: startTime, endTime: endTime }).then((res: any) => {
         balanceNum.value = res.amount ?? 0;
     });
 };
 // 获取账单月收入
 const incomeNum = ref(0);
 const getIncomeMonth = () => {
-    getIncomeMonthApi({ bookId: bookId.value }).then((res: any) => {
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    getIncomeMonthApi({ bookId: bookId.value, startTime: startTime, endTime: endTime }).then((res: any) => {
         incomeNum.value = res.amount ?? 0;
     });
 };
 // 获取账单月支出
 const payNum = ref(0);
 const getPayMonth = () => {
-    getPayMonthApi({ bookId: bookId.value }).then((res: any) => {
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    getPayMonthApi({ bookId: bookId.value, startTime: startTime, endTime: endTime }).then((res: any) => {
         payNum.value = res.amount ?? 0;
     });
 };
@@ -248,6 +253,9 @@ const panelChange = (info: { year: number, month: number }) => {
     activeMonth.value = info.month;
     initLineChart();
     getBillInStatisticTime();
+    getIncomeMonth();
+    getPayMonth();
+    getBalanceMonth();
 };
 
 // 获取支出分布柱状图
@@ -344,7 +352,7 @@ const initPieChart = () => {
     //     legend.push(item.name)
     //   }
     // })
-    let tempData = [];
+    let tempData: any[];
     if (activeType.value === "收入") {
         tempData = statisticBills.value.incomeStatistic;
     } else {
