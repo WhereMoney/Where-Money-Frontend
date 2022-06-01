@@ -253,6 +253,9 @@ const panelChange = (info: { year: number, month: number }) => {
     activeMonth.value = info.month;
     initLineChart();
     getBillInStatisticTime();
+    getIncomeMonth();
+    getPayMonth();
+    getBalanceMonth();
 };
 
 // 获取支出分布柱状图

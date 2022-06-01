@@ -19,17 +19,17 @@ function getAllBillCategoryApi(params: { bookId: number, type: "支出" | "收�
 
 // 获取账本月结余
 function getBalanceMonthApi(params: { bookId: number, startTime: string, endTime: string }): any {
-    return http.get("/book/balance-month", params);
+    return http.get("/book/balance-month-time", params);
 }
 
 // 获取账本月收入
 function getIncomeMonthApi(params: { bookId: number, startTime: string, endTime: string }): any {
-    return http.get("book/income-month", params);
+    return http.get("book/income-month-time", params);
 }
 
 // 获取账本月支出
 function getPayMonthApi(params: { bookId: number, startTime: string, endTime: string }): any {
-    return http.get("/book/pay-month", params);
+    return http.get("/book/pay-month-time", params);
 }
 
 export {
