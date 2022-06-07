@@ -170,8 +170,8 @@ const addBook = () => {
 // 获取账单结余
 const balanceNum = ref(0);
 const getBalanceMonth = () => {
-    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
-    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
     getBalanceMonthApi({ bookId: bookId.value, startTime: startTime, endTime: endTime }).then((res: any) => {
         balanceNum.value = res.amount ?? 0;
     });
@@ -179,8 +179,8 @@ const getBalanceMonth = () => {
 // 获取账单月收入
 const incomeNum = ref(0);
 const getIncomeMonth = () => {
-    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
-    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
     getIncomeMonthApi({ bookId: bookId.value, startTime: startTime, endTime: endTime }).then((res: any) => {
         incomeNum.value = res.amount ?? 0;
     });
@@ -188,8 +188,8 @@ const getIncomeMonth = () => {
 // 获取账单月支出
 const payNum = ref(0);
 const getPayMonth = () => {
-    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
-    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
     getPayMonthApi({ bookId: bookId.value, startTime: startTime, endTime: endTime }).then((res: any) => {
         payNum.value = res.amount ?? 0;
     });
@@ -320,8 +320,8 @@ const initLineChart = () => {
 const activeType = ref("收入");
 const statisticBills = ref<any>();
 const getBillInStatisticTime = () => {
-    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString().replaceAll("/", "-");
-    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString().replaceAll("/", "-");
+    const startTime = new Date(activeYear.value, activeMonth.value - 1, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
+    const endTime = new Date(activeYear.value, activeMonth.value, 1).toLocaleString('en', { hour12: false }).replaceAll("/", "-");
     getBillInStatisticTimeApi({ bookId: bookId.value, startTime, endTime }).then((res: any) => {
         statisticBills.value = res;
         initPieChart();

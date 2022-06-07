@@ -86,8 +86,8 @@ function pullAssetDayStatistic() {
     today.setHours(24, 0, 0, 0);
     const past30Day = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
     getDayStatisticTime({
-        startTime: past30Day.toLocaleString().replaceAll("/", "-"),
-        endTime: today.toLocaleString().replaceAll("/", "-")
+        startTime: past30Day.toLocaleString('en', { hour12: false }).replaceAll("/", "-"),
+        endTime: today.toLocaleString('en', { hour12: false }).replaceAll("/", "-")
     }).then((res: AssetDayStatisticTimeResponse) => {
         dayStatisticList.value = res.dayStatistic;
     }).catch((error: any) => {
